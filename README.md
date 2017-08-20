@@ -1,4 +1,4 @@
-# Shopping List Api
+# Shopping List API
 Shopping List API
 ## Endpoints to create account and login into application
 HTTP Method|End point | Public Access|Action
