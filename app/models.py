@@ -7,7 +7,8 @@
     Models map to database tables
 """
 from app import db, shoplist_api
-from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
+import jwt
+from datetime import datetime, timedelta
 
 
 class Item(db.Model):
@@ -18,8 +19,8 @@ class Item(db.Model):
     description = db.Column(db.Text())
     status = db.Column(db.Boolean)
 
-    def __init__(self, item_id, item_name, list_id, description="", status=False):
-        self.item_id = item_id
+    def __init__(self, item_name, list_id, description="", status=False):
+        # self.item_id = item_id
         self.item_name = item_name
         self.list_id = list_id
         self.description = description
@@ -31,6 +32,14 @@ class Item(db.Model):
         :return:
         """
         db.session.add(self)
+        db.session.commit()
+
+    @staticmethod
+    def update():
+        """
+        This method update a new record to the database
+        :return:
+        """
         db.session.commit()
 
     def delete(self):
@@ -45,52 +54,19 @@ class Item(db.Model):
         return '<List %s>' % self.item_name
 
 
-class List(db.Model):
-    __tablename__ = 'lists'
-    list_id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), db.ForeignKey('users.username'))
-    list_name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text())
-    # items = db.relationship(Item, backref='List', cascade='delete, all')
-
-    def __init__(self, list_id, list_name, username, description=""):
-        self.list_id = list_id
-        self.list_name = list_name
-        self.username = username
-        self.description = description
-
-    def add(self):
-        """
-        This method adds a new record to the database
-        :return:
-        """
-        db.session.add(self)
-        db.session.commit()
-
-    def delete(self):
-        """
-        This method deletes a record from the database
-        :return:
-        """
-        db.session.delete(self)
-        db.session.commit()
-
-    def __repr__(self):
-        return '<List %s>' % self.list_name
-
-
 class User(db.Model):
     __tablename__ = 'users'
-    username = db.Column(db.String(50), primary_key=True)
+    # username = db.Column(db.String(50), primary_key=True)
+    user_id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(250), unique=True)
     password = db.Column(db.String(250))
     firstname = db.Column(db.String(100))
     lastname = db.Column(db.String(100))
     description = db.Column(db.Text())
-    # lists = db.relationship(List, backref='User', cascade='delete,all')
+    user_lists = db.relationship('List', order_by='List.list_id', cascade='delete,all')
 
-    def __init__(self, username, email, password, firstname="", lastname="", description=""):
-        self.username = username
+    def __init__(self, email, password, firstname="", lastname="", description=""):
+        # self.username = username
         self.email = email
         self.password = password
         self.firstname = firstname
@@ -105,6 +81,14 @@ class User(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    @staticmethod
+    def update():
+        """
+        This method update a new record to the database
+        :return:
+        """
+        db.session.commit()
+
     def delete(self):
         """
         This method deletes a record from the database
@@ -114,8 +98,78 @@ class User(db.Model):
         db.session.commit()
 
     def generate_auth_token(self, expiration=600):
-        s = Serializer(shoplist_api.config['SECRET_KEY'], expires_in=expiration)
-        return s.dumps({'user': self.username})
+        try:
+            payload = {
+                'exp': datetime.utcnow() + timedelta(minutes=expiration),
+                'iat': datetime.utcnow(),
+                'sub': self.user_id
+            }
+            # create the byte string token using the payload and the SECRET key
+            jwt_string = jwt.encode(
+                payload,
+                shoplist_api.config['SECRET_KEY'],
+                algorithm='HS256'
+            )
+            return jwt_string
+        except Exception as ex:
+            return str(ex)
+
+    @staticmethod
+    def decode_token(token):
+        """Decodes the access token from the Authorization header."""
+        try:
+            # try to decode the token using our SECRET variable
+            payload = jwt.decode(token, shoplist_api.config['SECRET_KEY'])
+            return payload['sub']
+        except jwt.ExpiredSignatureError:
+            # the token is expired, return an error string
+            return "Expired token. Please login to get a new token"
+        except jwt.InvalidTokenError:
+            # the token is invalid, return an error string
+            return "Invalid token. Please register or login"
 
     def __repr__(self):
-        return '<User %s>' % self.username
+        return '<User %s>' % self.user_id
+
+
+class List(db.Model):
+    __tablename__ = 'lists'
+    list_id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.Integer, db.ForeignKey(User.user_id))
+    list_name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text())
+    list_items = db.relationship('Item', order_by='Item.item_id', cascade='delete, all')
+
+    def __init__(self, list_name, user_id, description=""):
+        # self.list_id = list_id
+        self.list_name = list_name
+        self.username = user_id
+        self.description = description
+
+    def add(self):
+        """
+        This method adds a new record to the database
+        :return:
+        """
+        db.session.add(self)
+        db.session.commit()
+
+    @staticmethod
+    def update():
+        """
+        This method update a new record to the database
+        :return:
+        """
+        db.session.commit()
+
+    def delete(self):
+        """
+        This method deletes a record from the database
+        :return:
+        """
+        db.session.delete(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return '<List: %s>' % self.list_name
+
