@@ -7,8 +7,6 @@ POST | /auth/register | True | Create an account
 POST | /auth/login | True | Login a user
 POST | /auth/logout | True | Logout a user
 POST | /auth/reset-password | True | Reset a user password
-
-
 ## Endpoints to create, update, view and delete a shopping list
 HTTP Method|End point | Public Access|Action
 -----------|----------|--------------|------
@@ -23,5 +21,5 @@ HTTP Method|End point | Public Access|Action
 POST | /shoppinglists/<id>/items | False | Add an Item to a shopping list
 PUT | /shoppinglists/<id>/items/<item_id> | False | Update a shopping list item on a given list
 DELETE | shoppinglists/<id>/items/<item_id> | False | Delete a shopping list item from a given list
-## Endpoints to create, update, view and delete a shopping list item
+
 
