@@ -32,10 +32,11 @@ def register():
                                    password=generate_password_hash(data['password']))
                 user.add()
                 shoplist_api.logger.debug("created user %s " % user.email)
-                return jsonify({'username': user.email}), 200
-            return jsonify({'status': 'user already exists'}), 200
+                return jsonify({'username': user.email, 'status': 'pass', 'message': 'user created successfully'}), 200
+            shoplist_api.logger.error("user already exists")
+            return jsonify({'status': 'fail', 'message': 'user already exists'}), 200
         shoplist_api.logger.error("bad or missing parameter(s) in json")
-        return jsonify({'error': 'bad parameter(s)'}), 400
+        return jsonify({'status': 'fail', 'message': 'bad parameter(s)'}), 400
     shoplist_api.logger.error("bad request to endpoint /auth/register")
     return abort(400)
 
@@ -59,9 +60,11 @@ def login():
                 token = user.generate_auth_token()
                 if token:
                     shoplist_api.logger.debug("user %s has logged in successfully" % data['username'])
-                    return jsonify({'token': token.decode('ascii'), 'status': 'login was successful'}), 200
-            shoplist_api.logger.error("wrong password or username")
-            return jsonify({'error': 'wrong password or username'}), 401
+                    return jsonify({'token': token.decode('ascii'),
+                                    'status': 'pass',
+                                    'message': 'login was successful'}), 200
+            shoplist_api.logger.error("wrong password or username or may be user does't exist")
+            return jsonify({'status': 'fail', 'message': 'wrong password or username or may be user does\'t exist'}), 200
     shoplist_api.logger.error("bad request to endpoint /auth/login")
     return abort(400)
 
@@ -85,11 +88,14 @@ def reset_password():
             user = models.User.query.filter_by(email=data['username']).first()
             if user and check_password_hash(user.password, data['old_password']):
                 user.password = generate_password_hash(data['new_password'])
-                return jsonify({'username': user.username}), 200
-            shoplist_api.logger.error("wrong username or password")
-            return jsonify({'error': 'wrong username or password'}), 400
+                user.update()
+                return jsonify({'username': user.email,
+                                'status': 'pass',
+                                'message': 'password was changed successfully'}), 200
+            shoplist_api.logger.error("wrong username or password or may be user does't exist")
+            return jsonify({'status': 'fail', 'message': 'wrong username or password or may be user does\'t exist'}), 200
         shoplist_api.logger.error("bad or missing parameter(s) in json")
-        return jsonify({'error': 'bad parameter(s)'}), 400
+        return jsonify({'status': 'fail', 'message': 'bad parameter(s)'}), 400
     shoplist_api.logger.error("bad request to endpoint /auth/reset")
     return abort(400)
 
@@ -129,10 +135,12 @@ def create_list():
                                                                                      the_list.username))
                     response = jsonify({'user_id': the_list.username,
                                         'title': the_list.list_name,
+                                        'status': 'pass',
+                                        'message': 'list created successfully'
                                         })
                     return response, 200
                 shoplist_api.logger.error("bad or missing parameter(s) in json")
-                return jsonify({'error': 'bad parameter(s)'}), 400
+                return jsonify({'status': 'fail', 'message': 'bad parameter(s)'}), 400
             shoplist_api.logger.error("bad request to endpoint /shoppinglists")
         return abort(400)
     shoplist_api.logger.error("no access token")
