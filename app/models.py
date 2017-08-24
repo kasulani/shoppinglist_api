@@ -11,49 +11,6 @@ import jwt
 from datetime import datetime, timedelta
 
 
-class Item(db.Model):
-    __tablename__ = 'items'
-    item_id = db.Column(db.Integer, primary_key=True)
-    list_id = db.Column(db.Integer, db.ForeignKey('lists.list_id'))
-    item_name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text())
-    status = db.Column(db.Boolean)
-
-    def __init__(self, item_name, list_id, description="", status=False):
-        # self.item_id = item_id
-        self.item_name = item_name
-        self.list_id = list_id
-        self.description = description
-        self.status = status
-
-    def add(self):
-        """
-        This method adds a new record to the database
-        :return:
-        """
-        db.session.add(self)
-        db.session.commit()
-
-    @staticmethod
-    def update():
-        """
-        This method update a new record to the database
-        :return:
-        """
-        db.session.commit()
-
-    def delete(self):
-        """
-        This method deletes a record from the database
-        :return:
-        """
-        db.session.delete(self)
-        db.session.commit()
-
-    def __repr__(self):
-        return '<List %s>' % self.item_name
-
-
 class User(db.Model):
     __tablename__ = 'users'
     # username = db.Column(db.String(50), primary_key=True)
@@ -172,4 +129,47 @@ class List(db.Model):
 
     def __repr__(self):
         return '<List: %s>' % self.list_name
+
+
+class Item(db.Model):
+    __tablename__ = 'items'
+    item_id = db.Column(db.Integer, primary_key=True)
+    list_id = db.Column(db.Integer, db.ForeignKey(List.list_id))
+    item_name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text())
+    status = db.Column(db.Boolean)
+
+    def __init__(self, item_name, list_id, description="", status=False):
+        # self.item_id = item_id
+        self.item_name = item_name
+        self.list_id = list_id
+        self.description = description
+        self.status = status
+
+    def add(self):
+        """
+        This method adds a new record to the database
+        :return:
+        """
+        db.session.add(self)
+        db.session.commit()
+
+    @staticmethod
+    def update():
+        """
+        This method update a new record to the database
+        :return:
+        """
+        db.session.commit()
+
+    def delete(self):
+        """
+        This method deletes a record from the database
+        :return:
+        """
+        db.session.delete(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return '<List %s>' % self.item_name
 
