@@ -295,22 +295,20 @@ def get_list_items(list_id):
         shoplist_api.logger.debug("decoded token to get user id %s " % user_id)
         if isinstance(int(user_id), int):
             items = models.Item.query.filter_by(list_id=list_id)
-            # shoplist_api.logger.debug("items: %s " % items)
             shoplist_api.logger.debug("getting items on list: %s " % list_id)
-            if items is not None:
-				results = []
-				for item in items:
-					result = {
-						'id': item.item_id,
-						'name': item.item_name,
-						'description': item.description
-					}
-					results.append(result)
-				return results, 200
-            return jsonify({'status': 'no record found'}), 200
-        abort(400)
+            results = []
+            for item in items:
+                result = {
+                    'id': item.item_id,
+                    'name': item.item_name,
+                    'description': item.description
+                }
+                results.append(result)
+            return jsonify(results), 200
+        abort(404)
     shoplist_api.logger.error("no access token")
     return jsonify({'error': 'no access token'}), 401
+
 
 @shoplist_api.route('/shoppinglists/<int:list_id>/items', methods=['POST'])
 def add_items_list(list_id):
