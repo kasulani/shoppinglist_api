@@ -10,11 +10,15 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
+from flask_login import LoginManager
 
 # Initialise flask application
 shoplist_api = Flask(__name__, instance_relative_config=True)
 # load the config file in instance folder, don't suppress errors (silent=false)
 shoplist_api.config.from_pyfile('config.cfg', silent=False)
+# set up login manager for the api
+login_manager = LoginManager()
+login_manager.init_app(shoplist_api)
 # Create ORM object
 db = SQLAlchemy(shoplist_api)
 # Setup migrations
