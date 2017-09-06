@@ -23,20 +23,25 @@ def register():
     if request.method == 'POST' and request.headers.get('content-type') == 'application/json':
         data = request.json
         shoplist_api.logger.debug("/auth/register: incoming request data %s " % data)
-        if 'email' in data and 'password' in data:
-            # check if the user exists in the db
-            user = models.User.query.filter_by(email=data['email']).first()
-            if user is None:
-                # create user in the database
-                user = models.User(email=data['email'],
-                                   password=generate_password_hash(data['password']))
-                user.add()
-                shoplist_api.logger.debug("created user %s " % user.email)
-                return jsonify({'username': user.email, 'status': 'pass', 'message': 'user created successfully'}), 200
-            shoplist_api.logger.error("user already exists")
-            return jsonify({'status': 'fail', 'message': 'user already exists'}), 200
-        shoplist_api.logger.error("bad or missing parameter(s) in json")
-        return jsonify({'status': 'fail', 'message': 'bad parameter(s)'}), 400
+        try:
+            if 'email' in data and 'password' in data:
+                # check if the user exists in the db
+                user = models.User.query.filter_by(email=data['email']).first()
+                if user is None:
+                    # create user in the database
+                    user = models.User(email=data['email'],
+                                       password=generate_password_hash(data['password']))
+                    user.add()
+                    shoplist_api.logger.debug("created user %s " % user.email)
+                    return jsonify({'username': user.email,
+                                    'status': 'pass',
+                                    'message': 'user account created successfully'}), 200
+                shoplist_api.logger.error("user already exists")
+                return jsonify({'status': 'fail', 'message': 'user already exists'}), 200
+            shoplist_api.logger.error("bad or missing parameter(s) in json")
+            return jsonify({'status': 'fail', 'message': 'bad parameter(s)'}), 200
+        except Exception as ex:
+            shoplist_api.logger.error(ex.message)
     shoplist_api.logger.error("bad request to endpoint /auth/register")
     return abort(400)
 
@@ -49,12 +54,12 @@ def login():
     """
     if request.method == 'POST' and request.headers.get('content-type') == 'application/json':
         data = request.json
-        shoplist_api.logger.debug("/auth/login: incoming request data %s " % data)
+        shoplist_api.logger.debug("/auth/login endpoint: incoming request data %s " % data)
         if 'username' in data and 'password' in data:
             # locate the user
             user = models.User.query.filter_by(email=data['username']).first()
             # authenticate user
-            shoplist_api.logger.debug("/auth/register: incoming request data %s " % user)
+            shoplist_api.logger.debug("/auth/login endpoint: authenticating user: %s" % data['username'])
             if user and check_password_hash(user.password, data['password']):
                 # generate token here
                 token = user.generate_auth_token()
