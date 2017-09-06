@@ -138,7 +138,7 @@ def reset_password():
 
 @shoplist_api.route('/shoppinglists', methods=['POST'])
 @login_required
-def create_list():
+def add_a_list():
     """
     This endpoint will create a shopping list for a logged in user
     :return:
