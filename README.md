@@ -1,6 +1,6 @@
 # Shopping List API
-#### Bagdges of Honor :)
-Travis [![Build Status](https://travis-ci.org/kasulani/shoppinglist_api.svg?branch=master)](https://travis-ci.org/kasulani/shoppinglist_api)
+##### Bagdges of Honor :)
+Travis CI [![Build Status](https://travis-ci.org/kasulani/shoppinglist_api.svg?branch=master)](https://travis-ci.org/kasulani/shoppinglist_api)
 ## Endpoints to create account and login into application
 HTTP Method|End point | Public Access|Action
 -----------|----------|--------------|------
