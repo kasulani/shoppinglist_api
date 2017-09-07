@@ -1,5 +1,5 @@
 # Shopping List API
-##### Bagdges of Honor :)
+###### Badges of Honor :)
 [![Build Status](https://travis-ci.org/kasulani/shoppinglist_api.svg?branch=master)](https://travis-ci.org/kasulani/shoppinglist_api)
 ## Endpoints to create account and login into application
 HTTP Method|End point | Public Access|Action
