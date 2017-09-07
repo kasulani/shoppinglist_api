@@ -27,7 +27,7 @@ def load_user(email):
 def register():
     """
     This endpoint will create a user account in the shopping list application
-    :return:
+    :return: json response
     """
     if request.method == 'POST' and request.headers.get('content-type') == 'application/json':
         data = request.json
@@ -47,11 +47,11 @@ def register():
                                     'message': 'user account created successfully'}), 200
                 shoplist_api.logger.error("user already exists")
                 return jsonify({'status': 'fail', 'message': 'user already exists'}), 200
-            shoplist_api.logger.error("bad or missing parameter(s) in json")
-            return jsonify({'status': 'fail', 'message': 'bad parameter(s)'}), 200
+            shoplist_api.logger.error("bad or missing parameters in json body")
+            return jsonify({'status': 'fail', 'message': 'bad or missing parameters in request'}), 400
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
-            return jsonify({'status': 'fail', 'message': ex.message}), 200
+            return jsonify({'status': 'fail', 'message': ex.message}), 500
     shoplist_api.logger.error("bad request to endpoint /auth/register")
     return abort(400)
 
@@ -84,9 +84,11 @@ def login():
                 shoplist_api.logger.error("wrong password or username or may be user does't exist")
                 return jsonify({'status': 'fail',
                                 'message': 'wrong password or username or may be user does\'t exist'}), 200
+            shoplist_api.logger.error("bad or missing parameters in json body")
+            return jsonify({'status': 'fail', 'message': 'bad or missing parameters in request'}), 400
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
-            return jsonify({'status': 'fail', 'message': ex.message}), 200
+            return jsonify({'status': 'fail', 'message': ex.message}), 500
     shoplist_api.logger.error("bad request to endpoint /auth/login")
     return abort(400)
 
@@ -107,7 +109,7 @@ def logout():
 def reset_password():
     """
     This endpoint will reset a password for a given user logged in at the front end
-    :return:
+    :return: json response
     """
     if request.method == 'POST' and request.headers.get('content-type') == 'application/json':
         data = request.json
@@ -125,13 +127,13 @@ def reset_password():
                 shoplist_api.logger.error("wrong username or password or may be user does't exist")
                 return jsonify({'status': 'fail',
                                 'message': 'wrong username or password or may be user does\'t exist'}), 200
-            shoplist_api.logger.error("bad or missing parameter(s) in json")
-            return jsonify({'status': 'fail', 'message': 'bad parameter(s)'}), 200
+            shoplist_api.logger.error("bad or missing parameters in json body")
+            return jsonify({'status': 'fail', 'message': 'bad or missing parameters in request'}), 400
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
-            return jsonify({'status': 'fail', 'message': ex.message}), 200
+            return jsonify({'status': 'fail', 'message': ex.message}), 500
     shoplist_api.logger.error("bad request to endpoint /auth/reset")
-    return abort(400)
+    return jsonify({'status': 'fail', 'message': 'bad request'}), 400
 
 # -------------------------------------------------------------------------------------------------
 
@@ -141,7 +143,7 @@ def reset_password():
 def add_a_list():
     """
     This endpoint will create a shopping list for a logged in user
-    :return:
+    :return: json response
     """
     token = None
     try:
@@ -183,11 +185,12 @@ def add_a_list():
                         shoplist_api.logger.error(ex.message)
                         return jsonify({'status': 'fail', 'message': ex.message}), 200
 
-                shoplist_api.logger.error("bad or missing parameter(s) in json")
-                return jsonify({'status': 'fail', 'message': 'missing parameter(s)'}), 200
+                shoplist_api.logger.error("bad or missing parameters in json body")
+                return jsonify({'status': 'fail', 'message': 'bad or missing parameters in request'}), 200
             shoplist_api.logger.error("bad request to endpoint /shoppinglists")
-            return jsonify({'status': 'fail', 'message': 'bad request'}), 200
-        return abort(401)
+            return jsonify({'status': 'fail', 'message': 'bad request'}), 400
+        shoplist_api.logger.error("unknown user id: <%s> " % user_id)
+        abort(401)
     shoplist_api.logger.error("no access token")
     return jsonify({'status': 'fail', 'message': 'no access token'}), 401
 
@@ -229,10 +232,11 @@ def view_all_lists():
                                     'message': 'lists found'}), 200
 
                 return jsonify({'count': '0', 'status': 'pass', 'message': 'no lists found'}), 200
+            shoplist_api.logger.error("unknown user id: <%s> " % user_id)
             abort(401)
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
-            return jsonify({'status': 'fail', 'message': ex.message}), 200
+            return jsonify({'status': 'fail', 'message': ex.message}), 500
     shoplist_api.logger.error("no access token")
     return jsonify({'status': 'fail', 'message': 'no access token'}), 401
 
@@ -272,10 +276,11 @@ def get_a_list(list_id):
                     return response, 200
                 shoplist_api.logger.debug("list with id<%s> not found" % list_id)
                 return jsonify({'count': '0', 'status': 'pass', 'message': 'list not found'}), 200
+            shoplist_api.logger.error("unknown user id: <%s> " % user_id)
             abort(401)
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
-            return jsonify({'status': 'fail', 'message': ex.message}), 200
+            return jsonify({'status': 'fail', 'message': ex.message}), 500
     shoplist_api.logger.error("no access token")
     return jsonify({'status': 'fail', 'message': 'no access token'}), 401
 
@@ -328,7 +333,7 @@ def update_a_list(list_id):
             abort(401)
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
-            return jsonify({'status': 'fail', 'message': ex.message}), 200
+            return jsonify({'status': 'fail', 'message': ex.message}), 500
     shoplist_api.logger.error("no access token")
     return jsonify({'status': 'fail', 'message': 'no access token'}), 401
 
@@ -361,10 +366,11 @@ def delete_a_list(list_id):
                     shoplist_api.logger.debug("list with id<%s> has been deleted " % list_id)
                     return jsonify({'status': 'pass', 'message': 'list deleted'})
                 return jsonify({'status': 'fail', 'message': 'list not deleted'}), 200
-            abort(404)
+            shoplist_api.logger.error("unknown user id: <%s> " % user_id)
+            abort(401)
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
-            return jsonify({'status': 'fail', 'message': ex.message}), 200
+            return jsonify({'status': 'fail', 'message': ex.message}), 500
     shoplist_api.logger.error("no access token")
     return jsonify({'status': 'fail', 'message': 'no access token'}), 401
 
@@ -411,10 +417,11 @@ def get_list_items(list_id):
                                         'status': 'pass',
                                         'message': 'items found'}), 200
                 return jsonify({'count': '0', 'status': 'pass', 'message': 'list does not exist'}), 200
+            shoplist_api.logger.error("unknown user id: <%s> " % user_id)
             abort(401)
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
-            return jsonify({'status': 'fail', 'message': ex.message}), 200
+            return jsonify({'status': 'fail', 'message': ex.message}), 500
     shoplist_api.logger.error("no access token")
     return jsonify({'status': 'fail', 'message': 'no access token'}), 401
 
@@ -459,16 +466,17 @@ def add_items_list(list_id):
                             shoplist_api.logger.debug("added item:<{0}> to list <{1}>".format(item.item_name, list_id))
                             return jsonify({'item_id': item.item_id,
                                             'status': 'pass', 'message': 'item added to list'}), 200
-                        shoplist_api.logger.error("bad or missing parameter(s) in json")
-                        return jsonify({'status': 'fail', 'message': 'missing parameter(s)'}), 200
+                        shoplist_api.logger.error("bad or missing parameters in json body")
+                        return jsonify({'status': 'fail', 'message': 'bad or missing parameters in request'}), 400
                     shoplist_api.logger.error("list <%s> does not exist" % list_id)
                     return jsonify({'status': 'fail', 'message': 'list does not exist'}), 200
                 shoplist_api.logger.error("bad request to endpoint /shoppinglists/<int:list_id>/items")
-                return jsonify({'status': 'fail', 'message': 'bad request'}), 200
-            return abort(401)
+                return jsonify({'status': 'fail', 'message': 'bad request'}), 400
+            shoplist_api.logger.error("unknown user id: <%s> " % user_id)
+            abort(401)
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
-            return jsonify({'status': 'fail', 'message': ex.message}), 200
+            return jsonify({'status': 'fail', 'message': ex.message}), 500
     shoplist_api.logger.error("no access token")
     return jsonify({'status': 'fail', 'message': 'no access token'}), 401
 
@@ -500,7 +508,8 @@ def update_list_item(list_id, item_id):
                 if the_list is not None:
                     the_item = models.Item.query.filter_by(list_id=list_id, item_id=item_id).first()
                     data = request.json
-                    shoplist_api.logger.debug("/shoppinglists/<int:list_id>/items/<int:item_id>: incoming request data %s " % data)
+                    shoplist_api.logger.debug(
+                        "/shoppinglists/<int:list_id>/items/<int:item_id>: incoming request data %s " % data)
                     if the_item is not None and 'name' in data:
                         try:
                             description = data['description']
@@ -527,7 +536,7 @@ def update_list_item(list_id, item_id):
             abort(401)
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
-            return jsonify({'status': 'fail', 'message': ex.message}), 200
+            return jsonify({'status': 'fail', 'message': ex.message}), 500
     shoplist_api.logger.error("no access token")
     return jsonify({'status': 'fail', 'message': 'no access token'}), 401
 
@@ -572,7 +581,7 @@ def delete_item_from_list(list_id, item_id):
             abort(401)
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
-            return jsonify({'status': 'fail', 'message': ex.message}), 200
+            return jsonify({'status': 'fail', 'message': ex.message}), 500
     shoplist_api.logger.error("no access token")
     return jsonify({'status': 'fail', 'message': 'no access token'}), 401
 # -------------------------------------------------------------------------------------------------

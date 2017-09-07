@@ -25,8 +25,6 @@ db = SQLAlchemy(shoplist_api)
 migrate = Migrate(app=shoplist_api, db=db)
 manager = Manager(shoplist_api)
 manager.add_command('db', MigrateCommand)
-# Create all tables if they are not yet created in the db
-db.create_all()
 # set logging format
 formatter = logging.Formatter("[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
 # set up file handler for the logger
@@ -36,6 +34,12 @@ handler.setLevel(shoplist_api.config['LEVEL'])
 handler.setFormatter(formatter)
 shoplist_api.logger.setLevel(shoplist_api.config['LEVEL'])
 shoplist_api.logger.addHandler(handler)
+# Create all tables if they are not yet created in the db
+try:
+    db.create_all()
+except Exception as ex:
+    shoplist_api.logger.error(ex.message)
+
 
 from app import views
 
