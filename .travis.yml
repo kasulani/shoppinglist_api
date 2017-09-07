@@ -17,4 +17,7 @@ before_script:
 
 # command to run tests
 script:
-  - python test_shoplist.py
+  - nosetests --with-coverage test_shoplist.py
+
+after_success:
+  - coveralls

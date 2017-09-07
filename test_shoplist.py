@@ -17,18 +17,21 @@ class TestShoppingListAPI(TestCase):
     def create_app(self):
         return shoplist_api
 
-    def add_test_user(self):
+    def add_user(self):
+        """This is a test user to use during the running of tests"""
         user = models.User(email=self.test_user,
                            password=generate_password_hash(self.test_user_password))
         user.add()
 
-    def add_test_list(self):
+    def add_list(self):
+        """This is a list user to use during the running of tests"""
         the_list = models.List(user_id=1,
                                list_name=self.test_list,
                                description=self.test_list_desc)
         the_list.add()
 
-    def add_test_item(self):
+    def add_item(self):
+        """This is a test list item to use during the running of tests"""
         item = models.Item(item_name=self.test_item,
                            list_id=1,
                            description=self.test_item_desc)
@@ -54,7 +57,7 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "user account created successfully", msg="message key fail")
 
     def test_02_register_an_existing_account(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             response = self.client.post('/auth/register',
                                         content_type='application/json',
@@ -66,7 +69,7 @@ class TestShoppingListAPI(TestCase):
     # --------------------------- /auth/login endpoint tests --------------------------------------------------------
 
     def test_03_login_with_wrong_credentials(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             response = self.client.post('/auth/login',
                                         content_type='application/json',
@@ -77,7 +80,7 @@ class TestShoppingListAPI(TestCase):
                              "wrong password or username or may be user does't exist", msg="message key fail")
 
     def test_04_login_with_correct_credentials(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             response = self.client.post('/auth/login',
                                         content_type='application/json',
@@ -91,7 +94,7 @@ class TestShoppingListAPI(TestCase):
     # --------------------------- /auth/logout endpoint tests --------------------------------------------------------
     # @unittest.skip("skipping logout test")
     def test_05_logout(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to log out
             self.client.post('/auth/login',
@@ -106,7 +109,7 @@ class TestShoppingListAPI(TestCase):
     # --------------------------- /auth/reset-password endpoint tests -------------------------------------------
     # @unittest.skip("skipping reset-password with wrong credentials test")
     def test_06_reset_password_with_wrong_credentials(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to reset password
             self.client.post('/auth/login',
@@ -125,7 +128,7 @@ class TestShoppingListAPI(TestCase):
 
     # @unittest.skip("skipping reset-password with correct test")
     def test_07_reset_password_with_correct_credentials(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to reset password
             self.client.post('/auth/login',
@@ -145,7 +148,7 @@ class TestShoppingListAPI(TestCase):
 
     # --------------------------- /shoppinglists endpoint tests -------------------------------------------
     def test_08_create_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to create a list
             response = self.client.post('/auth/login',
@@ -167,8 +170,8 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "list created successfully", msg="message key fail")
 
     def test_09_view_lists(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
-        self.add_test_list()
+        self.add_user()  # add this test user because tearDown drops all table data
+        self.add_list()
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
@@ -185,8 +188,8 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "lists found", msg="message key fail")
 
     def test_10_view_an_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
-        self.add_test_list()
+        self.add_user()  # add this test user because tearDown drops all table data
+        self.add_list()
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
@@ -203,7 +206,7 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "list found", msg="message key fail")
 
     def test_11_view_a_non_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
@@ -219,8 +222,8 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "list not found", msg="message key fail")
 
     def test_12_update_an_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
-        self.add_test_list()
+        self.add_user()  # add this test user because tearDown drops all table data
+        self.add_list()
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
@@ -238,7 +241,7 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "list updated", msg="message key fail")
 
     def test_13_update_a_non_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
@@ -256,8 +259,8 @@ class TestShoppingListAPI(TestCase):
 
     # --------------------------- /shoppinglists items endpoint tests ----------------------------------------
     def test_14_add_an_item_to_an_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
-        self.add_test_list()
+        self.add_user()  # add this test user because tearDown drops all table data
+        self.add_list()
         with self.client:
             # you have to be logged in to create a list
             response = self.client.post('/auth/login',
@@ -278,7 +281,7 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "item added to list", msg="message key fail")
 
     def test_15_add_an_item_to_a_non_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to create a list
             response = self.client.post('/auth/login',
@@ -298,9 +301,9 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "list does not exist", msg="message key fail")
 
     def test_16_view_items_on_an_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
-        self.add_test_list()
-        self.add_test_item()
+        self.add_user()  # add this test user because tearDown drops all table data
+        self.add_list()
+        self.add_item()
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
@@ -317,7 +320,7 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "items found", msg="message key fail")
 
     def test_17_view_items_on_a_non_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
@@ -333,9 +336,9 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "list does not exist", msg="message key fail")
 
     def test_18_update_an_item_on_an_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
-        self.add_test_list()
-        self.add_test_item()
+        self.add_user()  # add this test user because tearDown drops all table data
+        self.add_list()
+        self.add_item()
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
@@ -353,9 +356,9 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "item updated", msg="message key fail")
 
     def test_19_update_a_non_item_on_an_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
-        self.add_test_list()
-        self.add_test_item()
+        self.add_user()  # add this test user because tearDown drops all table data
+        self.add_list()
+        self.add_item()
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
@@ -372,7 +375,7 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "item not updated", msg="message key fail")
 
     def test_20_update_an_item_on_a_non_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
@@ -390,7 +393,7 @@ class TestShoppingListAPI(TestCase):
 
     # --------------------------- /delete endpoint tests ------------------------------------------------------
     def test_21_delete_an_item_on_a_non_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
@@ -406,9 +409,9 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "list does not exist", msg="message key fail")
 
     def test_22_delete_an_existing_item_on_an_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
-        self.add_test_list()
-        self.add_test_item()
+        self.add_user()  # add this test user because tearDown drops all table data
+        self.add_list()
+        self.add_item()
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
@@ -424,9 +427,9 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "item deleted", msg="message key fail")
 
     def test_23_delete_a_non_existing_item_on_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
-        self.add_test_list()
-        self.add_test_item()
+        self.add_user()  # add this test user because tearDown drops all table data
+        self.add_list()
+        self.add_item()
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
@@ -442,8 +445,8 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "item not deleted", msg="message key fail")
 
     def test_24_delete_an_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
-        self.add_test_list()
+        self.add_user()  # add this test user because tearDown drops all table data
+        self.add_list()
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
@@ -459,7 +462,7 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "list deleted", msg="message key fail")
 
     def test_25_delete_a_non_existing_list(self):
-        self.add_test_user()  # add this test user because tearDown drops all table data
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
             response = self.client.post('/auth/login', content_type='application/json',
