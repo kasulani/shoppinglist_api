@@ -1,6 +1,7 @@
 # Shopping List API
 ###### Badges of Honor :)
 [![Build Status](https://travis-ci.org/kasulani/shoppinglist_api.svg?branch=master)](https://travis-ci.org/kasulani/shoppinglist_api)
+[![Coverage Status](https://coveralls.io/repos/github/kasulani/shoppinglist_api/badge.svg?branch=master)](https://coveralls.io/github/kasulani/shoppinglist_api?branch=coverall-setup)
 ## Endpoints to create account and login into application
 HTTP Method|End point | Public Access|Action
 -----------|----------|--------------|------
