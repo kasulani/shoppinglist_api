@@ -5,6 +5,14 @@ python:
 install:
   - pip install -r requirements.txt
 
+services:
+  - postgresql
+  
+before_script:
+  - python run.py db init
+  - python run.py db migrate
+  - python run.py db upgrade
+
 # command to run tests
 script:
   - python test_shoplist.py
