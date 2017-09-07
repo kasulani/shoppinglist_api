@@ -9,7 +9,6 @@ services:
   - postgresql
 
 before_script:
-  - psql -c 'create database shoplist;' -U shoplist
   - python run.py db init
   - python run.py db migrate
   - python run.py db upgrade
