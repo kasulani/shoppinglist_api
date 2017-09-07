@@ -21,6 +21,7 @@ DELETE | /shoppinglists/id | False | Deletes a shopping list with a given id
 ## Endpoints to create, update, view and delete a shopping list item
 HTTP Method|End point | Public Access|Action
 -----------|----------|--------------|------
+GET | /shoppinglists/id/items | False | View Items of a given list id
 POST | /shoppinglists/id/items | False | Add an Item to a shopping list
 PUT | /shoppinglists/id/items/<item_id> | False | Update a shopping list item on a given list
 DELETE | /shoppinglists/id/items/<item_id> | False | Delete a shopping list item from a given list
