@@ -164,8 +164,9 @@ class TestShoppingListAPI(TestCase):
                                         data=json.dumps(dict(title="house party",
                                                              description="my house party list")))
             reply = json.loads(response.data.decode())
-            self.assertTrue(reply['user_id'], msg="user_id key fail")
+            self.assertTrue(reply['id'], msg="id key fail")
             self.assertEqual(reply['title'], "house party", msg="title key fail")
+            self.assertEqual(reply['description'], "my house party list", msg="description key fail")
             self.assertEqual(reply['status'], "pass", msg="status key fail")
             self.assertEqual(reply['message'], "list created successfully", msg="message key fail")
 
@@ -332,8 +333,8 @@ class TestShoppingListAPI(TestCase):
             response = self.client.get('/shoppinglists/100/items', content_type='application/json', headers=headers)
             reply = json.loads(response.data.decode())
             self.assertEqual(reply['count'], "0", msg="count key fail")
-            self.assertEqual(reply['status'], "pass", msg="status key fail")
-            self.assertEqual(reply['message'], "list does not exist", msg="message key fail")
+            self.assertEqual(reply['status'], "fail", msg="status key fail")
+            self.assertEqual(reply['message'], "items not found", msg="message key fail")
 
     def test_18_update_an_item_on_an_existing_list(self):
         self.add_user()  # add this test user because tearDown drops all table data
@@ -442,7 +443,7 @@ class TestShoppingListAPI(TestCase):
                                           headers=headers)
             reply = json.loads(response.data.decode())
             self.assertEqual(reply['status'], "fail", msg="status key fail")
-            self.assertEqual(reply['message'], "item not deleted", msg="message key fail")
+            self.assertEqual(reply['message'], "item not not found", msg="message key fail")
 
     def test_24_delete_an_existing_list(self):
         self.add_user()  # add this test user because tearDown drops all table data

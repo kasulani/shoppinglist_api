@@ -11,9 +11,16 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from flask_login import LoginManager
+from flasgger import Swagger
 
 # Initialise flask application
 shoplist_api = Flask(__name__, instance_relative_config=True)
+# API documentation
+shoplist_api.config['SWAGGER'] = {
+    'title': 'Shopping List API',
+    'uiversion': 2
+}
+Swagger(shoplist_api, template_file='../api_doc.yaml')
 # load the config file in instance folder, don't suppress errors (silent=false)
 shoplist_api.config.from_pyfile('config.cfg', silent=False)
 # set up login manager for the api

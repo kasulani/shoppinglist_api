@@ -1,0 +1,811 @@
+swagger: "2.0"
+info:
+  title: Shopping List API
+  description: "Shopping List API for web and mobile front-ends"
+  version: 1.0.0
+  contact:
+    email: kasulani@gmail.com
+tags:
+- name: auth
+  description: Endpoints for authentication
+- name: shoppinglists
+  description: CRUD endpoints for shoppinglists
+- name: items
+  description: CRUD endpoints for shoppinglist items
+consumes:
+  - "application/json"
+paths:
+  /auth/register:
+    post:
+      tags:
+      - auth
+      description: |-
+        This endpoint creates a new user. The client application should ensure the password is double checked to ensure
+        user does not enter mismatching password and also ensure the email address field is checked using regular
+        expressions to ensure it's an email address.
+      summary: Create a user account
+      parameters:
+        - in: body
+          name: body
+          description: The body should have the "username"(mandatory) and "password"(mandatory)
+          required: true
+          schema:
+            $ref: '#/definitions/AddUserPayload'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: |-
+            user account created successfully
+          examples:
+            application/json: |-
+              {
+                  "username":"foobar@mail.com"
+                  "status":"pass",
+                  "message":"user account created successfully"
+              }
+        "200":
+          description: |-
+            user already exists
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"user already exists"
+              }
+        "400":
+          description: |-
+            bad or missing parameters or content-type not specified as application/json
+          examples:
+            application/json: |-
+              {
+                "status":"fail",
+                "message":"bad or missing parameters in json body"
+              }
+              {
+                "status":"fail",
+                "message":"content-type not specified as application/json"
+              }
+        "500":
+          description: |-
+            catastrophic error due to no database connection
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"(psycopg2.OperationalError) terminating connection due to administrator command server closed the connection unexpectedly This probably means the server terminated abnormally before or while processing the request"
+              }
+  /auth/login:
+    post:
+      tags:
+      - auth
+      description: |-
+        This endpoint logs in a user
+      summary: Login a user
+      parameters:
+        - in: body
+          name: body
+          description: The body should have the "username"(mandatory) and "password"(mandatory)
+          required: true
+          schema:
+            $ref: '#/definitions/AddUserPayload'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: |-
+            login was successful
+          examples:
+            application/json: |-
+              {
+                  "token":"aDSKksdfOSfjuilldfs"
+                  "status":"pass",
+                  "message":"login was successful"
+              }
+        "200":
+          description: |-
+            wrong password or username or may be user does't exist
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"wrong password or username or may be user does't exist"
+              }
+        "400":
+          description: |-
+            bad or missing parameters or content-type not specified as application/json
+          examples:
+            application/json: |-
+              {
+                "status":"fail",
+                "message":"bad or missing parameters in json body"
+              }
+              {
+                "status":"fail",
+                "message":"content-type not specified as application/json"
+              }
+        "500":
+          description: |-
+            catastrophic error due to no database connection
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"(psycopg2.OperationalError) terminating connection due to administrator command server closed the connection unexpectedly This probably means the server terminated abnormally before or while processing the request"
+              }
+  /auth/reset:
+    post:
+      tags:
+      - auth
+      description: |-
+        This endpoint resets a user's password
+      summary: Reset password
+      parameters:
+        - in: body
+          name: body
+          description: The body should have the "username"(mandatory), "old_password"(mandatory) and "new_password"(mandatory)
+          required: true
+          schema:
+            $ref: '#/definitions/ResetPassPayload'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: |-
+            password was changed successfully
+          examples:
+            application/json: |-
+              {
+                  "username":"foobar@mail.com"
+                  "status":"pass",
+                  "message":"password was changed successfully"
+              }
+        "200":
+          description: |-
+            wrong username or password or may be user does't exist
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"wrong username or password or may be user does't exist"
+              }
+        "400":
+          description: |-
+            bad or missing parameters or content-type not specified as application/json
+          examples:
+            application/json: |-
+              {
+                "status":"fail",
+                "message":"bad or missing parameters in json body"
+              }
+              {
+                "status":"fail",
+                "message":"content-type not specified as application/json"
+              }
+        "500":
+          description: |-
+            catastrophic error due to no database connection
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"(psycopg2.OperationalError) terminating connection due to administrator command server closed the connection unexpectedly This probably means the server terminated abnormally before or while processing the request"
+              }
+  /auth/logout:
+    get:
+      tags:
+      - auth
+      description: |-
+        This endpoint logs out a user who's logged in
+      summary: Reset password
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: |-
+            logout was successful
+          examples:
+            application/json: |-
+              {
+                  "status":"pass",
+                  "message":"logout was successful"
+              }
+  /shoppinglists:
+    get:
+      tags:
+      - shoppinglists
+      description: |-
+        This endpoint requires log-in access. It's used to get all shopping lists that belong to a logged in user
+      summary: Get all shopping lists
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: |-
+            lists found
+          examples:
+            application/json: |-
+              {
+                  "lists": [
+                      {
+                          "id": "1",
+                          "title": "house party",
+                          "description": "my house party list"
+                      },
+                      {
+                          "id": "2",
+                          "title": "chrismas party",
+                          "description": "my chrismas party list"
+                      },
+                      {
+                          "id": "3",
+                          "title": "birthday party",
+                          "description": "my birthday party list"
+                      },
+                  ],
+                  "count":"3",
+                  "status":"pass",
+                  "message":"lists found"
+              }
+        "401":
+          description: |-
+            no access token means authentication failed
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"no access token"
+              }
+        "404":
+          description: |-
+            list not found
+          examples:
+            application/json: |-
+              {
+                  "count":"0",
+                  "status":"fail",
+                  "message":"list not found"
+              }
+        "500":
+          description: |-
+            catastrophic error due to no database connection
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"(psycopg2.OperationalError) terminating connection due to administrator command server closed the connection unexpectedly This probably means the server terminated abnormally before or while processing the request"
+              }
+    post:
+      tags:
+      - shoppinglists
+      description: |-
+        This endpoint requires log-in access. It's used to create a user for a logged in user
+      summary: Create a shopping list
+      parameters:
+        - in: body
+          name: body
+          description: The body should have the "title"(mandatory) of the list and a short "description"(optional)
+          required: true
+          schema:
+            $ref: '#/definitions/AddListPayload'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: |-
+            list created successfully
+          examples:
+            application/json: |-
+              {
+                "id":"1",
+                "title":"house party",
+                "description":"my house party",
+                "status":"pass"
+                "message":"list created successfully"
+              }
+        "400":
+          description: |-
+            bad or missing parameters or content-type not specified as application/json
+          examples:
+            application/json: |-
+              {
+                "status":"fail",
+                "message":"bad or missing parameters in json body"
+              }
+              {
+                "status":"fail",
+                "message":"content-type not specified as application/json"
+              }
+        "401":
+          description: |-
+            no access token means authentication failed
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"no access token"
+              }
+        "500":
+          description: |-
+            catastrophic error due to no database connection
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"(psycopg2.OperationalError) terminating connection due to administrator command server closed the connection unexpectedly This probably means the server terminated abnormally before or while processing the request"
+              }
+  /shoppinglists/{listid}:
+    get:
+      tags:
+      - shoppinglists
+      description: |-
+        This endpoint requires log-in access. It's used to get a specific list with a given id that belongs to a logged in user
+      summary: Get a shopping list
+      parameters:
+        - name: listid
+          in: path
+          required: true
+          description: The id of the shopping list to retrieve
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: |-
+            list found
+          examples:
+            application/json: |-
+              {
+                  "list": [
+                      {
+                          "id": "1",
+                          "title": "house party",
+                          "description": "my house party list"
+                      }
+                  ],
+                  "count":"1",
+                  "status":"pass",
+                  "message":"list found"
+              }
+        "401":
+          description: |-
+            no access token means authentication failed
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"no access token"
+              }
+        "404":
+          description: |-
+            no lists found
+          examples:
+            application/json: |-
+              {
+                  "count":"0",
+                  "status":"fail",
+                  "message":"no lists found"
+              }
+        "500":
+          description: |-
+            catastrophic error due to no database connection
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"(psycopg2.OperationalError) terminating connection due to administrator command server closed the connection unexpectedly This probably means the server terminated abnormally before or while processing the request"
+              }
+    put:
+      tags:
+      - shoppinglists
+      summary: Update a shopping list
+      description: |-
+        This endpoint requires log-in access. It's used to update a specific list with a given id that belongs to a logged in user
+      parameters:
+        - name: listid
+          in: path
+          required: true
+          description: The id of the shopping list to retrieve
+          type: integer
+
+        - in: body
+          name: body
+          description: The body should have the "title"(mandatory) of the list and a short "description"(optional)
+          required: true
+          schema:
+            $ref: '#/definitions/AddListPayload'
+      responses:
+        200:
+          description: "list updated"
+          examples:
+            application/json: |-
+              {
+                  "list": [
+                      {
+                          "id": "1",
+                          "title": "house party",
+                          "description": "my house party list"
+                      }
+                  ],
+                  "status":"pass",
+                  "message":"lists updated"
+              }
+        "400":
+          description: |-
+            list not updated
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"list not updated"
+              }
+              {
+                  "status":"fail",
+                  "message":"content-type not specified as application/json"
+              }
+        "401":
+          description: |-
+            no access token means authentication failed
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"no access token"
+              }
+        "500":
+          description: |-
+            catastrophic error due to no database connection
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"(psycopg2.OperationalError) terminating connection due to administrator command server closed the connection unexpectedly This probably means the server terminated abnormally before or while processing the request"
+              }
+    delete:
+      tags:
+      - shoppinglists
+      summary: delete a shopping list
+      description: |-
+        This endpoint requires log-in access. It's used to delete a specific list with a given id that belongs to a logged in user
+      parameters:
+        - name: listid
+          in: path
+          required: true
+          description: The id of the shopping list to delete
+          type: integer
+      responses:
+        200:
+          description: "list deleted"
+          examples:
+            application/json: |-
+              {
+                  "status":"pass",
+                  "message":"list deleted"
+              }
+  /shoppinglists/{listid}/items:
+    get:
+      tags:
+      - items
+      summary: Get items on a list
+      description: |-
+        This endpoint requires log-in access. It's used to retrive items on a specific list with a given id that belongs to a logged in user
+      parameters:
+        - name: listid
+          in: path
+          required: true
+          description: The id of the shopping list to retrieve
+          type: integer
+      responses:
+        200:
+          description: "items found"
+          examples:
+            application/json: |-
+              {
+                  "items": [
+                      {
+                          "id": "1",
+                          "name": "beer",
+                          "description": "cold lagers"
+                      },
+                      {
+                          "id": "2",
+                          "title": "soda",
+                          "description": "soft drinks"
+                      },
+                      {
+                          "id": "3",
+                          "title": "meat",
+                          "description": "bbq"
+                      },
+                  ],
+                  "count":"3",
+                  "status":"pass",
+                  "message":"items found"
+              }
+        "401":
+          description: |-
+            no access token means authentication failed
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"no access token"
+              }
+        "404":
+          description: |-
+            list not found
+          examples:
+            application/json: |-
+              {
+                  "count":"0",
+                  "status":"fail",
+                  "message":"items not found"
+              }
+        "500":
+          description: |-
+            catastrophic error due to no database connection
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"(psycopg2.OperationalError) terminating connection due to administrator command server closed the connection unexpectedly This probably means the server terminated abnormally before or while processing the request"
+              }
+    post:
+      tags:
+      - items
+      summary: Add an item to a list
+      description: |-
+        This endpoint requires log-in access. It's used to add items to a specific list with a given id that belongs to a logged in user
+      parameters:
+        - name: listid
+          in: path
+          required: true
+          description: The id of the shopping list to add items
+          type: integer
+
+        - in: body
+          name: body
+          description: The body should have the "name"(mandatory) of the item and a short "description"(optional)
+          required: true
+          schema:
+            $ref: '#/definitions/AddItemPayload'
+      responses:
+        "201":
+          description: "item added to list"
+          examples:
+            application/json: |-
+              {
+                "id":"1",
+                "title":"whiskey",
+                "description":"liquor",
+                "status":"pass"
+                "message":"item added to list"
+              }
+        "400":
+          description: |-
+            bad or missing parameters or content-type not specified as application/json
+          examples:
+            application/json: |-
+              {
+                "status":"fail",
+                "message":"bad or missing parameters in json body"
+              }
+              {
+                "status":"fail",
+                "message":"content-type not specified as application/json"
+              }
+        "401":
+          description: |-
+            no access token means authentication failed
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"no access token"
+              }
+        "404":
+          description: |-
+            list does not exist
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"list does not exist"
+              }
+        "500":
+          description: |-
+            catastrophic error due to no database connection
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"(psycopg2.OperationalError) terminating connection due to administrator command server closed the connection unexpectedly This probably means the server terminated abnormally before or while processing the request"
+              }
+  /shoppinglists/{listid}/items/{itemid}:
+    put:
+      tags:
+      - items
+      summary: Update a shopping list item
+      description: |-
+        This endpoint requires log-in access. It's used to update an item on a specific list with a given id that belongs to a logged in user
+      parameters:
+        - name: listid
+          in: path
+          required: true
+          description: The id of the shopping list to update
+          type: integer
+
+        - name: itemid
+          in: path
+          required: true
+          description: The id of the shopping list item to update
+          type: integer
+
+        - in: body
+          name: body
+          description: The body should have the "name"(mandatory) of the item and a short "description"(optional)
+          required: true
+          schema:
+            $ref: '#/definitions/AddItemPayload'
+      responses:
+        201:
+          description: "item updated"
+          examples:
+            application/json: |-
+              {
+                  "list": [
+                      {
+                          "id": "1",
+                          "name": "wine",
+                          "description": "dinner wine"
+                      }
+                  ],
+                  "status":"pass",
+                  "message":"item updated"
+              }
+        "400":
+          description: |-
+            item not updated
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"list not updated"
+              }
+              {
+                  "status":"fail",
+                  "message":"content-type not specified as application/json"
+              }
+        "401":
+          description: |-
+            no access token means authentication failed
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"no access token"
+              }
+        "404":
+          description: |-
+            list does not exist
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"list does not exist"
+              }
+        "500":
+          description: |-
+            catastrophic error due to no database connection
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"(psycopg2.OperationalError) terminating connection due to administrator command server closed the connection unexpectedly This probably means the server terminated abnormally before or while processing the request"
+              }
+    delete:
+      tags:
+      - items
+      summary: delete a shopping list item
+      description: |-
+        This endpoint requires log-in access. It's used to delete an item on a specific list with a given id that belongs to a logged in user
+      parameters:
+        - name: listid
+          in: path
+          required: true
+          description: The id of the shopping list to delete item from
+          type: integer
+
+        - name: itemid
+          in: path
+          required: true
+          description: The id of the shopping list item to delete
+          type: integer
+      responses:
+        200:
+          description: "item deleted"
+          examples:
+            application/json: |-
+              {
+                  "status":"pass",
+                  "message":"item deleted"
+              }
+        "401":
+          description: |-
+            no access token means authentication failed
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"no access token"
+              }
+        "404":
+          description: |-
+            list does not exist
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"list does not exist"
+              }
+              {
+                  "status":"fail",
+                  "message":"item not found"
+              }
+        "500":
+          description: |-
+            catastrophic error due to no database connection
+          examples:
+            application/json: |-
+              {
+                  "status":"fail",
+                  "message":"(psycopg2.OperationalError) terminating connection due to administrator command server closed the connection unexpectedly This probably means the server terminated abnormally before or while processing the request"
+              }
+definitions:
+  AddListPayload:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+  AddItemPayload:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+  AddUserPayload:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+  ResetPassPayload:
+      type: object
+      required:
+        - username
+        - old_password
+        - new_password
+      properties:
+        username:
+          type: string
+        old_password:
+          type: string
+        new_password:
+          type: string
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /kasulani/shoppinglist_api/1.0.0
+schemes:
+ - https
+ - http

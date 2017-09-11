@@ -26,10 +26,10 @@ def load_user(email):
 @shoplist_api.route('/auth/register', methods=['POST'])
 def register():
     """
-    This endpoint will create a user account in the shopping list application
+    This endpoint will create a user account
     :return: json response
     """
-    if request.method == 'POST' and request.headers.get('content-type') == 'application/json':
+    if request.headers.get('content-type') == 'application/json':
         data = request.json
         shoplist_api.logger.debug("/auth/register: incoming request data %s " % data)
         try:
@@ -44,7 +44,7 @@ def register():
                     shoplist_api.logger.debug("created user %s " % user.email)
                     return jsonify({'username': user.email,
                                     'status': 'pass',
-                                    'message': 'user account created successfully'}), 200
+                                    'message': 'user account created successfully'}), 201
                 shoplist_api.logger.error("user already exists")
                 return jsonify({'status': 'fail', 'message': 'user already exists'}), 200
             shoplist_api.logger.error("bad or missing parameters in json body")
@@ -52,8 +52,8 @@ def register():
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
             return jsonify({'status': 'fail', 'message': ex.message}), 500
-    shoplist_api.logger.error("bad request to endpoint /auth/register")
-    return abort(400)
+    shoplist_api.logger.error("content-type not specified as application/json")
+    return jsonify({'status': 'fail', 'message': 'content-type not specified as application/json'}), 400
 
 
 @shoplist_api.route('/auth/login', methods=['POST'])
@@ -62,7 +62,7 @@ def login():
     This endpoint will login a user with an account
     :return: json response
     """
-    if request.method == 'POST' and request.headers.get('content-type') == 'application/json':
+    if request.headers.get('content-type') == 'application/json':
         data = request.json
         shoplist_api.logger.debug("/auth/login endpoint: incoming request data %s " % data)
         try:
@@ -80,7 +80,7 @@ def login():
                         shoplist_api.logger.debug("user %s has logged in successfully" % data['username'])
                         return jsonify({'token': token.decode('ascii'),
                                         'status': 'pass',
-                                        'message': 'login was successful'}), 200
+                                        'message': 'login was successful'}), 201
                 shoplist_api.logger.error("wrong password or username or may be user does't exist")
                 return jsonify({'status': 'fail',
                                 'message': 'wrong password or username or may be user does\'t exist'}), 200
@@ -89,8 +89,8 @@ def login():
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
             return jsonify({'status': 'fail', 'message': ex.message}), 500
-    shoplist_api.logger.error("bad request to endpoint /auth/login")
-    return abort(400)
+    shoplist_api.logger.error("content-type not specified as application/json")
+    return jsonify({'status': 'fail', 'message': 'content-type not specified as application/json'}), 400
 
 
 @shoplist_api.route('/auth/logout', methods=['GET'])
@@ -111,7 +111,7 @@ def reset_password():
     This endpoint will reset a password for a given user logged in at the front end
     :return: json response
     """
-    if request.method == 'POST' and request.headers.get('content-type') == 'application/json':
+    if request.headers.get('content-type') == 'application/json':
         data = request.json
         shoplist_api.logger.debug("/auth/reset: incoming request data %s " % data)
         try:
@@ -123,7 +123,7 @@ def reset_password():
                     user.update()
                     return jsonify({'username': user.email,
                                     'status': 'pass',
-                                    'message': 'password was changed successfully'}), 200
+                                    'message': 'password was changed successfully'}), 201
                 shoplist_api.logger.error("wrong username or password or may be user does't exist")
                 return jsonify({'status': 'fail',
                                 'message': 'wrong username or password or may be user does\'t exist'}), 200
@@ -132,8 +132,8 @@ def reset_password():
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
             return jsonify({'status': 'fail', 'message': ex.message}), 500
-    shoplist_api.logger.error("bad request to endpoint /auth/reset")
-    return jsonify({'status': 'fail', 'message': 'bad request'}), 400
+    shoplist_api.logger.error("content-type not specified as application/json")
+    return jsonify({'status': 'fail', 'message': 'content-type not specified as application/json'}), 400
 
 # -------------------------------------------------------------------------------------------------
 
@@ -158,7 +158,7 @@ def add_a_list():
         user_id = models.User.decode_token(token)
         shoplist_api.logger.debug("decoded token to get user id %s " % user_id)
         if isinstance(int(user_id), int):
-            if request.method == 'POST' and request.headers.get('content-type') == 'application/json':
+            if request.headers.get('content-type') == 'application/json':
                 data = request.json
                 shoplist_api.logger.debug("/shoppinglists: incoming request data %s " % data)
                 if 'title' in data:
@@ -175,20 +175,20 @@ def add_a_list():
                         the_list.add()
                         shoplist_api.logger.debug("created list:<{0}> for user:<{1}>".format(the_list.list_name,
                                                                                              the_list.user_id))
-                        response = jsonify({'user_id': the_list.user_id,
+                        response = jsonify({'id': the_list.list_id,
                                             'title': the_list.list_name,
+                                            'description': the_list.description,
                                             'status': 'pass',
                                             'message': 'list created successfully'
                                             })
-                        return response, 200
+                        return response, 201
                     except Exception as ex:
                         shoplist_api.logger.error(ex.message)
-                        return jsonify({'status': 'fail', 'message': ex.message}), 200
-
-                shoplist_api.logger.error("bad or missing parameters in json body")
-                return jsonify({'status': 'fail', 'message': 'bad or missing parameters in request'}), 200
-            shoplist_api.logger.error("bad request to endpoint /shoppinglists")
-            return jsonify({'status': 'fail', 'message': 'bad request'}), 400
+                        return jsonify({'status': 'fail', 'message': ex.message}), 500
+                shoplist_api.logger.error("bad request to endpoint /shoppinglists")
+                return jsonify({'status': 'fail', 'message': 'bad request'}), 400
+            shoplist_api.logger.error("content-type not specified as application/json")
+            return jsonify({'status': 'fail', 'message': 'content-type not specified as application/json'}), 400
         shoplist_api.logger.error("unknown user id: <%s> " % user_id)
         abort(401)
     shoplist_api.logger.error("no access token")
@@ -231,7 +231,7 @@ def view_all_lists():
                                     'status': 'pass',
                                     'message': 'lists found'}), 200
 
-                return jsonify({'count': '0', 'status': 'pass', 'message': 'no lists found'}), 200
+                return jsonify({'count': '0', 'status': 'pass', 'message': 'no lists found'}), 404
             shoplist_api.logger.error("unknown user id: <%s> " % user_id)
             abort(401)
         except Exception as ex:
@@ -257,7 +257,6 @@ def get_a_list(list_id):
         shoplist_api.logger.debug("token: %s " % token)
     except Exception as ex:
         shoplist_api.logger.error(ex.message)
-
     #
     if token:
         try:
@@ -275,7 +274,7 @@ def get_a_list(list_id):
                                         'message': 'list found'})
                     return response, 200
                 shoplist_api.logger.debug("list with id<%s> not found" % list_id)
-                return jsonify({'count': '0', 'status': 'pass', 'message': 'list not found'}), 200
+                return jsonify({'count': '0', 'status': 'pass', 'message': 'list not found'}), 404
             shoplist_api.logger.error("unknown user id: <%s> " % user_id)
             abort(401)
         except Exception as ex:
@@ -308,27 +307,30 @@ def update_a_list(list_id):
             if isinstance(int(user_id), int):
                 shoplist_api.logger.debug("decoded token to get user id %s " % user_id)
                 the_list = models.List.query.filter_by(list_id=list_id, user_id=user_id).first()
-                data = request.json
-                shoplist_api.logger.debug("/shoppinglists/<id>: incoming request data %s " % data)
-                if the_list is not None and 'title' in data:
-                    try:
-                        description = data['description']
-                    except Exception as ex:
-                        shoplist_api.logger.error(ex.message)
-                        description = ""
+                if request.headers.get('content-type') == 'application/json':
+                    data = request.json
+                    shoplist_api.logger.debug("/shoppinglists/<id>: incoming request data %s " % data)
+                    if the_list is not None and 'title' in data:
+                        try:
+                            description = data['description']
+                        except Exception as ex:
+                            shoplist_api.logger.error(ex.message)
+                            description = ""
 
-                    the_list.list_name = data['title']
-                    the_list.description = description
-                    the_list.update()
-                    shoplist_api.logger.debug("list with id<%s> has been updated " % the_list.list_id)
-                    response = jsonify({'list': dict(id=the_list.list_id,
-                                                     title=the_list.list_name,
-                                                     description=the_list.description),
-                                        'status': 'pass',
-                                        'message': 'list updated'})
-                    return response, 200
-                shoplist_api.logger.error("list with id<%s> has not been updated " % list_id)
-                return jsonify({'status': 'fail', 'message': 'list not updated'}), 200
+                        the_list.list_name = data['title']
+                        the_list.description = description
+                        the_list.update()
+                        shoplist_api.logger.debug("list with id<%s> has been updated " % the_list.list_id)
+                        response = jsonify({'list': dict(id=the_list.list_id,
+                                                         title=the_list.list_name,
+                                                         description=the_list.description),
+                                            'status': 'pass',
+                                            'message': 'list updated'})
+                        return response, 201
+                    shoplist_api.logger.error("list with id<%s> has not been updated " % list_id)
+                    return jsonify({'status': 'fail', 'message': 'list not updated'}), 400
+                shoplist_api.logger.error("content-type not specified as application/json")
+                return jsonify({'status': 'fail', 'message': 'content-type not specified as application/json'}), 400
             shoplist_api.logger.error("unknown user id: <%s> " % user_id)
             abort(401)
         except Exception as ex:
@@ -364,8 +366,8 @@ def delete_a_list(list_id):
                 if the_list is not None:
                     the_list.delete()
                     shoplist_api.logger.debug("list with id<%s> has been deleted " % list_id)
-                    return jsonify({'status': 'pass', 'message': 'list deleted'})
-                return jsonify({'status': 'fail', 'message': 'list not deleted'}), 200
+                    return jsonify({'status': 'pass', 'message': 'list deleted'}), 200
+                return jsonify({'status': 'fail', 'message': 'list not deleted'}), 404
             shoplist_api.logger.error("unknown user id: <%s> " % user_id)
             abort(401)
         except Exception as ex:
@@ -416,7 +418,7 @@ def get_list_items(list_id):
                                         'count': str(len(results)),
                                         'status': 'pass',
                                         'message': 'items found'}), 200
-                return jsonify({'count': '0', 'status': 'pass', 'message': 'list does not exist'}), 200
+                return jsonify({'count': '0', 'status': 'fail', 'message': 'items not found'}), 404
             shoplist_api.logger.error("unknown user id: <%s> " % user_id)
             abort(401)
         except Exception as ex:
@@ -447,7 +449,7 @@ def add_items_list(list_id):
             user_id = models.User.decode_token(token)
             if isinstance(int(user_id), int):
                 shoplist_api.logger.debug("decoded token to get user id %s " % user_id)
-                if request.method == 'POST' and request.headers.get('content-type') == 'application/json':
+                if request.headers.get('content-type') == 'application/json':
                     the_list = models.List.query.filter_by(list_id=list_id).first()
                     # check to ensure the list exists
                     if the_list is not None:
@@ -464,14 +466,15 @@ def add_items_list(list_id):
                                                description=description)
                             item.add()
                             shoplist_api.logger.debug("added item:<{0}> to list <{1}>".format(item.item_name, list_id))
-                            return jsonify({'item_id': item.item_id,
-                                            'status': 'pass', 'message': 'item added to list'}), 200
+                            return jsonify({'item_id': item.item_id, 'name': item.item_name,
+                                            'description': item.description,
+                                            'status': 'pass', 'message': 'item added to list'}), 201
                         shoplist_api.logger.error("bad or missing parameters in json body")
                         return jsonify({'status': 'fail', 'message': 'bad or missing parameters in request'}), 400
                     shoplist_api.logger.error("list <%s> does not exist" % list_id)
-                    return jsonify({'status': 'fail', 'message': 'list does not exist'}), 200
-                shoplist_api.logger.error("bad request to endpoint /shoppinglists/<int:list_id>/items")
-                return jsonify({'status': 'fail', 'message': 'bad request'}), 400
+                    return jsonify({'status': 'fail', 'message': 'list does not exist'}), 404
+                shoplist_api.logger.error("content-type not specified as application/json")
+                return jsonify({'status': 'fail', 'message': 'content-type not specified as application/json'}), 400
             shoplist_api.logger.error("unknown user id: <%s> " % user_id)
             abort(401)
         except Exception as ex:
@@ -507,31 +510,34 @@ def update_list_item(list_id, item_id):
                 the_list = models.List.query.filter_by(list_id=list_id).first()
                 if the_list is not None:
                     the_item = models.Item.query.filter_by(list_id=list_id, item_id=item_id).first()
-                    data = request.json
-                    shoplist_api.logger.debug(
-                        "/shoppinglists/<int:list_id>/items/<int:item_id>: incoming request data %s " % data)
-                    if the_item is not None and 'name' in data:
-                        try:
-                            description = data['description']
-                        except Exception as ex:
-                            shoplist_api.logger.error(ex.message)
-                            description = ""
-
-                        the_item.item_name = data['name']
-                        the_item.description = description
-                        the_item.update()
+                    if request.headers.get('content-type') == 'application/json':
+                        data = request.json
                         shoplist_api.logger.debug(
-                            "item with id:<{0}> on list with id:<{1}> has been updated ".format(item_id, list_id))
-                        return jsonify({'item': dict(id=the_item.item_id,
-                                                     title=the_item.item_name,
-                                                     description=the_item.description),
-                                        'status': 'pass',
-                                        'message': 'item updated'}), 200
-                    shoplist_api.logger.error(
-                        "item with id: <{0}> on list with id:<{1}> has not been updated ".format(item_id, list_id))
-                    return jsonify({'status': 'fail', 'message': 'item not updated'}), 200
+                            "/shoppinglists/<int:list_id>/items/<int:item_id>: incoming request data %s " % data)
+                        if the_item is not None and 'name' in data:
+                            try:
+                                description = data['description']
+                            except Exception as ex:
+                                shoplist_api.logger.error(ex.message)
+                                description = ""
+
+                            the_item.item_name = data['name']
+                            the_item.description = description
+                            the_item.update()
+                            shoplist_api.logger.debug(
+                                "item with id:<{0}> on list with id:<{1}> has been updated ".format(item_id, list_id))
+                            return jsonify({'item': dict(id=the_item.item_id,
+                                                         title=the_item.item_name,
+                                                         description=the_item.description),
+                                            'status': 'pass',
+                                            'message': 'item updated'}), 201
+                        shoplist_api.logger.error(
+                            "item with id: <{0}> on list with id:<{1}> has not been updated ".format(item_id, list_id))
+                        return jsonify({'status': 'fail', 'message': 'item not updated'}), 400
+                    shoplist_api.logger.error("content-type not specified as application/json")
+                    return jsonify({'status': 'fail', 'message': 'content-type not specified as application/json'}), 400
                 shoplist_api.logger.error("list with id:<%s> does not exist" % list_id)
-                return jsonify({'status': 'fail', 'message': 'list does not exist'}), 200
+                return jsonify({'status': 'fail', 'message': 'list does not exist'}), 404
             shoplist_api.logger.error("unknown user id: <%s> " % user_id)
             abort(401)
         except Exception as ex:
@@ -571,12 +577,12 @@ def delete_item_from_list(list_id, item_id):
                         item_name = the_item.item_name
                         the_item.delete()
                         shoplist_api.logger.debug("item %s has been deleted successfully" % item_name)
-                        return jsonify({'status': 'pass', 'message': 'item deleted'})
+                        return jsonify({'status': 'pass', 'message': 'item deleted'}),200
                     shoplist_api.logger.error(
                         "item with id: <{0}> on list with id:<{1}> has not been deleted ".format(item_id, list_id))
-                    return jsonify({'status': 'fail', 'message': 'item not deleted'}), 200
+                    return jsonify({'status': 'fail', 'message': 'item not not found'}), 404
                 shoplist_api.logger.error("list with id:<%s> does not exist" % list_id)
-                return jsonify({'status': 'fail', 'message': 'list does not exist'}), 200
+                return jsonify({'status': 'fail', 'message': 'list does not exist'}), 404
             shoplist_api.logger.error("unknown user id: <%s> " % user_id)
             abort(401)
         except Exception as ex:
