@@ -138,6 +138,119 @@ def reset_password():
 # -------------------------------------------------------------------------------------------------
 
 
+@shoplist_api.route('/users', methods=['GET'])
+#@login_required
+def get_user_details():
+    """
+    This endpoint will return details on a single user
+    :return: json response
+    """
+    token = None
+    try:
+        # Get the access token from the header
+        auth_header = request.headers.get('Authorization')
+        token = auth_header.split(" ")[1]
+        shoplist_api.logger.debug("token: %s " % token)
+    except Exception as ex:
+        shoplist_api.logger.error(ex.message)
+    #
+    if token:
+        if request.headers.get('content-type') == 'application/json':
+            # get the user id from the token
+            user_id = models.User.decode_token(token)
+            try:
+                user = models.User.query.filter_by(user_id=user_id).first()
+                if user:
+                    return jsonify({'user': dict(id=user.user_id,
+                                                 username=user.email,
+                                                 firstname=user.firstname,
+                                                 lastname=user.lastname,
+                                                 description=user.description),
+                                   'status': 'pass',
+                                    'message': 'user found'}), 201
+                shoplist_api.logger.error("user does't exist")
+                return jsonify({'status': 'fail', 'message': 'user not found'}), 404
+            except Exception as ex:
+                shoplist_api.logger.error(ex.message)
+                return jsonify({'status': 'fail', 'message': ex.message}), 500
+        shoplist_api.logger.error("content-type not specified as application/json")
+        return jsonify({'status': 'fail', 'message': 'content-type not specified as application/json'}), 400
+    shoplist_api.logger.error("no access token")
+    return jsonify({'status': 'fail', 'message': 'no access token'}), 401
+
+
+@shoplist_api.route('/users', methods=['PUT'])
+#@login_required
+def update_user():
+    """
+    This endpoint will update user details such as firstname, lastname, description
+    :return: json response
+    """
+    token = None
+    try:
+        # Get the access token from the header
+        auth_header = request.headers.get('Authorization')
+        token = auth_header.split(" ")[1]
+        shoplist_api.logger.debug("token: %s " % token)
+    except Exception as ex:
+        shoplist_api.logger.error(ex.message)
+    #
+    if token:
+        if request.headers.get('content-type') == 'application/json':
+            data = request.json
+            shoplist_api.logger.debug("/user: incoming request data %s " % data)
+            try:
+                # get the user id from the token
+                user_id = models.User.decode_token(token)
+                # locate the user whose details are to be updated
+                user = models.User.query.filter_by(user_id=user_id).first()
+                if user and isinstance(int(user_id), int):
+                    '''
+                    Each field is in a try block of it's own to give the api user the ability to update a single field
+                    independent of the other fields in the User model/table
+                    '''
+                    err_count = 0
+                    # first name
+                    try:
+                        user.firstname = data['firstname']
+                    except Exception as ex:
+                        user.firstname = ""
+                        err_count += 1
+                        shoplist_api.logger.warning(ex.message)
+                    # last name
+                    try:
+                        user.lastname = data['lastname']
+                    except Exception as ex:
+                        user.lastname = ""
+                        err_count += 1
+                        shoplist_api.logger.warning(ex.message)
+                    # description
+                    try:
+                        user.description = data['description']
+                    except Exception as ex:
+                        user.description = ""
+                        err_count += 1
+                        shoplist_api.logger.warning(ex.message)
+                    # update the user
+                    if err_count == 3:  # this means non of the fields was updated
+                        return jsonify({'status': 'fail',
+                                        'message': 'user not updated'}), 200
+                    user.update()
+                    return jsonify({'status': 'pass',
+                                    'message': 'user updated'}), 201
+                shoplist_api.logger.error("user does't exist")
+                return jsonify({'status': 'fail', 'message': 'user not found'}), 404
+            except Exception as ex:
+                shoplist_api.logger.error(ex.message)
+                return jsonify({'status': 'fail', 'message': ex.message}), 500
+        shoplist_api.logger.error("content-type not specified as application/json")
+        return jsonify({'status': 'fail', 'message': 'content-type not specified as application/json'}), 400
+    shoplist_api.logger.error("no access token")
+    return jsonify({'status': 'fail', 'message': 'no access token'}), 401
+
+# -------------------------------------------------------------------------------------------------
+
+
 @shoplist_api.route('/shoppinglists', methods=['POST'])
 #@login_required
 def add_a_list():
@@ -165,7 +278,7 @@ def add_a_list():
                     try:
                         description = data['description']
                     except Exception as ex:
-                        shoplist_api.logger.error(ex.message)
+                        shoplist_api.logger.warning(ex.message)
                         description = ""
                     try:
                         # create a list
@@ -314,7 +427,7 @@ def update_a_list(list_id):
                         try:
                             description = data['description']
                         except Exception as ex:
-                            shoplist_api.logger.error(ex.message)
+                            shoplist_api.logger.warning(ex.message)
                             description = ""
 
                         the_list.list_name = data['title']
@@ -509,7 +622,7 @@ def add_items_list(list_id):
                             try:
                                 description = data['description']
                             except Exception as ex:
-                                shoplist_api.logger.error(ex.message)
+                                shoplist_api.logger.warning(ex.message)
                                 description = ""
                             # add an item to the list
                             item = models.Item(item_name=data['name'],
@@ -569,7 +682,7 @@ def update_list_item(list_id, item_id):
                             try:
                                 description = data['description']
                             except Exception as ex:
-                                shoplist_api.logger.error(ex.message)
+                                shoplist_api.logger.warning(ex.message)
                                 description = ""
 
                             the_item.item_name = data['name']

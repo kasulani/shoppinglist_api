@@ -514,6 +514,44 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['status'], "fail", msg="status key fail")
             self.assertEqual(reply['message'], "list not deleted", msg="message key fail")
 
+    def test_28_view_existing_user(self):
+        self.add_user()  # add this test user because tearDown drops all table data
+        with self.client:
+            # you have to be logged in to view a user details
+            response = self.client.post('/auth/login', content_type='application/json',
+                                        data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
+            reply = json.loads(response.data.decode())
+            bearer = "Bearer {}".format(reply['token'])
+            headers = {'Authorization': bearer}
+
+            response = self.client.get('/users',
+                                       content_type='application/json', headers=headers)
+
+            reply = json.loads(response.data.decode())
+            self.assertTrue(reply['user'], msg="user key fail")
+            self.assertEqual(reply['status'], "pass", msg="status key fail")
+            self.assertEqual(reply['message'], "user found", msg="message key fail")
+
+    def test_29_update_an_existing_user(self):
+        self.add_user()  # add this test user because tearDown drops all table data
+        with self.client:
+            # you have to be logged in to view a user details
+            response = self.client.post('/auth/login', content_type='application/json',
+                                        data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
+            reply = json.loads(response.data.decode())
+            bearer = "Bearer {}".format(reply['token'])
+            headers = {'Authorization': bearer}
+
+            response = self.client.put('/users',
+                                       content_type='application/json', headers=headers,
+                                       data=json.dumps(dict(firstname="Test",
+                                                            lastname="User",
+                                                            description="this is a test user")))
+
+            reply = json.loads(response.data.decode())
+            self.assertEqual(reply['status'], "pass", msg="status key fail")
+            self.assertEqual(reply['message'], "user updated", msg="message key fail")
+
 
 if __name__ == "__main__":
     unittest.main()
