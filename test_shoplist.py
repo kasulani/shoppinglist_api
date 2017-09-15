@@ -183,6 +183,7 @@ class TestShoppingListAPI(TestCase):
 
             response = self.client.get('/shoppinglists', content_type='application/json', headers=headers)
             reply = json.loads(response.data.decode())
+            print (reply)
             self.assertTrue(reply['lists'], msg="lists key fail")
             self.assertEqual(reply['count'], "1", msg="count key fail")
             self.assertEqual(reply['status'], "pass", msg="status key fail")

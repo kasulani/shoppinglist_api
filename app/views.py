@@ -330,20 +330,19 @@ def view_all_lists():
             if isinstance(int(user_id), int):
                 shoplist_api.logger.debug("decoded token to get user id %s " % user_id)
                 lists = models.List.query.filter_by(user_id=user_id)
-                if lists is not None:
-                    results = []
-                    for a_list in lists:
-                        result = {
-                            'id': a_list.list_id,
-                            'title': a_list.list_name,
-                            'description': a_list.description
-                        }
-                        results.append(result)
+                results = []
+                for a_list in lists:
+                    result = {
+                        'id': a_list.list_id,
+                        'title': a_list.list_name,
+                        'description': a_list.description
+                    }
+                    results.append(result)
+                if len(results) > 0:
                     return jsonify({'lists': results,
                                     'count': str(len(results)),
                                     'status': 'pass',
                                     'message': 'lists found'}), 200
-
                 return jsonify({'count': '0', 'status': 'fail', 'message': 'no lists found'}), 404
             shoplist_api.logger.error("unknown user id: <%s> " % user_id)
             abort(401)
@@ -516,17 +515,17 @@ def get_list_items(list_id):
                 shoplist_api.logger.debug("decoded token to get user id %s " % user_id)
                 the_list = models.List.query.filter_by(list_id=list_id).first()
                 if the_list is not None:
+                    shoplist_api.logger.debug("getting items on list:<%s> " % list_id)
                     items = models.Item.query.filter_by(list_id=list_id)
-                    if items is not None:
-                        shoplist_api.logger.debug("getting items on list:<%s> " % list_id)
-                        results = []
-                        for item in items:
-                            result = {
-                                'id': item.item_id,
-                                'name': item.item_name,
-                                'description': item.description
-                            }
-                            results.append(result)
+                    results = []
+                    for item in items:
+                        result = {
+                            'id': item.item_id,
+                            'name': item.item_name,
+                            'description': item.description
+                        }
+                        results.append(result)
+                    if len(results) > 0:
                         return jsonify({'items': results,
                                         'count': str(len(results)),
                                         'status': 'pass',
