@@ -94,7 +94,7 @@ def login():
 
 
 @shoplist_api.route('/auth/logout', methods=['GET'])
-@login_required
+#@login_required
 def logout():
     """
     This endpoint will logout a user
@@ -105,7 +105,7 @@ def logout():
 
 
 @shoplist_api.route('/auth/reset-password', methods=['POST'])
-@login_required
+#@login_required
 def reset_password():
     """
     This endpoint will reset a password for a given user logged in at the front end
@@ -139,7 +139,7 @@ def reset_password():
 
 
 @shoplist_api.route('/shoppinglists', methods=['POST'])
-@login_required
+#@login_required
 def add_a_list():
     """
     This endpoint will create a shopping list for a logged in user
@@ -196,7 +196,7 @@ def add_a_list():
 
 
 @shoplist_api.route('/shoppinglists', methods=['GET'])
-@login_required
+#@login_required
 def view_all_lists():
     """
     This endpoint will return all the lists for a logged in user
@@ -231,7 +231,7 @@ def view_all_lists():
                                     'status': 'pass',
                                     'message': 'lists found'}), 200
 
-                return jsonify({'count': '0', 'status': 'pass', 'message': 'no lists found'}), 404
+                return jsonify({'count': '0', 'status': 'fail', 'message': 'no lists found'}), 404
             shoplist_api.logger.error("unknown user id: <%s> " % user_id)
             abort(401)
         except Exception as ex:
@@ -242,7 +242,7 @@ def view_all_lists():
 
 
 @shoplist_api.route('/shoppinglists/<int:list_id>', methods=['GET'])
-@login_required
+#@login_required
 def get_a_list(list_id):
     """
     This endpoint will return a list of a given id
@@ -285,7 +285,7 @@ def get_a_list(list_id):
 
 
 @shoplist_api.route('/shoppinglists/<int:list_id>', methods=['PUT'])
-@login_required
+#@login_required
 def update_a_list(list_id):
     """
     This endpoint will update a list of with a given id
@@ -341,7 +341,7 @@ def update_a_list(list_id):
 
 
 @shoplist_api.route('/shoppinglists/<int:list_id>', methods=['DELETE'])
-@login_required
+#@login_required
 def delete_a_list(list_id):
     """
     This endpoint will delete a list with a given id
@@ -380,7 +380,7 @@ def delete_a_list(list_id):
 # -------------------------------------------------------------------------------------------------
 
 @shoplist_api.route('/shoppinglists/<int:list_id>/items', methods=['GET'])
-@login_required
+#@login_required
 def get_list_items(list_id):
     """
     This endpoint will return items on a given list
@@ -418,7 +418,58 @@ def get_list_items(list_id):
                                         'count': str(len(results)),
                                         'status': 'pass',
                                         'message': 'items found'}), 200
-                return jsonify({'count': '0', 'status': 'fail', 'message': 'items not found'}), 404
+                    return jsonify({'count': '0', 'status': 'fail', 'message': 'items not found'}), 404
+                return jsonify({'status': 'fail', 'message': 'list not found'}), 404
+            shoplist_api.logger.error("unknown user id: <%s> " % user_id)
+            abort(401)
+        except Exception as ex:
+            shoplist_api.logger.error(ex.message)
+            return jsonify({'status': 'fail', 'message': ex.message}), 500
+    shoplist_api.logger.error("no access token")
+    return jsonify({'status': 'fail', 'message': 'no access token'}), 401
+
+
+@shoplist_api.route('/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['GET'])
+#@login_required
+def get_list_item(list_id, item_id):
+    """
+    This endpoint will return details of a particular item on a given list. It returns details on a single
+    item on a shopping list
+    :param list_id:
+    :param item_id:
+    :return: json response
+    """
+    token = None
+    try:
+        # Get the access token from the header
+        auth_header = request.headers.get('Authorization')
+        token = auth_header.split(" ")[1]
+        shoplist_api.logger.debug("token: %s " % token)
+    except Exception as ex:
+        shoplist_api.logger.error(ex.message)
+    #
+    if token:
+        try:
+            user_id = models.User.decode_token(token)
+            if isinstance(int(user_id), int):
+                shoplist_api.logger.debug("decoded token to get user id %s " % user_id)
+                the_list = models.List.query.filter_by(list_id=list_id).first()
+                # check if list exists
+                if the_list is not None:
+                    # locate the item
+                    the_item = models.Item.query.filter_by(item_id=item_id).first()
+                    if the_item is not None:
+                        result = {
+                            'id': the_item.item_id,
+                            'name': the_item.item_name,
+                            'description': the_item.description
+                        }
+                        return jsonify({'item': result,
+                                        'count': "1",
+                                        'status': 'pass',
+                                        'message': 'item found'}), 200
+                    return jsonify({'count': '0', 'status': 'fail', 'message': 'item not found'}), 404
+                return jsonify({'status': 'fail', 'message': 'list not found'}), 404
             shoplist_api.logger.error("unknown user id: <%s> " % user_id)
             abort(401)
         except Exception as ex:
@@ -429,7 +480,7 @@ def get_list_items(list_id):
 
 
 @shoplist_api.route('/shoppinglists/<int:list_id>/items', methods=['POST'])
-@login_required
+#@login_required
 def add_items_list(list_id):
     """
     This endpoint will add items to a given list
@@ -485,7 +536,7 @@ def add_items_list(list_id):
 
 
 @shoplist_api.route('/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['PUT'])
-@login_required
+#@login_required
 def update_list_item(list_id, item_id):
     """
     This endpoint will update a given item on a given list
@@ -548,7 +599,7 @@ def update_list_item(list_id, item_id):
 
 
 @shoplist_api.route('/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['DELETE'])
-@login_required
+#@login_required
 def delete_item_from_list(list_id, item_id):
     """
     This endpoint will delete an item on given list

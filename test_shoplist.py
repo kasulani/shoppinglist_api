@@ -332,11 +332,47 @@ class TestShoppingListAPI(TestCase):
 
             response = self.client.get('/shoppinglists/100/items', content_type='application/json', headers=headers)
             reply = json.loads(response.data.decode())
+            self.assertEqual(reply['status'], "fail", msg="status key fail")
+            self.assertEqual(reply['message'], "list not found", msg="message key fail")
+
+    def test_18_view_a_single_item_on_an_existing_list(self):
+        self.add_user()  # add this test user because tearDown drops all table data
+        self.add_list()
+        self.add_item()
+        with self.client:
+            # you have to be logged in to view a list
+            response = self.client.post('/auth/login', content_type='application/json',
+                                        data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
+            reply = json.loads(response.data.decode())
+            bearer = "Bearer {}".format(reply['token'])
+            headers = {'Authorization': bearer}
+
+            response = self.client.get('/shoppinglists/1/items/1', content_type='application/json', headers=headers)
+            reply = json.loads(response.data.decode())
+            self.assertTrue(reply['item'], msg="lists key fail")
+            self.assertEqual(reply['count'], "1", msg="count key fail")
+            self.assertEqual(reply['status'], "pass", msg="status key fail")
+            self.assertEqual(reply['message'], "item found", msg="message key fail")
+
+    def test_19_view_a_single_non_existing_item_on_an_existing_list(self):
+        self.add_user()  # add this test user because tearDown drops all table data
+        self.add_list()
+        self.add_item()
+        with self.client:
+            # you have to be logged in to view a list
+            response = self.client.post('/auth/login', content_type='application/json',
+                                        data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
+            reply = json.loads(response.data.decode())
+            bearer = "Bearer {}".format(reply['token'])
+            headers = {'Authorization': bearer}
+
+            response = self.client.get('/shoppinglists/1/items/100', content_type='application/json', headers=headers)
+            reply = json.loads(response.data.decode())
             self.assertEqual(reply['count'], "0", msg="count key fail")
             self.assertEqual(reply['status'], "fail", msg="status key fail")
-            self.assertEqual(reply['message'], "items not found", msg="message key fail")
+            self.assertEqual(reply['message'], "item not found", msg="message key fail")
 
-    def test_18_update_an_item_on_an_existing_list(self):
+    def test_20_update_an_item_on_an_existing_list(self):
         self.add_user()  # add this test user because tearDown drops all table data
         self.add_list()
         self.add_item()
@@ -356,7 +392,7 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['status'], "pass", msg="status key fail")
             self.assertEqual(reply['message'], "item updated", msg="message key fail")
 
-    def test_19_update_a_non_item_on_an_existing_list(self):
+    def test_21_update_a_non_item_on_an_existing_list(self):
         self.add_user()  # add this test user because tearDown drops all table data
         self.add_list()
         self.add_item()
@@ -375,7 +411,7 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['status'], "fail", msg="status key fail")
             self.assertEqual(reply['message'], "item not updated", msg="message key fail")
 
-    def test_20_update_an_item_on_a_non_existing_list(self):
+    def test_22_update_an_item_on_a_non_existing_list(self):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
@@ -393,7 +429,7 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['message'], "list does not exist", msg="message key fail")
 
     # --------------------------- /delete endpoint tests ------------------------------------------------------
-    def test_21_delete_an_item_on_a_non_existing_list(self):
+    def test_23_delete_an_item_on_a_non_existing_list(self):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
@@ -409,7 +445,7 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['status'], "fail", msg="status key fail")
             self.assertEqual(reply['message'], "list does not exist", msg="message key fail")
 
-    def test_22_delete_an_existing_item_on_an_existing_list(self):
+    def test_24_delete_an_existing_item_on_an_existing_list(self):
         self.add_user()  # add this test user because tearDown drops all table data
         self.add_list()
         self.add_item()
@@ -427,7 +463,7 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['status'], "pass", msg="status key fail")
             self.assertEqual(reply['message'], "item deleted", msg="message key fail")
 
-    def test_23_delete_a_non_existing_item_on_list(self):
+    def test_25_delete_a_non_existing_item_on_list(self):
         self.add_user()  # add this test user because tearDown drops all table data
         self.add_list()
         self.add_item()
@@ -445,7 +481,7 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['status'], "fail", msg="status key fail")
             self.assertEqual(reply['message'], "item not not found", msg="message key fail")
 
-    def test_24_delete_an_existing_list(self):
+    def test_26_delete_an_existing_list(self):
         self.add_user()  # add this test user because tearDown drops all table data
         self.add_list()
         with self.client:
@@ -462,7 +498,7 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['status'], "pass", msg="status key fail")
             self.assertEqual(reply['message'], "list deleted", msg="message key fail")
 
-    def test_25_delete_a_non_existing_list(self):
+    def test_27_delete_a_non_existing_list(self):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
