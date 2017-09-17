@@ -15,7 +15,7 @@ With this API;
 - You can create, view, update, and delete an item in your shopping list under your account
 ## API Documentation
 Documentation for this API can be found [online here](https://app.swaggerhub.com/apis/kasulani/shoppinglist_api/1.0.0)
-. You can also access the documentation locally when you run application at http://127.0.0.1:5000/apidocs/
+. You can also access the documentation locally when you run application at http://127.0.0.1:5000
 ## Tools
 Tools used during the development of this API are;
 - [Swagger](https://swagger.io/) - this is a tool for documenting the API

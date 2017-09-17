@@ -1,0 +1,486 @@
+[2017-09-16 12:22:42,346] {/root/Projects/andela/shopping_list_api/app/__init__.py:48} ERROR - (psycopg2.OperationalError) could not connect to server: Connection refused
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+
+[2017-09-16 12:24:41,700] {/root/Projects/andela/shopping_list_api/app/views.py:34} DEBUG - /auth/register: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:41,921] {/root/Projects/andela/shopping_list_api/app/views.py:44} DEBUG - created user testuser1@gmail.com 
+[2017-09-16 12:24:42,687] {/root/Projects/andela/shopping_list_api/app/views.py:34} DEBUG - /auth/register: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:42,690] {/root/Projects/andela/shopping_list_api/app/views.py:48} ERROR - user already exists
+[2017-09-16 12:24:43,415] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser007'} 
+[2017-09-16 12:24:43,421] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:43,562] {/root/Projects/andela/shopping_list_api/app/views.py:84} ERROR - wrong password or username or may be user does't exist
+[2017-09-16 12:24:44,308] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:44,314] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:44,461] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:45,210] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:45,216] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:45,358] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:46,000] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:46,003] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:46,102] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:46,105] {/root/Projects/andela/shopping_list_api/app/views.py:116} DEBUG - /auth/reset: incoming request data {u'username': u'testuser1@gmail.com', u'new_password': u'testuser123', u'old_password': u'testuser12300'} 
+[2017-09-16 12:24:46,203] {/root/Projects/andela/shopping_list_api/app/views.py:127} ERROR - wrong username or password or may be user does't exist
+[2017-09-16 12:24:47,380] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:47,383] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:47,480] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:47,483] {/root/Projects/andela/shopping_list_api/app/views.py:116} DEBUG - /auth/reset: incoming request data {u'username': u'testuser1@gmail.com', u'new_password': u'testuser1234', u'old_password': u'testuser123'} 
+[2017-09-16 12:24:48,407] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:48,412] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:48,551] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:48,554] {/root/Projects/andela/shopping_list_api/app/views.py:266} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4ODgsInN1YiI6MSwiZXhwIjoxNTA1NTg5ODg4fQ.X-Ht7HdvjQidLUl19kCSNMGrFS6ZF0mMdKVJekjU9Zs 
+[2017-09-16 12:24:48,554] {/root/Projects/andela/shopping_list_api/app/views.py:272} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:48,554] {/root/Projects/andela/shopping_list_api/app/views.py:276} DEBUG - /shoppinglists: incoming request data {u'description': u'my house party list', u'title': u'house party'} 
+[2017-09-16 12:24:48,610] {/root/Projects/andela/shopping_list_api/app/views.py:290} DEBUG - created list:<house party> for user:<1>
+[2017-09-16 12:24:49,220] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:49,223] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:49,320] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:49,323] {/root/Projects/andela/shopping_list_api/app/views.py:323} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4ODksInN1YiI6MSwiZXhwIjoxNTA1NTg5ODg5fQ.N4h-Kel5ZufQzxw_DsFZxfQGsYPmSHL5muSSH8kWprY 
+[2017-09-16 12:24:49,323] {/root/Projects/andela/shopping_list_api/app/views.py:331} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:49,978] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:49,981] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:50,077] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:50,080] {/root/Projects/andela/shopping_list_api/app/views.py:369} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4OTAsInN1YiI6MSwiZXhwIjoxNTA1NTg5ODkwfQ.udSE-qtDTxErjEqOSDA96plLHNB0fEHroxE8hrh8KpM 
+[2017-09-16 12:24:50,080] {/root/Projects/andela/shopping_list_api/app/views.py:377} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:50,083] {/root/Projects/andela/shopping_list_api/app/views.py:380} DEBUG - list with id<1> found
+[2017-09-16 12:24:50,703] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:50,706] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:50,805] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:50,809] {/root/Projects/andela/shopping_list_api/app/views.py:369} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4OTAsInN1YiI6MSwiZXhwIjoxNTA1NTg5ODkwfQ.udSE-qtDTxErjEqOSDA96plLHNB0fEHroxE8hrh8KpM 
+[2017-09-16 12:24:50,810] {/root/Projects/andela/shopping_list_api/app/views.py:377} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:50,813] {/root/Projects/andela/shopping_list_api/app/views.py:388} DEBUG - list with id<100> not found
+[2017-09-16 12:24:51,505] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:51,508] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:51,602] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:51,605] {/root/Projects/andela/shopping_list_api/app/views.py:412} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4OTEsInN1YiI6MSwiZXhwIjoxNTA1NTg5ODkxfQ.gvXWhdne95LGcG4_5s8_lYSe8_RNZ5A9GH6TdvpnavU 
+[2017-09-16 12:24:51,605] {/root/Projects/andela/shopping_list_api/app/views.py:420} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:51,608] {/root/Projects/andela/shopping_list_api/app/views.py:424} DEBUG - /shoppinglists/<id>: incoming request data {u'description': u'my camping list', u'title': u'camping list'} 
+[2017-09-16 12:24:51,617] {/root/Projects/andela/shopping_list_api/app/views.py:435} DEBUG - list with id<1> has been updated 
+[2017-09-16 12:24:52,287] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:52,291] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:52,386] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:52,389] {/root/Projects/andela/shopping_list_api/app/views.py:412} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4OTIsInN1YiI6MSwiZXhwIjoxNTA1NTg5ODkyfQ.f3wQvvZHc_f0jSHYZR8FZMs1U8QG4LHfLTUdBNESXZs 
+[2017-09-16 12:24:52,390] {/root/Projects/andela/shopping_list_api/app/views.py:420} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:52,393] {/root/Projects/andela/shopping_list_api/app/views.py:424} DEBUG - /shoppinglists/<id>: incoming request data {u'description': u'my camping list', u'title': u'camping list'} 
+[2017-09-16 12:24:52,393] {/root/Projects/andela/shopping_list_api/app/views.py:442} ERROR - list with id<100> has not been updated 
+[2017-09-16 12:24:53,012] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:53,016] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:53,118] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:53,121] {/root/Projects/andela/shopping_list_api/app/views.py:606} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4OTMsInN1YiI6MSwiZXhwIjoxNTA1NTg5ODkzfQ.snR2bwljF_y99m4lhDXMy8dAiw7uhvRQdRcjRcUpUIs 
+[2017-09-16 12:24:53,122] {/root/Projects/andela/shopping_list_api/app/views.py:614} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:53,136] {/root/Projects/andela/shopping_list_api/app/views.py:631} DEBUG - added item:<soda> to list <1>
+[2017-09-16 12:24:53,795] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:53,801] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:53,949] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:53,952] {/root/Projects/andela/shopping_list_api/app/views.py:606} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4OTMsInN1YiI6MSwiZXhwIjoxNTA1NTg5ODkzfQ.snR2bwljF_y99m4lhDXMy8dAiw7uhvRQdRcjRcUpUIs 
+[2017-09-16 12:24:53,952] {/root/Projects/andela/shopping_list_api/app/views.py:614} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:53,955] {/root/Projects/andela/shopping_list_api/app/views.py:637} ERROR - list <100> does not exist
+[2017-09-16 12:24:54,719] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:54,724] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:54,854] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:54,857] {/root/Projects/andela/shopping_list_api/app/views.py:507} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4OTQsInN1YiI6MSwiZXhwIjoxNTA1NTg5ODk0fQ.KC7aOYk4p4pSvBZwf9VKXucRlJ87MuvzmAOtNa1zI2I 
+[2017-09-16 12:24:54,858] {/root/Projects/andela/shopping_list_api/app/views.py:515} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:54,860] {/root/Projects/andela/shopping_list_api/app/views.py:518} DEBUG - getting items on list:<1> 
+[2017-09-16 12:24:55,589] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:55,594] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:55,735] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:55,738] {/root/Projects/andela/shopping_list_api/app/views.py:507} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4OTUsInN1YiI6MSwiZXhwIjoxNTA1NTg5ODk1fQ.r0f1vAI-Sj7vVq8YeGlleVuFgEge-GOANxqnUMHXntg 
+[2017-09-16 12:24:55,738] {/root/Projects/andela/shopping_list_api/app/views.py:515} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:56,458] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:56,461] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:56,556] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:56,559] {/root/Projects/andela/shopping_list_api/app/views.py:559} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4OTYsInN1YiI6MSwiZXhwIjoxNTA1NTg5ODk2fQ.vI7FfGEfY-itFMt3IFS4dUdqszo0yqDkk8pOa7JMHmw 
+[2017-09-16 12:24:56,560] {/root/Projects/andela/shopping_list_api/app/views.py:567} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:57,238] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:57,241] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:57,337] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:57,340] {/root/Projects/andela/shopping_list_api/app/views.py:559} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4OTcsInN1YiI6MSwiZXhwIjoxNTA1NTg5ODk3fQ.bPD7uzVHD6hEHY4OXYIojIebJV5GxIL57K5TfTCTNP8 
+[2017-09-16 12:24:57,341] {/root/Projects/andela/shopping_list_api/app/views.py:567} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:57,974] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:57,977] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:58,079] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:58,082] {/root/Projects/andela/shopping_list_api/app/views.py:664} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4OTgsInN1YiI6MSwiZXhwIjoxNTA1NTg5ODk4fQ.IlVUKWjY5_b_w5L_IQ9MJXo-Kuo1p-cR-IiKR2XzSCc 
+[2017-09-16 12:24:58,083] {/root/Projects/andela/shopping_list_api/app/views.py:672} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:58,088] {/root/Projects/andela/shopping_list_api/app/views.py:679} DEBUG - /shoppinglists/<int:list_id>/items/<int:item_id>: incoming request data {u'description': u'the energy drink', u'name': u'rock boom'} 
+[2017-09-16 12:24:58,095] {/root/Projects/andela/shopping_list_api/app/views.py:691} DEBUG - item with id:<1> on list with id:<1> has been updated 
+[2017-09-16 12:24:58,754] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:58,758] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:58,854] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:58,857] {/root/Projects/andela/shopping_list_api/app/views.py:664} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4OTgsInN1YiI6MSwiZXhwIjoxNTA1NTg5ODk4fQ.IlVUKWjY5_b_w5L_IQ9MJXo-Kuo1p-cR-IiKR2XzSCc 
+[2017-09-16 12:24:58,857] {/root/Projects/andela/shopping_list_api/app/views.py:672} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:58,862] {/root/Projects/andela/shopping_list_api/app/views.py:679} DEBUG - /shoppinglists/<int:list_id>/items/<int:item_id>: incoming request data {u'description': u'the energy drink', u'name': u'rock boom'} 
+[2017-09-16 12:24:58,862] {/root/Projects/andela/shopping_list_api/app/views.py:698} ERROR - item with id: <100> on list with id:<1> has not been updated 
+[2017-09-16 12:24:59,525] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:24:59,528] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:24:59,626] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:24:59,629] {/root/Projects/andela/shopping_list_api/app/views.py:664} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM4OTksInN1YiI6MSwiZXhwIjoxNTA1NTg5ODk5fQ.aLH1fKjrMBptvr7W4iCsq_8pVbf9-eBvG8J_PgNs3nE 
+[2017-09-16 12:24:59,629] {/root/Projects/andela/shopping_list_api/app/views.py:672} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:24:59,631] {/root/Projects/andela/shopping_list_api/app/views.py:702} ERROR - list with id:<100> does not exist
+[2017-09-16 12:25:00,217] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:00,219] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:00,313] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:00,316] {/root/Projects/andela/shopping_list_api/app/views.py:727} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MDAsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTAwfQ.MZkIavgZmKj6VDBvB0DANIwHV1kFeUlIh7067KSHaPs 
+[2017-09-16 12:25:00,316] {/root/Projects/andela/shopping_list_api/app/views.py:735} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:00,319] {/root/Projects/andela/shopping_list_api/app/views.py:747} ERROR - list with id:<100> does not exist
+[2017-09-16 12:25:01,031] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:01,034] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:01,136] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:01,138] {/root/Projects/andela/shopping_list_api/app/views.py:727} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MDEsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTAxfQ.wEfd-RHqFxfWeRIiq1L7vBVlbpVDLNfBj1NIKFWtcRQ 
+[2017-09-16 12:25:01,139] {/root/Projects/andela/shopping_list_api/app/views.py:735} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:01,152] {/root/Projects/andela/shopping_list_api/app/views.py:742} DEBUG - item test item has been deleted successfully
+[2017-09-16 12:25:01,801] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:01,806] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:01,935] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:01,938] {/root/Projects/andela/shopping_list_api/app/views.py:727} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MDEsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTAxfQ.wEfd-RHqFxfWeRIiq1L7vBVlbpVDLNfBj1NIKFWtcRQ 
+[2017-09-16 12:25:01,938] {/root/Projects/andela/shopping_list_api/app/views.py:735} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:01,942] {/root/Projects/andela/shopping_list_api/app/views.py:745} ERROR - item with id: <100> on list with id:<1> has not been deleted 
+[2017-09-16 12:25:02,559] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:02,562] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:02,656] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:02,659] {/root/Projects/andela/shopping_list_api/app/views.py:468} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MDIsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTAyfQ.jD4bW9SkIkOUxLnExQSvtzp5sC7BxS9OKxHozskxKtM 
+[2017-09-16 12:25:02,659] {/root/Projects/andela/shopping_list_api/app/views.py:476} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:02,669] {/root/Projects/andela/shopping_list_api/app/views.py:480} DEBUG - list with id<1> has been deleted 
+[2017-09-16 12:25:03,362] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:03,365] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:03,459] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:03,462] {/root/Projects/andela/shopping_list_api/app/views.py:468} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MDMsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTAzfQ.KssItHiHB0pjvxx5s_l5HnraN-ODVb-Mjji5Yzso96I 
+[2017-09-16 12:25:03,463] {/root/Projects/andela/shopping_list_api/app/views.py:476} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:04,065] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:04,068] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:04,164] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:04,167] {/root/Projects/andela/shopping_list_api/app/views.py:153} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MDQsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTA0fQ.qR0capJdRZaxYWXgIgFI4Yt2C9x8B9hM2WqR9LmPLZU 
+[2017-09-16 12:25:04,789] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:04,792] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:04,889] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:04,892] {/root/Projects/andela/shopping_list_api/app/views.py:194} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MDQsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTA0fQ.qR0capJdRZaxYWXgIgFI4Yt2C9x8B9hM2WqR9LmPLZU 
+[2017-09-16 12:25:04,893] {/root/Projects/andela/shopping_list_api/app/views.py:201} DEBUG - /user: incoming request data {u'lastname': u'User', u'description': u'this is a test user', u'firstname': u'Test'} 
+[2017-09-16 12:25:17,661] {/root/Projects/andela/shopping_list_api/app/views.py:34} DEBUG - /auth/register: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:17,825] {/root/Projects/andela/shopping_list_api/app/views.py:44} DEBUG - created user testuser1@gmail.com 
+[2017-09-16 12:25:18,426] {/root/Projects/andela/shopping_list_api/app/views.py:34} DEBUG - /auth/register: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:18,429] {/root/Projects/andela/shopping_list_api/app/views.py:48} ERROR - user already exists
+[2017-09-16 12:25:19,041] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser007'} 
+[2017-09-16 12:25:19,045] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:19,142] {/root/Projects/andela/shopping_list_api/app/views.py:84} ERROR - wrong password or username or may be user does't exist
+[2017-09-16 12:25:19,777] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:19,780] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:19,877] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:20,513] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:20,517] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:20,615] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:21,182] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:21,185] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:21,282] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:21,286] {/root/Projects/andela/shopping_list_api/app/views.py:116} DEBUG - /auth/reset: incoming request data {u'username': u'testuser1@gmail.com', u'new_password': u'testuser123', u'old_password': u'testuser12300'} 
+[2017-09-16 12:25:21,385] {/root/Projects/andela/shopping_list_api/app/views.py:127} ERROR - wrong username or password or may be user does't exist
+[2017-09-16 12:25:22,006] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:22,010] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:22,108] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:22,112] {/root/Projects/andela/shopping_list_api/app/views.py:116} DEBUG - /auth/reset: incoming request data {u'username': u'testuser1@gmail.com', u'new_password': u'testuser1234', u'old_password': u'testuser123'} 
+[2017-09-16 12:25:22,977] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:22,981] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:23,078] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:23,082] {/root/Projects/andela/shopping_list_api/app/views.py:266} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MjMsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTIzfQ.ZFVG_oLAKQSVjQYINgOi8I-AHLor8pJriCtTNFVL5ck 
+[2017-09-16 12:25:23,083] {/root/Projects/andela/shopping_list_api/app/views.py:272} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:23,083] {/root/Projects/andela/shopping_list_api/app/views.py:276} DEBUG - /shoppinglists: incoming request data {u'description': u'my house party list', u'title': u'house party'} 
+[2017-09-16 12:25:23,102] {/root/Projects/andela/shopping_list_api/app/views.py:290} DEBUG - created list:<house party> for user:<1>
+[2017-09-16 12:25:23,735] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:23,738] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:23,835] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:23,839] {/root/Projects/andela/shopping_list_api/app/views.py:323} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MjMsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTIzfQ.ZFVG_oLAKQSVjQYINgOi8I-AHLor8pJriCtTNFVL5ck 
+[2017-09-16 12:25:23,839] {/root/Projects/andela/shopping_list_api/app/views.py:331} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:24,493] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:24,497] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:24,596] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:24,600] {/root/Projects/andela/shopping_list_api/app/views.py:369} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MjQsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTI0fQ.5kdBdO7ZVTs4objCZryUMYaPAi_zBc5JLqCziYpvFhA 
+[2017-09-16 12:25:24,600] {/root/Projects/andela/shopping_list_api/app/views.py:377} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:24,604] {/root/Projects/andela/shopping_list_api/app/views.py:380} DEBUG - list with id<1> found
+[2017-09-16 12:25:25,196] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:25,201] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:25,299] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:25,303] {/root/Projects/andela/shopping_list_api/app/views.py:369} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MjUsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTI1fQ.CgvfOvDt7UfNglseIh2j-92bho2TaIPc38K8NSVeu9s 
+[2017-09-16 12:25:25,304] {/root/Projects/andela/shopping_list_api/app/views.py:377} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:25,307] {/root/Projects/andela/shopping_list_api/app/views.py:388} DEBUG - list with id<100> not found
+[2017-09-16 12:25:25,945] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:25,948] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:26,046] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:26,050] {/root/Projects/andela/shopping_list_api/app/views.py:412} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MjYsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTI2fQ.rX6nuiUgL7UZHtR2vWFfaRjJsOVhTnLg6uGGTdt8148 
+[2017-09-16 12:25:26,051] {/root/Projects/andela/shopping_list_api/app/views.py:420} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:26,053] {/root/Projects/andela/shopping_list_api/app/views.py:424} DEBUG - /shoppinglists/<id>: incoming request data {u'description': u'my camping list', u'title': u'camping list'} 
+[2017-09-16 12:25:26,068] {/root/Projects/andela/shopping_list_api/app/views.py:435} DEBUG - list with id<1> has been updated 
+[2017-09-16 12:25:26,714] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:26,718] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:26,816] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:26,820] {/root/Projects/andela/shopping_list_api/app/views.py:412} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MjYsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTI2fQ.rX6nuiUgL7UZHtR2vWFfaRjJsOVhTnLg6uGGTdt8148 
+[2017-09-16 12:25:26,820] {/root/Projects/andela/shopping_list_api/app/views.py:420} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:26,824] {/root/Projects/andela/shopping_list_api/app/views.py:424} DEBUG - /shoppinglists/<id>: incoming request data {u'description': u'my camping list', u'title': u'camping list'} 
+[2017-09-16 12:25:26,824] {/root/Projects/andela/shopping_list_api/app/views.py:442} ERROR - list with id<100> has not been updated 
+[2017-09-16 12:25:27,417] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:27,421] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:27,519] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:27,523] {/root/Projects/andela/shopping_list_api/app/views.py:606} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MjcsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTI3fQ.J5IWiilJQgcG3XpNEoQGIVhzezXPFBMRX9BmpNoFM28 
+[2017-09-16 12:25:27,524] {/root/Projects/andela/shopping_list_api/app/views.py:614} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:27,541] {/root/Projects/andela/shopping_list_api/app/views.py:631} DEBUG - added item:<soda> to list <1>
+[2017-09-16 12:25:28,174] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:28,178] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:28,275] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:28,279] {/root/Projects/andela/shopping_list_api/app/views.py:606} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MjgsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTI4fQ.8rDtvyue6_igYzQhkg01uv78_7Jhz_D3eB015V9wnHg 
+[2017-09-16 12:25:28,279] {/root/Projects/andela/shopping_list_api/app/views.py:614} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:28,282] {/root/Projects/andela/shopping_list_api/app/views.py:637} ERROR - list <100> does not exist
+[2017-09-16 12:25:28,912] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:28,916] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:29,016] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:29,020] {/root/Projects/andela/shopping_list_api/app/views.py:507} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MjksInN1YiI6MSwiZXhwIjoxNTA1NTg5OTI5fQ.6Q9PdnsASSTzzcOUV2AmVgCjkpb85Hb_pI4apHD86wM 
+[2017-09-16 12:25:29,020] {/root/Projects/andela/shopping_list_api/app/views.py:515} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:29,023] {/root/Projects/andela/shopping_list_api/app/views.py:518} DEBUG - getting items on list:<1> 
+[2017-09-16 12:25:29,626] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:29,629] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:29,728] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:29,733] {/root/Projects/andela/shopping_list_api/app/views.py:507} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MjksInN1YiI6MSwiZXhwIjoxNTA1NTg5OTI5fQ.6Q9PdnsASSTzzcOUV2AmVgCjkpb85Hb_pI4apHD86wM 
+[2017-09-16 12:25:29,733] {/root/Projects/andela/shopping_list_api/app/views.py:515} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:30,395] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:30,399] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:30,496] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:30,500] {/root/Projects/andela/shopping_list_api/app/views.py:559} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MzAsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTMwfQ.6Lvk8DtkV94tMxeofsSQwGHI15MR7_cMnKR_uE2FCJM 
+[2017-09-16 12:25:30,500] {/root/Projects/andela/shopping_list_api/app/views.py:567} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:31,142] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:31,145] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:31,244] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:31,248] {/root/Projects/andela/shopping_list_api/app/views.py:559} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MzEsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTMxfQ.3OC61pIk_dw1LcOM9YAiOQoifpNwc4tBh3EZO5ygYtg 
+[2017-09-16 12:25:31,248] {/root/Projects/andela/shopping_list_api/app/views.py:567} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:31,867] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:31,870] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:31,967] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:31,971] {/root/Projects/andela/shopping_list_api/app/views.py:664} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MzEsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTMxfQ.3OC61pIk_dw1LcOM9YAiOQoifpNwc4tBh3EZO5ygYtg 
+[2017-09-16 12:25:31,972] {/root/Projects/andela/shopping_list_api/app/views.py:672} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:31,977] {/root/Projects/andela/shopping_list_api/app/views.py:679} DEBUG - /shoppinglists/<int:list_id>/items/<int:item_id>: incoming request data {u'description': u'the energy drink', u'name': u'rock boom'} 
+[2017-09-16 12:25:31,987] {/root/Projects/andela/shopping_list_api/app/views.py:691} DEBUG - item with id:<1> on list with id:<1> has been updated 
+[2017-09-16 12:25:32,649] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:32,652] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:32,749] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:32,753] {/root/Projects/andela/shopping_list_api/app/views.py:664} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MzIsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTMyfQ.nsecWFWwE-UvH2BcKZBsOSCujDe7brQzvthhsLwDDco 
+[2017-09-16 12:25:32,754] {/root/Projects/andela/shopping_list_api/app/views.py:672} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:32,759] {/root/Projects/andela/shopping_list_api/app/views.py:679} DEBUG - /shoppinglists/<int:list_id>/items/<int:item_id>: incoming request data {u'description': u'the energy drink', u'name': u'rock boom'} 
+[2017-09-16 12:25:32,759] {/root/Projects/andela/shopping_list_api/app/views.py:698} ERROR - item with id: <100> on list with id:<1> has not been updated 
+[2017-09-16 12:25:33,429] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:33,433] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:33,532] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:33,536] {/root/Projects/andela/shopping_list_api/app/views.py:664} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MzMsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTMzfQ.QMrYU3fYSqZshS9gbTDjkU6MrFl0VEQLgkymX3LDfYo 
+[2017-09-16 12:25:33,537] {/root/Projects/andela/shopping_list_api/app/views.py:672} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:33,540] {/root/Projects/andela/shopping_list_api/app/views.py:702} ERROR - list with id:<100> does not exist
+[2017-09-16 12:25:34,109] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:34,113] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:34,209] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:34,213] {/root/Projects/andela/shopping_list_api/app/views.py:727} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MzQsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTM0fQ.HrNCKczASeM_EwV6cqd5D-o3qP6HpS9JZqaNQJsW3Lo 
+[2017-09-16 12:25:34,214] {/root/Projects/andela/shopping_list_api/app/views.py:735} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:34,217] {/root/Projects/andela/shopping_list_api/app/views.py:747} ERROR - list with id:<100> does not exist
+[2017-09-16 12:25:34,857] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:34,860] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:34,961] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:34,965] {/root/Projects/andela/shopping_list_api/app/views.py:727} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MzQsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTM0fQ.HrNCKczASeM_EwV6cqd5D-o3qP6HpS9JZqaNQJsW3Lo 
+[2017-09-16 12:25:34,965] {/root/Projects/andela/shopping_list_api/app/views.py:735} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:34,977] {/root/Projects/andela/shopping_list_api/app/views.py:742} DEBUG - item test item has been deleted successfully
+[2017-09-16 12:25:35,683] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:35,687] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:35,788] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:35,792] {/root/Projects/andela/shopping_list_api/app/views.py:727} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MzUsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTM1fQ.Ykg7t3eFNkeSxLo4SNpwCWOW6mRt2BZHNeZjVizw9KI 
+[2017-09-16 12:25:35,793] {/root/Projects/andela/shopping_list_api/app/views.py:735} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:35,798] {/root/Projects/andela/shopping_list_api/app/views.py:745} ERROR - item with id: <100> on list with id:<1> has not been deleted 
+[2017-09-16 12:25:36,441] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:36,444] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:36,543] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:36,547] {/root/Projects/andela/shopping_list_api/app/views.py:468} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MzYsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTM2fQ.-DaYAzzbdICPC8VPkLCGR_Dw6EdKiDpwn9wHws_CDbE 
+[2017-09-16 12:25:36,547] {/root/Projects/andela/shopping_list_api/app/views.py:476} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:36,562] {/root/Projects/andela/shopping_list_api/app/views.py:480} DEBUG - list with id<1> has been deleted 
+[2017-09-16 12:25:37,210] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:37,214] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:37,311] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:37,315] {/root/Projects/andela/shopping_list_api/app/views.py:468} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MzcsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTM3fQ._u4hhbTqiKx7KUEkLqIbeowkiVi62TwfukQPCeTCZ5g 
+[2017-09-16 12:25:37,315] {/root/Projects/andela/shopping_list_api/app/views.py:476} DEBUG - decoded token to get user id 1 
+[2017-09-16 12:25:37,957] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:37,960] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:38,058] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:38,062] {/root/Projects/andela/shopping_list_api/app/views.py:153} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MzgsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTM4fQ.oYarGnCTFQZlRFZlEtp-UblTc0y5gZseo8r060z_DZQ 
+[2017-09-16 12:25:38,682] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-16 12:25:38,685] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-16 12:25:38,782] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-16 12:25:38,786] {/root/Projects/andela/shopping_list_api/app/views.py:194} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU1NTM5MzgsInN1YiI6MSwiZXhwIjoxNTA1NTg5OTM4fQ.oYarGnCTFQZlRFZlEtp-UblTc0y5gZseo8r060z_DZQ 
+[2017-09-16 12:25:38,787] {/root/Projects/andela/shopping_list_api/app/views.py:201} DEBUG - /user: incoming request data {u'lastname': u'User', u'description': u'this is a test user', u'firstname': u'Test'} 
+[2017-09-16 14:14:38,616] {/root/Projects/andela/shopping_list_api/app/views.py:84} ERROR - wrong password or username or may be user does't exist
+[2017-09-16 20:02:50,875] {/root/Projects/andela/shopping_list_api/app/views.py:84} ERROR - wrong password or username or may be user does't exist
+[2017-09-17 13:15:18,171] {/root/Projects/andela/shopping_list_api/app/views.py:350} ERROR - invalid literal for int() with base 10: 'Invalid token. Please register or login'
+[2017-09-17 13:16:03,960] {/root/Projects/andela/shopping_list_api/app/views.py:350} ERROR - invalid literal for int() with base 10: 'Invalid token. Please register or login'
+[2017-09-17 13:18:40,762] {/root/Projects/andela/shopping_list_api/app/views.py:350} ERROR - invalid literal for int() with base 10: 'Invalid token. Please register or login'
+[2017-09-17 13:20:52,227] {/root/Projects/andela/shopping_list_api/app/views.py:350} ERROR - invalid literal for int() with base 10: 'Invalid token. Please register or login'
+[2017-09-17 13:25:20,627] {/root/Projects/andela/shopping_list_api/app/views.py:350} ERROR - invalid literal for int() with base 10: 'Invalid token. Please register or login'
+[2017-09-17 13:40:21,386] {/root/Projects/andela/shopping_list_api/app/views.py:350} ERROR - invalid literal for int() with base 10: 'Invalid token. Please register or login'
+[2017-09-17 13:40:30,954] {/root/Projects/andela/shopping_list_api/app/views.py:350} ERROR - invalid literal for int() with base 10: 'Invalid token. Please register or login'
+[2017-09-17 13:40:51,733] {/root/Projects/andela/shopping_list_api/app/views.py:350} ERROR - invalid literal for int() with base 10: 'Invalid token. Please register or login'
+[2017-09-17 13:41:03,007] {/root/Projects/andela/shopping_list_api/app/views.py:350} ERROR - invalid literal for int() with base 10: 'Invalid token. Please register or login'
+[2017-09-17 13:42:06,141] {/root/Projects/andela/shopping_list_api/app/views.py:350} ERROR - invalid literal for int() with base 10: 'Invalid token. Please register or login'
+[2017-09-17 13:48:51,798] {/root/Projects/andela/shopping_list_api/app/views.py:350} ERROR - invalid literal for int() with base 10: 'Invalid token. Please register or login'
+[2017-09-17 13:51:47,219] {/root/Projects/andela/shopping_list_api/app/views.py:350} ERROR - invalid literal for int() with base 10: 'Invalid token. Please register or login'
+[2017-09-17 13:53:06,074] {/root/Projects/andela/shopping_list_api/app/views.py:350} ERROR - invalid literal for int() with base 10: 'Invalid token. Please register or login'
+[2017-09-17 16:45:24,357] {/root/Projects/andela/shopping_list_api/app/views.py:34} DEBUG - /auth/register: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:24,611] {/root/Projects/andela/shopping_list_api/app/views.py:44} DEBUG - created user testuser1@gmail.com 
+[2017-09-17 16:45:25,983] {/root/Projects/andela/shopping_list_api/app/views.py:34} DEBUG - /auth/register: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:25,990] {/root/Projects/andela/shopping_list_api/app/views.py:48} ERROR - user already exists
+[2017-09-17 16:45:26,650] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser007'} 
+[2017-09-17 16:45:26,654] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:26,750] {/root/Projects/andela/shopping_list_api/app/views.py:84} ERROR - wrong password or username or may be user does't exist
+[2017-09-17 16:45:27,341] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:27,345] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:27,441] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:28,099] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:28,103] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:28,200] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:28,859] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:28,863] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:28,962] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:28,966] {/root/Projects/andela/shopping_list_api/app/views.py:116} DEBUG - /auth/reset: incoming request data {u'username': u'testuser1@gmail.com', u'new_password': u'testuser123', u'old_password': u'testuser12300'} 
+[2017-09-17 16:45:29,064] {/root/Projects/andela/shopping_list_api/app/views.py:127} ERROR - wrong username or password or may be user does't exist
+[2017-09-17 16:45:29,876] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:29,883] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:30,026] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:30,030] {/root/Projects/andela/shopping_list_api/app/views.py:116} DEBUG - /auth/reset: incoming request data {u'username': u'testuser1@gmail.com', u'new_password': u'testuser1234', u'old_password': u'testuser123'} 
+[2017-09-17 16:45:30,854] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:30,857] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:30,953] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:30,957] {/root/Projects/andela/shopping_list_api/app/views.py:266} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5MzAsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTMwfQ.KniSFRXj2ivkVk01P7geBvrQn7IXIEVojEdIP5yM4mU 
+[2017-09-17 16:45:30,958] {/root/Projects/andela/shopping_list_api/app/views.py:272} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:30,958] {/root/Projects/andela/shopping_list_api/app/views.py:276} DEBUG - /shoppinglists: incoming request data {u'description': u'my house party list', u'title': u'house party'} 
+[2017-09-17 16:45:30,977] {/root/Projects/andela/shopping_list_api/app/views.py:290} DEBUG - created list:<house party> for user:<1>
+[2017-09-17 16:45:31,691] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:31,698] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:31,835] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:31,839] {/root/Projects/andela/shopping_list_api/app/views.py:323} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5MzEsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTMxfQ.bdyjBL4gMkyrZwTuT3FVvL5dFVJi8LhyjPHk4yqx8m0 
+[2017-09-17 16:45:31,840] {/root/Projects/andela/shopping_list_api/app/views.py:331} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:32,460] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:32,463] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:32,562] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:32,566] {/root/Projects/andela/shopping_list_api/app/views.py:369} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5MzIsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTMyfQ.R0Yb7YU-7bYVJ2E8H-PciYEkwEyUAsjY-EGmCdvUR44 
+[2017-09-17 16:45:32,566] {/root/Projects/andela/shopping_list_api/app/views.py:377} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:32,569] {/root/Projects/andela/shopping_list_api/app/views.py:380} DEBUG - list with id<1> found
+[2017-09-17 16:45:33,274] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:33,279] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:33,398] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:33,402] {/root/Projects/andela/shopping_list_api/app/views.py:369} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5MzMsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTMzfQ.NwsDBrjlKy8o2vYvnT7v_wExd_jhLXmsauKiuuHTH_s 
+[2017-09-17 16:45:33,402] {/root/Projects/andela/shopping_list_api/app/views.py:377} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:33,406] {/root/Projects/andela/shopping_list_api/app/views.py:388} DEBUG - list with id<100> not found
+[2017-09-17 16:45:34,189] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:34,194] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:34,323] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:34,327] {/root/Projects/andela/shopping_list_api/app/views.py:412} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5MzQsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTM0fQ.r5RSwEhqhvD69u6JhGwoYvxm6QwbB2s96vm1WfQjkWA 
+[2017-09-17 16:45:34,327] {/root/Projects/andela/shopping_list_api/app/views.py:420} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:34,331] {/root/Projects/andela/shopping_list_api/app/views.py:424} DEBUG - /shoppinglists/<id>: incoming request data {u'description': u'my camping list', u'title': u'camping list'} 
+[2017-09-17 16:45:34,343] {/root/Projects/andela/shopping_list_api/app/views.py:435} DEBUG - list with id<1> has been updated 
+[2017-09-17 16:45:35,067] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:35,071] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:35,168] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:35,172] {/root/Projects/andela/shopping_list_api/app/views.py:412} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5MzUsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTM1fQ.NkIoRIzQVEy8qeJq47F9rMqxZeFUNDOg4w99oECBgMM 
+[2017-09-17 16:45:35,172] {/root/Projects/andela/shopping_list_api/app/views.py:420} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:35,176] {/root/Projects/andela/shopping_list_api/app/views.py:424} DEBUG - /shoppinglists/<id>: incoming request data {u'description': u'my camping list', u'title': u'camping list'} 
+[2017-09-17 16:45:35,176] {/root/Projects/andela/shopping_list_api/app/views.py:442} ERROR - list with id<100> has not been updated 
+[2017-09-17 16:45:35,884] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:35,890] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:36,015] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:36,019] {/root/Projects/andela/shopping_list_api/app/views.py:606} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5MzYsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTM2fQ.CSvtIG6sbTqiH1HQMJOrLy0lccOHZWPbRKeImQ4O-YI 
+[2017-09-17 16:45:36,020] {/root/Projects/andela/shopping_list_api/app/views.py:614} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:36,040] {/root/Projects/andela/shopping_list_api/app/views.py:631} DEBUG - added item:<soda> to list <1>
+[2017-09-17 16:45:36,663] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:36,667] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:36,764] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:36,768] {/root/Projects/andela/shopping_list_api/app/views.py:606} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5MzYsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTM2fQ.CSvtIG6sbTqiH1HQMJOrLy0lccOHZWPbRKeImQ4O-YI 
+[2017-09-17 16:45:36,768] {/root/Projects/andela/shopping_list_api/app/views.py:614} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:36,772] {/root/Projects/andela/shopping_list_api/app/views.py:637} ERROR - list <100> does not exist
+[2017-09-17 16:45:37,443] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:37,447] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:37,544] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:37,548] {/root/Projects/andela/shopping_list_api/app/views.py:507} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5MzcsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTM3fQ.5hVjR-2B8mvRnX_KHhqt0ulZL0SRbdtZOZwhypO-OU0 
+[2017-09-17 16:45:37,549] {/root/Projects/andela/shopping_list_api/app/views.py:515} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:37,551] {/root/Projects/andela/shopping_list_api/app/views.py:518} DEBUG - getting items on list:<1> 
+[2017-09-17 16:45:38,246] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:38,249] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:38,346] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:38,350] {/root/Projects/andela/shopping_list_api/app/views.py:507} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5MzgsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTM4fQ.FaYB2qkFW7nJQPC6trsdWDUYFqKVSVaQsgx9GSfewcY 
+[2017-09-17 16:45:38,351] {/root/Projects/andela/shopping_list_api/app/views.py:515} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:39,085] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:39,092] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:39,226] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:39,230] {/root/Projects/andela/shopping_list_api/app/views.py:559} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5MzksInN1YiI6MSwiZXhwIjoxNTA1NjkxOTM5fQ.Ra_AK9KBcAOrPML276RsyEC10r500UVlndETSwkaEUM 
+[2017-09-17 16:45:39,230] {/root/Projects/andela/shopping_list_api/app/views.py:567} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:39,988] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:39,994] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:40,119] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:40,123] {/root/Projects/andela/shopping_list_api/app/views.py:559} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5NDAsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTQwfQ.UijQOgbl9n4ckxDdpixdzn0ovBeeMA6ZAV5LeZ1i4k4 
+[2017-09-17 16:45:40,123] {/root/Projects/andela/shopping_list_api/app/views.py:567} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:40,778] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:40,782] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:40,879] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:40,883] {/root/Projects/andela/shopping_list_api/app/views.py:664} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5NDAsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTQwfQ.UijQOgbl9n4ckxDdpixdzn0ovBeeMA6ZAV5LeZ1i4k4 
+[2017-09-17 16:45:40,884] {/root/Projects/andela/shopping_list_api/app/views.py:672} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:40,888] {/root/Projects/andela/shopping_list_api/app/views.py:679} DEBUG - /shoppinglists/<int:list_id>/items/<int:item_id>: incoming request data {u'description': u'the energy drink', u'name': u'rock boom'} 
+[2017-09-17 16:45:40,899] {/root/Projects/andela/shopping_list_api/app/views.py:691} DEBUG - item with id:<1> on list with id:<1> has been updated 
+[2017-09-17 16:45:41,583] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:41,588] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:41,719] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:41,723] {/root/Projects/andela/shopping_list_api/app/views.py:664} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5NDEsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTQxfQ.-GmrJGJPdx6Eino7mjobkD9WqqP52pMdiwJ-_KViiP0 
+[2017-09-17 16:45:41,723] {/root/Projects/andela/shopping_list_api/app/views.py:672} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:41,729] {/root/Projects/andela/shopping_list_api/app/views.py:679} DEBUG - /shoppinglists/<int:list_id>/items/<int:item_id>: incoming request data {u'description': u'the energy drink', u'name': u'rock boom'} 
+[2017-09-17 16:45:41,729] {/root/Projects/andela/shopping_list_api/app/views.py:698} ERROR - item with id: <100> on list with id:<1> has not been updated 
+[2017-09-17 16:45:42,372] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:42,376] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:42,471] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:42,476] {/root/Projects/andela/shopping_list_api/app/views.py:664} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5NDIsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTQyfQ.TrY_Ot-d-RvwK2eaoYBasPiQgvxtvjE5PyuLhoXIBf4 
+[2017-09-17 16:45:42,476] {/root/Projects/andela/shopping_list_api/app/views.py:672} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:42,480] {/root/Projects/andela/shopping_list_api/app/views.py:702} ERROR - list with id:<100> does not exist
+[2017-09-17 16:45:43,157] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:43,164] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:43,304] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:43,308] {/root/Projects/andela/shopping_list_api/app/views.py:727} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5NDMsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTQzfQ.aIgLjv7z7Ilw4NX7NdrNFop0UDBmD35qtU16lvJP6xk 
+[2017-09-17 16:45:43,309] {/root/Projects/andela/shopping_list_api/app/views.py:735} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:43,312] {/root/Projects/andela/shopping_list_api/app/views.py:747} ERROR - list with id:<100> does not exist
+[2017-09-17 16:45:44,068] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:44,072] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:44,171] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:44,175] {/root/Projects/andela/shopping_list_api/app/views.py:727} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5NDQsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTQ0fQ.1Mbz480sred2ET2WdJJI5ExGGaKow8IZ4Bdq1h1FIS4 
+[2017-09-17 16:45:44,176] {/root/Projects/andela/shopping_list_api/app/views.py:735} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:44,188] {/root/Projects/andela/shopping_list_api/app/views.py:742} DEBUG - item test item has been deleted successfully
+[2017-09-17 16:45:45,272] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:45,278] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:45,407] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:45,411] {/root/Projects/andela/shopping_list_api/app/views.py:727} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5NDUsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTQ1fQ.Ub6byZz5-Ngl5XsgAkpPKTMtlyHJoCqK5RuKA8o9JjQ 
+[2017-09-17 16:45:45,412] {/root/Projects/andela/shopping_list_api/app/views.py:735} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:45,417] {/root/Projects/andela/shopping_list_api/app/views.py:745} ERROR - item with id: <100> on list with id:<1> has not been deleted 
+[2017-09-17 16:45:46,052] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:46,056] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:46,169] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:46,173] {/root/Projects/andela/shopping_list_api/app/views.py:468} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5NDYsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTQ2fQ.v0ySLiuwcJUkLE8W_A6oepI1wZQTmUCub8pN0bj_lI0 
+[2017-09-17 16:45:46,173] {/root/Projects/andela/shopping_list_api/app/views.py:476} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:46,249] {/root/Projects/andela/shopping_list_api/app/views.py:480} DEBUG - list with id<1> has been deleted 
+[2017-09-17 16:45:46,944] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:46,949] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:47,099] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:47,103] {/root/Projects/andela/shopping_list_api/app/views.py:468} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5NDcsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTQ3fQ.0s50BbGmbZP8xHuZqYFIr0OHqXx0ycvOXqBpXVWNiX4 
+[2017-09-17 16:45:47,104] {/root/Projects/andela/shopping_list_api/app/views.py:476} DEBUG - decoded token to get user id 1 
+[2017-09-17 16:45:47,848] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:47,854] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:47,980] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:47,984] {/root/Projects/andela/shopping_list_api/app/views.py:153} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5NDcsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTQ3fQ.0s50BbGmbZP8xHuZqYFIr0OHqXx0ycvOXqBpXVWNiX4 
+[2017-09-17 16:45:48,616] {/root/Projects/andela/shopping_list_api/app/views.py:67} DEBUG - /auth/login endpoint: incoming request data {u'username': u'testuser1@gmail.com', u'password': u'testuser123'} 
+[2017-09-17 16:45:48,619] {/root/Projects/andela/shopping_list_api/app/views.py:73} DEBUG - /auth/login endpoint: authenticating user<testuser1@gmail.com>
+[2017-09-17 16:45:48,715] {/root/Projects/andela/shopping_list_api/app/views.py:80} DEBUG - user testuser1@gmail.com has logged in successfully
+[2017-09-17 16:45:48,721] {/root/Projects/andela/shopping_list_api/app/views.py:194} DEBUG - token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDU2NTU5NDgsInN1YiI6MSwiZXhwIjoxNTA1NjkxOTQ4fQ.Wj0zuZFsKEQRNX4Uedj78EWUwkWEr0jaV4QiuY2pjVM 
+[2017-09-17 16:45:48,722] {/root/Projects/andela/shopping_list_api/app/views.py:201} DEBUG - /user: incoming request data {u'lastname': u'User', u'description': u'this is a test user', u'firstname': u'Test'} 
+[2017-09-17 17:49:50,489] {/root/Projects/andela/shopping_list_api/virtenv/local/lib/python2.7/site-packages/flask/app.py:1560} ERROR - Exception on / [GET]
+Traceback (most recent call last):
+  File "/root/Projects/andela/shopping_list_api/virtenv/local/lib/python2.7/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/Projects/andela/shopping_list_api/virtenv/local/lib/python2.7/site-packages/flask/app.py", line 1615, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/root/Projects/andela/shopping_list_api/virtenv/local/lib/python2.7/site-packages/flask/app.py", line 1630, in finalize_request
+    response = self.make_response(rv)
+  File "/root/Projects/andela/shopping_list_api/virtenv/local/lib/python2.7/site-packages/flask/app.py", line 1725, in make_response
+    raise ValueError('View function did not return a response')
+ValueError: View function did not return a response

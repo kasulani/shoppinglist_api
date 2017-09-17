@@ -8,7 +8,7 @@
 """
 from app import shoplist_api, login_manager
 from app import models
-from flask import request, abort, jsonify
+from flask import request, abort, jsonify, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user
 
@@ -21,6 +21,15 @@ def load_user(email):
     :return: user object
     """
     return models.User.query.filter_by(email=email).first()
+
+
+@shoplist_api.route('/', methods=['GET'])
+def index():
+    """
+    This endpoint will return the API documentation
+    :return:
+    """
+    return render_template('index.html')
 
 
 @shoplist_api.route('/auth/register', methods=['POST'])
