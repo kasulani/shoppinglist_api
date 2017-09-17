@@ -169,12 +169,20 @@ def get_user_details():
             user_id = models.User.decode_token(token)
             try:
                 user = models.User.query.filter_by(user_id=user_id).first()
+                lists = models.List.query.filter_by(user_id=user_id)
+                num_of_lists = 0
+                num_of_items = 0
+                for a_list in lists:  # count items on each list and total them up
+                    num_of_lists += 1  # increment number of lists by 1 on each iteration
+                    num_of_items += models.Item.query.filter_by(list_id=a_list.list_id).count()
                 if user:
                     return jsonify({'user': dict(id=user.user_id,
                                                  username=user.email,
                                                  firstname=user.firstname,
                                                  lastname=user.lastname,
-                                                 description=user.description),
+                                                 description=user.description,
+                                                 num_of_lists=num_of_lists,
+                                                 num_of_items=num_of_items),
                                    'status': 'pass',
                                     'message': 'user found'}), 201
                 shoplist_api.logger.error("user does't exist")
