@@ -769,8 +769,10 @@ definitions:
       properties:
         title:
           type: string
+          example: "house Party"
         description:
           type: string
+          example: "my house Party"
   AddItemPayload:
       type: object
       required:
@@ -778,8 +780,10 @@ definitions:
       properties:
         name:
           type: string
+          example: "Beer"
         description:
           type: string
+          example: "Some Cold lagers"
   AddUserPayload:
       type: object
       required:
@@ -788,8 +792,10 @@ definitions:
       properties:
         username:
           type: string
+          example: "foo@bar.com"
         password:
           type: string
+          example: "foo-bar-mixed-char-password"
   ResetPassPayload:
       type: object
       required:
@@ -799,10 +805,13 @@ definitions:
       properties:
         username:
           type: string
+          example: "foo@bar.com"
         old_password:
           type: string
+          example: "foo-bar-mixed-char-old-password"
         new_password:
           type: string
+          example: "foo-bar-mixed-char-new-password"
 # Added by API Auto Mocking Plugin
 host: virtserver.swaggerhub.com
 basePath: /kasulani/shoppinglist_api/1.0.0
