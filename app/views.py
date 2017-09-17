@@ -531,7 +531,8 @@ def get_list_items(list_id):
                         result = {
                             'id': item.item_id,
                             'name': item.item_name,
-                            'description': item.description
+                            'description': item.description,
+                            'status': item.status
                         }
                         results.append(result)
                     if len(results) > 0:
@@ -583,7 +584,8 @@ def get_list_item(list_id, item_id):
                         result = {
                             'id': the_item.item_id,
                             'name': the_item.item_name,
-                            'description': the_item.description
+                            'description': the_item.description,
+                            'status': the_item.status
                         }
                         return jsonify({'item': result,
                                         'count': "1",
