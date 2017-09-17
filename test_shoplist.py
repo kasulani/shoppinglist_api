@@ -553,6 +553,11 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['status'], "pass", msg="status key fail")
             self.assertEqual(reply['message'], "user updated", msg="message key fail")
 
+    def test_30_index(self):
+        with self.client:
+            response = self.client.get('/')
+            self.assert_template_used('index.html')
+            self.assert200(response, message="failed to display index")
 
 if __name__ == "__main__":
     unittest.main()
