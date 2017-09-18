@@ -1,5 +1,6 @@
 alembic==0.9.5
 asn1crypto==0.22.0
+blinker==1.4
 certifi==2017.7.27.1
 cffi==1.10.0
 chardet==3.0.4
