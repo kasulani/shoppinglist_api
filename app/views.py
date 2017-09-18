@@ -231,26 +231,19 @@ def add_a_list():
         except Exception as ex:
             shoplist_api.logger.warning(ex.message)
             description = ""
-        try:
-            # create a list
-            the_list = models.List(user_id=int(user_id),
-                                   list_name=data['title'],
-                                   description=description)
-            the_list.add()
-            shoplist_api.logger.debug("created list:<{0}> for user:<{1}>".format(the_list.list_name,
-                                                                                 the_list.user_id))
-            response = jsonify({'id': the_list.list_id,
-                                'title': the_list.list_name,
-                                'description': the_list.description,
-                                'status': 'pass',
-                                'message': 'list created successfully'
-                                })
-            return response, 201
-        except Exception as ex:
-            shoplist_api.logger.error(ex.message)
-            return jsonify({'status': 'fail', 'message': ex.message}), 500
-    shoplist_api.logger.error("bad request to endpoint /shoppinglists")
-    return jsonify({'status': 'fail', 'message': 'bad request'}), 400
+        # create a list
+        the_list = models.List(user_id=int(user_id), list_name=data['title'], description=description)
+        the_list.add()
+        shoplist_api.logger.debug("created list:<{0}> for user:<{1}>".format(the_list.list_name, the_list.user_id))
+        response = jsonify({'id': the_list.list_id,
+                            'title': the_list.list_name,
+                            'description': the_list.description,
+                            'status': 'pass',
+                            'message': 'list created successfully'
+                            })
+        return response, 201
+    shoplist_api.logger.error("title is missing in the data")
+    return jsonify({'status': 'fail', 'message': 'title is missing in the data'}), 400
 
 
 @shoplist_api.route('/shoppinglists', methods=['GET'])

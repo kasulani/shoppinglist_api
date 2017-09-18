@@ -152,8 +152,8 @@ class TestShoppingListAPI(TestCase):
         with self.client:
             # you have to be logged in to create a list
             response = self.client.post('/auth/login',
-                             content_type='application/json',
-                             data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
+                                        content_type='application/json',
+                                        data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
