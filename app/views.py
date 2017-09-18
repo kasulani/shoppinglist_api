@@ -49,7 +49,7 @@ def register():
             user = models.User(email=data['username'],
                                password=generate_password_hash(data['password']))
             user.add()
-            shoplist_api.logger.debug("created user %s " % user.email)
+            shoplist_api.logger.debug("created user %s " % user)
             return jsonify({'username': user.email,
                             'status': 'pass',
                             'message': 'user account created successfully'}), 201
@@ -234,7 +234,7 @@ def add_a_list():
         # create a list
         the_list = models.List(user_id=int(user_id), list_name=data['title'], description=description)
         the_list.add()
-        shoplist_api.logger.debug("created list:<{0}> for user:<{1}>".format(the_list.list_name, the_list.user_id))
+        shoplist_api.logger.debug("created {0} for user:<{1}>".format(the_list, the_list.user_id))
         response = jsonify({'id': the_list.list_id,
                             'title': the_list.list_name,
                             'description': the_list.description,
@@ -437,7 +437,7 @@ def add_items_list(list_id):
                                list_id=list_id,
                                description=description)
             item.add()
-            shoplist_api.logger.debug("added item:<{0}> to list <{1}>".format(item.item_name, list_id))
+            shoplist_api.logger.debug("added {0} to list <{1}>".format(item, list_id))
             return jsonify({'item_id': item.item_id, 'name': item.item_name,
                             'description': item.description,
                             'status': 'pass', 'message': 'item added to list'}), 201

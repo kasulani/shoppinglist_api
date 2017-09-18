@@ -1,3 +1,8 @@
+"""
+    Author: Emmanuel King Kasulani
+    Email: kasulani@gmail.com
+    Even God commands us to write tests. 1 Thessalonians 5:21; Test all things.
+"""
 from app import shoplist_api, db, models
 import unittest
 from flask_testing import TestCase
@@ -553,7 +558,93 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['status'], "pass", msg="status key fail")
             self.assertEqual(reply['message'], "user updated", msg="message key fail")
 
-    def test_30_index(self):
+    def test_30_update_an_existing_user_first_name_only(self):
+        self.add_user()  # add this test user because tearDown drops all table data
+        with self.client:
+            # you have to be logged in to view a user details
+            response = self.client.post('/auth/login', content_type='application/json',
+                                        data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
+            reply = json.loads(response.data.decode())
+            bearer = "Bearer {}".format(reply['token'])
+            headers = {'Authorization': bearer}
+
+            response = self.client.put('/users',
+                                       content_type='application/json', headers=headers,
+                                       data=json.dumps(dict(firstname="Test1")))
+
+            reply = json.loads(response.data.decode())
+            self.assertEqual(reply['status'], "pass", msg="status key fail")
+            self.assertEqual(reply['message'], "user updated", msg="message key fail")
+
+    def test_31_update_an_existing_user_last_name_only(self):
+        self.add_user()  # add this test user because tearDown drops all table data
+        with self.client:
+            # you have to be logged in to view a user details
+            response = self.client.post('/auth/login', content_type='application/json',
+                                        data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
+            reply = json.loads(response.data.decode())
+            bearer = "Bearer {}".format(reply['token'])
+            headers = {'Authorization': bearer}
+
+            response = self.client.put('/users',
+                                       content_type='application/json', headers=headers,
+                                       data=json.dumps(dict(lastname="User1")))
+
+            reply = json.loads(response.data.decode())
+            self.assertEqual(reply['status'], "pass", msg="status key fail")
+            self.assertEqual(reply['message'], "user updated", msg="message key fail")
+
+    def test_32_update_an_existing_user_description_only(self):
+        self.add_user()  # add this test user because tearDown drops all table data
+        with self.client:
+            # you have to be logged in to view a user details
+            response = self.client.post('/auth/login', content_type='application/json',
+                                        data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
+            reply = json.loads(response.data.decode())
+            bearer = "Bearer {}".format(reply['token'])
+            headers = {'Authorization': bearer}
+
+            response = self.client.put('/users',
+                                       content_type='application/json', headers=headers,
+                                       data=json.dumps(dict(description="About user")))
+
+            reply = json.loads(response.data.decode())
+            self.assertEqual(reply['status'], "pass", msg="status key fail")
+            self.assertEqual(reply['message'], "user updated", msg="message key fail")
+
+    def test_33_calling_any_endpoint_with_wrong_content_type(self):
+        with self.client:
+            response = self.client.post('/auth/register',
+                                        content_type='application/text',
+                                        data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
+            reply = json.loads(response.data.decode())
+            self.assertEqual(reply['status'], "fail", msg="status key fail")
+            self.assertEqual(reply['message'], "content-type not specified as application/json", msg="message key fail")
+
+    def test_34_calling_any_endpoint_with_no_token(self):
+        with self.client:
+            response = self.client.get('/users',
+                                       content_type='application/json')
+
+            reply = json.loads(response.data.decode())
+            self.assertEqual(reply['status'], "fail", msg="status key fail")
+            self.assertEqual(reply['message'], "no access token", msg="message key fail")
+
+    def test_35_calling_any_endpoint_with_wrong_token(self):
+        with self.client:
+            # you have to be logged in to view a user details
+            token = "SDWFiosdf1.spoajsdf.POISDHnkjsaf823rokn"
+            bearer = "Bearer {}".format(token)
+            headers = {'Authorization': bearer}
+
+            response = self.client.get('/users',
+                                       content_type='application/json', headers=headers)
+
+            reply = json.loads(response.data.decode())
+            self.assertEqual(reply['status'], "fail", msg="status key fail")
+            self.assertTrue(reply['message'], msg="message key fail")
+
+    def test_36_index(self):
         with self.client:
             response = self.client.get('/')
             self.assert_template_used('index.html')

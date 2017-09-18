@@ -38,7 +38,7 @@ def validate_token(f):
     def decorated_function(*args, **kwargs):
         token = get_token()
         #
-        if token is None or isinstance(token, str):
+        if token is None:  # This condition is true when no Authorization header is present in the request
             return make_response(jsonify({'status': 'fail', 'message': 'no access token'})), 401
         try:
             if len(args) == 0 and len(kwargs) == 0:
@@ -47,5 +47,5 @@ def validate_token(f):
                 return f(*args, **kwargs)
         except Exception as ex:
             shoplist_api.logger.error(ex.message)
-        return make_response(jsonify({'status': 'fail', 'message': ex.message})), 500
+            return make_response(jsonify({'status': 'fail', 'message': ex.message})), 500
     return decorated_function
