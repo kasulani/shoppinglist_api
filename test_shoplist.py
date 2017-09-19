@@ -99,7 +99,6 @@ class TestShoppingListAPI(TestCase):
     # --------------------------- /auth/logout endpoint tests --------------------------------------------------------
     # @unittest.skip("skipping logout test")
     def test_05_logout(self):
-        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to log out
             self.client.post('/auth/login',
