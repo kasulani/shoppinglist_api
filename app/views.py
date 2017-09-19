@@ -251,12 +251,23 @@ def add_a_list():
 #@login_required
 def view_all_lists():
     """
-    This endpoint will return all the lists for a logged in user
+    This endpoint will return all the lists for a logged in user and if the q parameter is provided, it will implement
+    a search query based on the list name. Other parameters search as limit and page refine the results for the user of
+    the API
     :return:
     """
     user_id = models.User.decode_token(utility.get_token())
-    lists = models.List.query.filter_by(user_id=user_id)
     results = []
+    # query parameters
+    q = request.args.get('q', None)  # this parameter contains the name of the list
+    limit = request.args.get('limit', 50)  # limits the number of records to 50 per page (optional)
+    page = request.args.get('page', 1)  # page one is default, but page can be passed as an argument (optional)
+    if q is not None:
+        lists = models.List.query.filter(
+            models.List.list_name.like("%" + q.strip() + "%")).\
+            filter_by(user_id=user_id).paginate(page, limit, False).items
+    else:
+        lists = models.List.query.filter_by(user_id=user_id).paginate(page, limit, False).items
     for a_list in lists:
         result = {
             'id': a_list.list_id,
@@ -284,7 +295,7 @@ def get_a_list(list_id):
     user_id = models.User.decode_token(utility.get_token())
     a_list = models.List.query.filter_by(list_id=list_id, user_id=user_id).first()
     if a_list is not None:
-        shoplist_api.logger.debug("list with id<%s> found" % list_id)
+        shoplist_api.logger.debug("list %s found" % a_list)
         response = jsonify({'list': dict(id=a_list.list_id,
                                          title=a_list.list_name,
                                          description=a_list.description),
@@ -319,14 +330,14 @@ def update_a_list(list_id):
         the_list.list_name = data['title']
         the_list.description = description
         the_list.update()
-        shoplist_api.logger.debug("list with id<%s> has been updated " % the_list.list_id)
+        shoplist_api.logger.debug("list with id: <%s> has been updated " % the_list.list_id)
         response = jsonify({'list': dict(id=the_list.list_id,
                                          title=the_list.list_name,
                                          description=the_list.description),
                             'status': 'pass',
                             'message': 'list updated'})
         return response, 201
-    shoplist_api.logger.error("list with id<%s> has not been updated " % list_id)
+    shoplist_api.logger.error("list with id: <%s> has not been updated " % list_id)
     return jsonify({'status': 'fail', 'message': 'list not updated'}), 400
 
 
@@ -355,15 +366,19 @@ def delete_a_list(list_id):
 #@login_required
 def get_list_items(list_id):
     """
-    This endpoint will return items on a given list
+    This endpoint will return items on a given list. The results are paginated and a default limit is set in case one is
+    not provided in the request.
     :param list_id:
     :return: json response
     """
     the_list = models.List.query.filter_by(list_id=list_id).first()
-    if the_list is not None:
-        shoplist_api.logger.debug("getting items on list:<%s> " % list_id)
-        items = models.Item.query.filter_by(list_id=list_id)
+    if the_list is not None:  # check if list exists
+        shoplist_api.logger.debug("getting items on list: %s " % the_list)
         results = []
+        # get parameters
+        limit = request.args.get('limit', 50)  # limits the number of records to 50 per page (optional)
+        page = request.args.get('page', 1)  # page one is default, but page can be passed as an argument (optional)
+        items = models.Item.query.filter_by(list_id=list_id).paginate(page, limit, False).items
         for item in items:
             result = {
                 'id': item.item_id,
@@ -378,6 +393,7 @@ def get_list_items(list_id):
                             'status': 'pass',
                             'message': 'items found'}), 200
         return jsonify({'count': '0', 'status': 'fail', 'message': 'items not found'}), 404
+    shoplist_api.logger.error("list not found")
     return jsonify({'status': 'fail', 'message': 'list not found'}), 404
 
 
@@ -393,10 +409,8 @@ def get_list_item(list_id, item_id):
     :return: json response
     """
     the_list = models.List.query.filter_by(list_id=list_id).first()
-    # check if list exists
-    if the_list is not None:
-        # locate the item
-        the_item = models.Item.query.filter_by(item_id=item_id).first()
+    if the_list is not None:  # check if list exists
+        the_item = models.Item.query.filter_by(item_id=item_id).first()  # locate the item
         if the_item is not None:
             result = {
                 'id': the_item.item_id,
