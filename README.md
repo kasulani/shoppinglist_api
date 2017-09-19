@@ -14,8 +14,7 @@ With this API;
 - You can create, view, update, and delete a shopping list in your user account
 - You can create, view, update, and delete an item in your shopping list under your account
 ## API Documentation
-Documentation for this API can be found [online here](https://app.swaggerhub.com/apis/kasulani/shoppinglist_api/1.0.0)
-. You can also access the documentation locally when you run application at http://127.0.0.1:5000
+Documentation for this API can be found at http://127.0.0.1:5000, when you run the application it locally.
 ## Tools
 Tools used during the development of this API are;
 - [Swagger](https://swagger.io/) - this is a tool for documenting the API
@@ -49,6 +48,8 @@ POST | /auth/register | True | Create an account
 POST | /auth/login | True | Login a user
 POST | /auth/logout | False | Logout a user
 POST | /auth/reset-password | False | Reset a user password
+GET | /user | False | Returns details of a logged in user
+PUT | /user | False | Updates details of a logged in user
 ## Endpoints to create, update, view and delete a shopping list
 HTTP Method|End point | Public Access|Action
 -----------|----------|--------------|------
@@ -65,10 +66,5 @@ GET | /shoppinglists/id/items/<item_id> | False | View details of a particular i
 POST | /shoppinglists/id/items | False | Add an Item to a shopping list
 PUT | /shoppinglists/id/items/<item_id> | False | Update a shopping list item on a given list
 DELETE | /shoppinglists/id/items/<item_id> | False | Delete a shopping list item from a given list
-## TODO
-- Implement searching​ ​based​ ​on​ ​the​ ​name​ ​using​ a GET​ parameter​ q.
-- Implement​ ​pagination​ ​on​ ​your​ ​API​ ​so​ ​users​ ​can​ ​specify​ ​the​ ​number​ ​of​ ​results​ ​they​ ​would
- like​ ​to​ ​have​ ​via​ ​a ​GET​ parameter​ ​limit​.
-- Deploy to heroku
 
 

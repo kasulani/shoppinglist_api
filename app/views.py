@@ -6,21 +6,10 @@
 ----------------------------------------------------------------------------------------------
     Endpoints here
 """
-from app import shoplist_api, login_manager
+from app import shoplist_api
 from app import models, utility
-from flask import request, abort, jsonify, render_template
+from flask import request, jsonify, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, login_required, logout_user
-
-
-@login_manager.user_loader
-def load_user(email):
-    """
-    This methods loads a user from the database. This method is required for flask_login to work
-    :param email:
-    :return: user object
-    """
-    return models.User.query.filter_by(email=email).first()
 
 
 @shoplist_api.route('/', methods=['GET'])
@@ -76,7 +65,6 @@ def login():
         if user and check_password_hash(user.password, data['password']):
             # generate token here
             token = user.generate_auth_token()
-            login_user(user)
             if token:
                 # log message and return response to client
                 shoplist_api.logger.debug("user %s has logged in successfully" % data['username'])
@@ -91,19 +79,16 @@ def login():
 
 
 @shoplist_api.route('/auth/logout', methods=['GET'])
-#@login_required
 def logout():
     """
     This endpoint will logout a user
     :return:
     """
-    logout_user()
     return jsonify({'status': 'pass', 'message': 'logout was successful'}), 200
 
 
 @shoplist_api.route('/auth/reset-password', methods=['POST'])
 @utility.validate_content_type
-#@login_required
 def reset_password():
     """
     This endpoint will reset a password for a given user logged in at the front end
@@ -132,7 +117,6 @@ def reset_password():
 @shoplist_api.route('/users', methods=['GET'])
 @utility.validate_content_type
 @utility.validate_token
-#@login_required
 def get_user_details():
     """
     This endpoint will return details on a single user
@@ -162,7 +146,6 @@ def get_user_details():
 @shoplist_api.route('/users', methods=['PUT'])
 @utility.validate_content_type
 @utility.validate_token
-#@login_required
 def update_user():
     """
     This endpoint will update user details such as firstname, lastname, description
@@ -217,7 +200,6 @@ def update_user():
 @shoplist_api.route('/shoppinglists', methods=['POST'])
 @utility.validate_content_type
 @utility.validate_token
-#@login_required
 def add_a_list():
     """
     This endpoint will create a shopping list for a logged in user
@@ -248,7 +230,6 @@ def add_a_list():
 
 @shoplist_api.route('/shoppinglists', methods=['GET'])
 @utility.validate_token
-#@login_required
 def view_all_lists():
     """
     This endpoint will return all the lists for a logged in user and if the q parameter is provided, it will implement
@@ -285,7 +266,6 @@ def view_all_lists():
 
 @shoplist_api.route('/shoppinglists/<int:list_id>', methods=['GET'])
 @utility.validate_token
-#@login_required
 def get_a_list(list_id):
     """
     This endpoint will return a list of a given id
@@ -310,7 +290,6 @@ def get_a_list(list_id):
 @shoplist_api.route('/shoppinglists/<int:list_id>', methods=['PUT'])
 @utility.validate_content_type
 @utility.validate_token
-#@login_required
 def update_a_list(list_id):
     """
     This endpoint will update a list of with a given id
@@ -343,7 +322,6 @@ def update_a_list(list_id):
 
 @shoplist_api.route('/shoppinglists/<int:list_id>', methods=['DELETE'])
 @utility.validate_token
-#@login_required
 def delete_a_list(list_id):
     """
     This endpoint will delete a list with a given id
@@ -363,7 +341,6 @@ def delete_a_list(list_id):
 
 @shoplist_api.route('/shoppinglists/<int:list_id>/items', methods=['GET'])
 @utility.validate_token
-#@login_required
 def get_list_items(list_id):
     """
     This endpoint will return items on a given list. The results are paginated and a default limit is set in case one is
@@ -399,7 +376,6 @@ def get_list_items(list_id):
 
 @shoplist_api.route('/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['GET'])
 @utility.validate_token
-#@login_required
 def get_list_item(list_id, item_id):
     """
     This endpoint will return details of a particular item on a given list. It returns details on a single
@@ -429,7 +405,6 @@ def get_list_item(list_id, item_id):
 @shoplist_api.route('/shoppinglists/<int:list_id>/items', methods=['POST'])
 @utility.validate_content_type
 @utility.validate_token
-#@login_required
 def add_items_list(list_id):
     """
     This endpoint will add items to a given list
@@ -464,7 +439,6 @@ def add_items_list(list_id):
 @shoplist_api.route('/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['PUT'])
 @utility.validate_content_type
 @utility.validate_token
-#@login_required
 def update_list_item(list_id, item_id):
     """
     This endpoint will update a given item on a given list
@@ -505,7 +479,6 @@ def update_list_item(list_id, item_id):
 @shoplist_api.route('/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['DELETE'])
 @utility.validate_content_type
 @utility.validate_token
-#@login_required
 def delete_item_from_list(list_id, item_id):
     """
     This endpoint will delete an item on given list

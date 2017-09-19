@@ -54,7 +54,7 @@ class User(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def generate_auth_token(self, expiration=600):
+    def generate_auth_token(self, expiration=100):
         try:
             payload = {
                 'exp': datetime.utcnow() + timedelta(minutes=expiration),
@@ -87,40 +87,6 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User: %s>' % self.email
-
-    # flask_login properties and methods expected in the User model
-    @property
-    def is_authenticated(self):
-        """
-        This method should just return True unless the object represents a user that should not be allowed to
-        authenticate for some reason.
-        :return: boolean
-        """
-        return True
-
-    @property
-    def is_active(self):
-        """
-        This method should return True for users unless they are inactive, for example because they have been
-        banned.
-        :return: boolean
-        """
-        return True
-
-    @property
-    def is_anonymous(self):
-        """
-        This method should return True only for fake users that are not supposed to log in to the system.
-        :return: boolean
-        """
-        return False
-
-    def get_id(self):
-        """
-        This method should return a unique identifier for the user, in unicode format.
-        :return: str
-        """
-        return str(self.email)
 
 
 class List(db.Model):
