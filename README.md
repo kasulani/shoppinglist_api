@@ -14,23 +14,24 @@ With this API;
 - You can create, view, update, and delete a shopping list in your user account
 - You can create, view, update, and delete an item in your shopping list under your account
 ## API Documentation
-Documentation for this API can be found at http://127.0.0.1:5000, when you run the application it locally.
+Documentation for this API can be found at http://127.0.0.1:5000, when you run the application locally.
 ## Tools
 Tools used during the development of this API are;
 - [Swagger](https://swagger.io/) - this is a tool for documenting the API
+- [jwt](https://jwt.io) - JWT is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object
 - [Flask](http://flask.pocoo.org/) - this is a python micro-framework
 - [Postgresql](https://www.postgresql.org/) - this is a database server
 ## Requirements
 - Python 2.7.1x+. preferably use Python 3.x.x+
 ## Tests
 Even God commands us to run tests: 1 Thessalonians 5:21; "Test all things."
-To run tests, go to your command line prompt and execute the following command
+So to run tests, go to your command line prompt and execute the following command
 ```sh
    $ cd shopping_list_app/
    $ nosetest --with-coverage test_shoplist.py
 ```
 ## Running the application
-To run this application in linux, execute the following command.
+To run this application on a linux box, execute the following command.
 ```sh
     $ cd shopping_list_api
     $ virtualenv virtenv
