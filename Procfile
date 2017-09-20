@@ -1,1 +1,1 @@
-web: gunicorn -w 2 shoplist_api:app
+web: python run.py runserver
