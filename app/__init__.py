@@ -16,9 +16,6 @@ from flask_migrate import Migrate, MigrateCommand
 shoplist_api = Flask(__name__, instance_relative_config=True)
 # load the config file in instance folder, don't suppress errors (silent=false)
 shoplist_api.config.from_pyfile('config.cfg', silent=False)
-# Heroku deployment
-if shoplist_api.config['HEROKU']:
-    shoplist_api.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 # Create ORM object
 db = SQLAlchemy(shoplist_api)
 # Setup migrations
@@ -39,7 +36,14 @@ try:
     db.create_all()
 except Exception as ex:
     shoplist_api.logger.error(ex.message)
-
+# Heroku deployment
+try:
+    if shoplist_api.config['HEROKU']:
+        shoplist_api.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+        shoplist_api.config['HOST'] = os.environ['HOST']
+        shoplist_api.config['PORT'] = os.environ['PORT']
+except Exception as ex:
+    shoplist_api.logger.error(ex.message)
 
 from app import views
 
