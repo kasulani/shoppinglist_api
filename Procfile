@@ -1,1 +1,1 @@
-web: gunicorn -w 2 app:app
+web: gunicorn -w 2 shoplist_api:app
