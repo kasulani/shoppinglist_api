@@ -813,8 +813,7 @@ definitions:
           type: string
           example: "foo-bar-mixed-char-new-password"
 # Added by API Auto Mocking Plugin
-host: virtserver.swaggerhub.com
-basePath: /kasulani/shoppinglist_api/1.0.0
+basePath: https://api-shopping-list.herokuapp.com
 schemes:
  - https
  - http
