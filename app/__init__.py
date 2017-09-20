@@ -31,16 +31,13 @@ handler.setLevel(shoplist_api.config['LEVEL'])
 handler.setFormatter(formatter)
 shoplist_api.logger.setLevel(shoplist_api.config['LEVEL'])
 shoplist_api.logger.addHandler(handler)
-# Create all tables if they are not yet created in the db
 try:
-    db.create_all()
-except Exception as ex:
-    shoplist_api.logger.error(ex.message)
-# Heroku deployment
-try:
-    if shoplist_api.config['HEROKU']:
+    if shoplist_api.config['HEROKU']:  # Heroku deployment
         shoplist_api.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
         shoplist_api.config['PORT'] = os.environ['PORT']
+    else:  # Managed server deployment
+        # Create all tables if they are not yet created in the db
+        db.create_all()
 except Exception as ex:
     shoplist_api.logger.error(ex.message)
 
