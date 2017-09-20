@@ -5,6 +5,7 @@
     Email: kasulani@gmail.com
 """
 import logging
+import os
 from logging.handlers import RotatingFileHandler
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -15,6 +16,9 @@ from flask_migrate import Migrate, MigrateCommand
 shoplist_api = Flask(__name__, instance_relative_config=True)
 # load the config file in instance folder, don't suppress errors (silent=false)
 shoplist_api.config.from_pyfile('config.cfg', silent=False)
+# Heroku deployment
+if shoplist_api.config['HEROKU']:
+    shoplist_api.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 # Create ORM object
 db = SQLAlchemy(shoplist_api)
 # Setup migrations
