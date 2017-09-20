@@ -1,2 +1,1 @@
-web: python run.py runserver
-upgrade: python run.py db upgrade
+web: gunicorn -w 2 app:app
