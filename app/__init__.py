@@ -40,7 +40,7 @@ except Exception as ex:
 try:
     if shoplist_api.config['HEROKU']:
         shoplist_api.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-        shoplist_api.config['HOST'] = os.environ['HOST']
+        # shoplist_api.config['HOST'] = os.environ['HOST']
         shoplist_api.config['PORT'] = os.environ['PORT']
 except Exception as ex:
     shoplist_api.logger.error(ex.message)
