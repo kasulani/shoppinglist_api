@@ -1,1 +1,1 @@
-web: gunicorn start:app
+web: gunicorn app:shoplist_api
