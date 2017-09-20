@@ -14,11 +14,12 @@ With this API;
 - You can create, view, update, and delete a shopping list in your user account
 - You can create, view, update, and delete an item in your shopping list under your account
 ## API Documentation
-Documentation for this API can be found at http://127.0.0.1:5000, when you run the application locally.
+Documentation for this API can be found at http://127.0.0.1:5000, when you run the application locally or you can
+navigate to the [heroku](https://api-shopping-list.herokuapp.com/) deployment and view the documentation
 ## Tools
 Tools used during the development of this API are;
 - [Swagger](https://swagger.io/) - this is a tool for documenting the API
-- [jwt](https://jwt.io) - JWT is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object
+- [JWT](https://jwt.io) - JWT is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object
 - [Flask](http://flask.pocoo.org/) - this is a python micro-framework
 - [Postgresql](https://www.postgresql.org/) - this is a database server
 ## Requirements
@@ -42,7 +43,14 @@ To run this application on a linux box, execute the following command.
     $ python run.py db upgrade
     $ nohup python run.py runserver > logs/shop.log 2>&1>> logs/shop.log & disown
 ```
-## Endpoints to create a user account and login into the application
+## Base URL for the API
+The base url for this api is https://api-shopping-list.herokuapp.com/ in case you want to try out this API endpoints
+using curl or postman from your computer with out cloning this repository. For example, on linux commandline issue this
+curl command to login (you will need to first register to login, please see documentation).
+```
+curl -H "Content-Type: application/json" -X POST -d '{"username":"foo@bar.com","password":"foobar"}' https://api-shopping-list.herokuapp.com/auth/login
+```
+#### Endpoints to create a user account and login into the application
 HTTP Method|End point | Public Access|Action
 -----------|----------|--------------|------
 POST | /auth/register | True | Create an account
@@ -51,7 +59,7 @@ POST | /auth/logout | False | Logout a user
 POST | /auth/reset-password | False | Reset a user password
 GET | /user | False | Returns details of a logged in user
 PUT | /user | False | Updates details of a logged in user
-## Endpoints to create, update, view and delete a shopping list
+#### Endpoints to create, update, view and delete a shopping list
 HTTP Method|End point | Public Access|Action
 -----------|----------|--------------|------
 POST | /shoppinglists | False | Create a shopping list
@@ -59,7 +67,7 @@ GET | /shoppinglists | False | View all shopping lists
 GET | /shoppinglists/id | False | View details of a shopping list
 PUT | /shoppinglists/id | False | Updates a shopping list with a given id
 DELETE | /shoppinglists/id | False | Deletes a shopping list with a given id
-## Endpoints to create, update, view and delete a shopping list item
+#### Endpoints to create, update, view and delete a shopping list item
 HTTP Method|End point | Public Access|Action
 -----------|----------|--------------|------
 GET | /shoppinglists/id/items | False | View Items of a given list id
