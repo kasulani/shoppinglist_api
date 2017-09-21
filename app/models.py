@@ -13,7 +13,6 @@ from datetime import datetime, timedelta
 
 class User(db.Model):
     __tablename__ = 'users'
-    # username = db.Column(db.String(50), primary_key=True)
     user_id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(250), unique=True)
     password = db.Column(db.String(250))
@@ -23,7 +22,6 @@ class User(db.Model):
     user_lists = db.relationship('List', order_by='List.list_id', cascade='delete,all')
 
     def __init__(self, email, password, firstname="", lastname="", description=""):
-        # self.username = username
         self.email = email
         self.password = password
         self.firstname = firstname
@@ -98,7 +96,6 @@ class List(db.Model):
     list_items = db.relationship('Item', order_by='Item.item_id', cascade='delete, all')
 
     def __init__(self, list_name, user_id, description=""):
-        # self.list_id = list_id
         self.list_name = list_name
         self.user_id = user_id
         self.description = description
@@ -140,7 +137,6 @@ class Item(db.Model):
     status = db.Column(db.Boolean)
 
     def __init__(self, item_name, list_id, description="", status=False):
-        # self.item_id = item_id
         self.item_name = item_name
         self.list_id = list_id
         self.description = description
