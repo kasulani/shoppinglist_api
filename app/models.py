@@ -19,6 +19,8 @@ class User(db.Model):
     firstname = db.Column(db.String(100))
     lastname = db.Column(db.String(100))
     description = db.Column(db.Text())
+    created_on = db.Column(db.DateTime, nullable=False)
+    modified_on = db.Column(db.DateTime, nullable=False)
     user_lists = db.relationship('List', order_by='List.list_id', cascade='delete,all')
 
     def __init__(self, email, password, firstname="", lastname="", description=""):
@@ -27,6 +29,8 @@ class User(db.Model):
         self.firstname = firstname
         self.lastname = lastname
         self.description = description
+        self.created_on = datetime.now()
+        self.modified_on = datetime.now()
 
     def add(self):
         """
@@ -36,12 +40,12 @@ class User(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    @staticmethod
-    def update():
+    def update(self):
         """
         This method update a new record to the database
         :return:
         """
+        self.modified_on = datetime.now()
         db.session.commit()
 
     def delete(self):
@@ -93,12 +97,16 @@ class List(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(User.user_id))
     list_name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text())
+    created_on = db.Column(db.DateTime, nullable=False)
+    modified_on = db.Column(db.DateTime, nullable=False)
     list_items = db.relationship('Item', order_by='Item.item_id', cascade='delete, all')
 
     def __init__(self, list_name, user_id, description=""):
         self.list_name = list_name
         self.user_id = user_id
         self.description = description
+        self.created_on = datetime.now()
+        self.modified_on = datetime.now()
 
     def add(self):
         """
@@ -108,12 +116,12 @@ class List(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    @staticmethod
-    def update():
+    def update(self):
         """
         This method update a new record to the database
         :return:
         """
+        self.modified_on = datetime.now()
         db.session.commit()
 
     def delete(self):
@@ -135,12 +143,16 @@ class Item(db.Model):
     item_name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text())
     status = db.Column(db.Boolean)
+    created_on = db.Column(db.DateTime, nullable=False)
+    modified_on = db.Column(db.DateTime, nullable=False)
 
     def __init__(self, item_name, list_id, description="", status=False):
         self.item_name = item_name
         self.list_id = list_id
         self.description = description
         self.status = status
+        self.created_on = datetime.now()
+        self.modified_on = datetime.now()
 
     def add(self):
         """
@@ -150,12 +162,12 @@ class Item(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    @staticmethod
-    def update():
+    def update(self):
         """
         This method update a new record to the database
         :return:
         """
+        self.modified_on = datetime.now()
         db.session.commit()
 
     def delete(self):
