@@ -3,7 +3,7 @@
     Email: kasulani@gmail.com
     Even God commands us to write tests. 1 Thessalonians 5:21; Test all things.
 """
-from app import shoplist_api, db, models
+from app import shoplist_api, db, models, utility
 import unittest
 from flask_testing import TestCase
 import json
@@ -642,7 +642,16 @@ class TestShoppingListAPI(TestCase):
             self.assertEqual(reply['status'], "fail", msg="status key fail")
             self.assertTrue(reply['message'], msg="message key fail")
 
-    def test_36_index(self):
+    def test_36_utility_validate_data_with_invalid_data(self):
+        with self.client:
+            response = self.client.post('/auth/register',
+                                        content_type='application/json',
+                                        data=json.dumps(dict(username="testuser1", password="testuser123")))
+            reply = json.loads(response.data.decode())
+            print (reply)
+
+
+    def test_37_index(self):
         with self.client:
             response = self.client.get('/')
             self.assert_template_used('index.html')

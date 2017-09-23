@@ -30,6 +30,7 @@ def register():
     """
     data = request.json
     shoplist_api.logger.debug("/auth/register: incoming request data %s " % data)
+    utility.validate_data(data=data)
     if 'username' in data and 'password' in data:
         # check if the user exists in the db
         user = models.User.query.filter_by(email=data['username']).first()
