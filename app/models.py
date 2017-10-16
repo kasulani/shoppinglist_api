@@ -20,6 +20,7 @@ class User(db.Model):
     firstname = db.Column(db.String(100))
     lastname = db.Column(db.String(100))
     description = db.Column(db.Text())
+    token = db.Column(db.String(250))
     user_lists = db.relationship('List', order_by='List.list_id', cascade='delete,all')
 
     def __init__(self, email, password, firstname="", lastname="", description=""):
@@ -29,6 +30,7 @@ class User(db.Model):
         self.firstname = firstname
         self.lastname = lastname
         self.description = description
+        self.token = ""
 
     def add(self):
         """
@@ -67,6 +69,10 @@ class User(db.Model):
                 shoplist_api.config['SECRET_KEY'],
                 algorithm='HS256'
             )
+            # update the token field of the user
+            self.token = jwt_string
+            self.update()
+
             return jwt_string
         except Exception as ex:
             return str(ex)

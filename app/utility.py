@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import request, jsonify, make_response
-from app import shoplist_api
+from app import shoplist_api, models
 
 
 def get_token():
@@ -50,5 +50,15 @@ def validate_token(f):
         #
         if token is None:  # This condition is true when no Authorization header is present in the request
             return make_response(jsonify({'status': 'fail', 'message': 'no access token'})), 401
+        #
+        try:
+            user_id = models.User.decode_token(token())  # decode the user id from the token to make sure it's a genuine
+            user = models.User.query.filter_by(user_id=user_id).first()
+            if user.token != token:
+                return make_response(jsonify({'status': 'fail', 'message': 'mismatching or wrong token'})), 401
+        except Exception as ex:
+            shoplist_api.logger.error(ex.message)
+            return make_response(jsonify({'status': 'fail', 'message': ex.message})), 500
+        #
         return select_func_to_return(f, *args, **kwargs)
     return decorated_function
