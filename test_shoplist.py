@@ -99,13 +99,17 @@ class TestShoppingListAPI(TestCase):
     # --------------------------- /auth/logout endpoint tests --------------------------------------------------------
     # @unittest.skip("skipping logout test")
     def test_05_logout(self):
+        self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to log out
-            self.client.post('/auth/login',
+            response = self.client.post('/auth/login',
                              content_type='application/json',
                              data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
+            reply = json.loads(response.data.decode())
+            bearer = "Bearer {}".format(reply['token'])
+            headers = {'Authorization': bearer}
 
-            response = self.client.get('/auth/logout', content_type='application/json')
+            response = self.client.get('/auth/logout', content_type='application/json', headers=headers)
             reply = json.loads(response.data.decode())
             self.assertEqual(reply['status'], "pass", msg="status key fail")
             self.assertEqual(reply['message'], "logout was successful", msg="message key fail")
