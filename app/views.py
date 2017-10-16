@@ -87,7 +87,7 @@ def logout():
     """
     user_id = models.User.decode_token(utility.get_token())
     user = models.User.query.filter_by(user_id=user_id).first()
-    user.token = ""  # remove the token that was issued when user logged in
+    user.token = None  # remove the token that was issued when user logged in
     user.update()
     return jsonify({'status': 'pass', 'message': 'logout was successful'}), 200
 
