@@ -52,7 +52,7 @@ def validate_token(f):
             return make_response(jsonify({'status': 'fail', 'message': 'no access token'})), 401
         #
         try:
-            user_id = models.User.decode_token(token())  # decode the user id from the token to make sure it's a genuine
+            user_id = models.User.decode_token(token)  # decode the user id from the token to make sure it's a genuine
             user = models.User.query.filter_by(user_id=user_id).first()
             if user.token != token:
                 return make_response(jsonify({'status': 'fail', 'message': 'mismatching or wrong token'})), 401
