@@ -39,7 +39,7 @@ try:
         # Create all tables if they are not yet created in the db
         db.create_all()
 except Exception as ex:
-    shoplist_api.logger.error(ex.message)
+    shoplist_api.logger.warning(ex.message)
 
 from app import views
 
