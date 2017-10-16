@@ -79,11 +79,16 @@ def login():
 
 
 @shoplist_api.route('/auth/logout', methods=['GET'])
+@utility.validate_token
 def logout():
     """
     This endpoint will logout a user
     :return:
     """
+    user_id = models.User.decode_token(utility.get_token())
+    user = models.User.query.filter_by(user_id=user_id).first()
+    user.token = ""  # remove the token that was issued when user logged in
+    user.update()
     return jsonify({'status': 'pass', 'message': 'logout was successful'}), 200
 
 
