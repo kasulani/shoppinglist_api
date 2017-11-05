@@ -11,9 +11,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
+from flask_cors import CORS
 
 # Initialise flask application
 shoplist_api = Flask(__name__, instance_relative_config=True)
+# Setup CORS for all domains on all routes
+CORS(shoplist_api)
 # load the config file in instance folder, don't suppress errors (silent=false)
 shoplist_api.config.from_pyfile('config.cfg', silent=False)
 # Create ORM object
