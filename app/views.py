@@ -333,7 +333,7 @@ def update_a_list(list_id):
                                          description=the_list.description),
                             'status': 'pass',
                             'message': 'list updated'})
-        return response, 201
+        return response, 200
     shoplist_api.logger.error("list with id: <%s> has not been updated " % list_id)
     return jsonify({'status': 'fail', 'message': 'list not updated'}), 400
 
