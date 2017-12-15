@@ -30,8 +30,10 @@ def register(version):
     """
     data = request.json
     shoplist_api.\
-        logger.debug(
-        "/auth/register: incoming request data %s " % data)
+        logger.\
+            debug(
+                "/auth/register: incoming request data %s " % data
+            )
     if 'username' in data and 'password' in data:
         # check if the user exists in the db
         user = models.User.query.filter_by(email=data['username']).first()
@@ -93,8 +95,13 @@ def login(version):
                                 'message': 'login was successful'}), 201
         shoplist_api.logger.error(
             "wrong password or username or may be user does't exist")
-        return jsonify({'status': 'fail',
-                        'message': 'wrong password or username or may be user does\'t exist'}), 200
+        return \
+            jsonify(
+                {
+                    'status': 'fail',
+                    'message':
+                        'wrong password or username or may be user does\'t exist'
+                }), 200
     shoplist_api.logger.error("bad or missing parameters in json body")
     return \
         jsonify(
@@ -144,8 +151,13 @@ def reset_password(version):
                     }), 200
         shoplist_api.logger.error(
             "wrong username or password or may be user does't exist")
-        return jsonify({'status': 'fail',
-                        'message': 'wrong username or password or may be user does\'t exist'}), 200
+        return \
+            jsonify(
+                {
+                    'status': 'fail',
+                    'message':
+                        'wrong username or password or may be user does\'t exist'
+                }), 200
     shoplist_api.logger.error("bad or missing parameters in json body")
     return \
         jsonify(
@@ -204,8 +216,8 @@ def update_user(version):
     user = models.User.query.filter_by(user_id=user_id).first()
     if user and isinstance(int(user_id), int):
         '''
-        Each field is in a try block of it's own to give the api 
-        user the ability to update a single field independent of 
+        Each field is in a try block of it's own to give the api
+        user the ability to update a single field independent of
         the other fields in the User model/table
         '''
         err_count = 0
@@ -310,7 +322,8 @@ def view_all_lists(version):
             filter_by(user_id=user_id).paginate(page, limit, False)
     else:
         lists = \
-            models.List.query.filter_by(user_id=user_id).paginate(page, limit, False)
+            models.List.query.filter_by(user_id=user_id).\
+                paginate(page, limit, False)
     for a_list in lists.items:
         result = {
             'id': a_list.list_id,
@@ -365,7 +378,13 @@ def get_a_list(version, list_id):
                             'message': 'list found'})
         return response, 200
     shoplist_api.logger.debug("list with id<%s> not found" % list_id)
-    return jsonify({'count': '0', 'status': 'pass', 'message': 'list not found'}), 404
+    return \
+        jsonify(
+            {
+                'count': '0',
+                'status': 'pass',
+                'message': 'list not found'
+            }), 404
 
 
 @shoplist_api.route('/<version>/shoppinglists/<int:list_id>', methods=['PUT'])
@@ -380,7 +399,10 @@ def update_a_list(version, list_id):
     """
     data = request.json
     user_id = models.User.decode_token(utility.get_token())
-    the_list = models.List.query.filter_by(list_id=list_id, user_id=user_id).first()
+    the_list = \
+        models.List.query.filter_by(
+            list_id=list_id, user_id=user_id
+        ).first()
     if the_list is not None and 'title' in data:
         try:
             description = data['description']
@@ -451,7 +473,9 @@ def get_list_items(version, list_id):
         # page one is default, but page can be passed as an argument (optional)
         page = request.args.get('page', 1)
         items = \
-            models.Item.query.filter_by(list_id=list_id).paginate(page, limit, False).items
+            models.Item.query.filter_by(
+                list_id=list_id).\
+                paginate(page, limit, False).items
         for item in items:
             result = {
                 'id': item.item_id,
@@ -579,7 +603,9 @@ def update_list_item(version, list_id, item_id):
     the_list = models.List.query.filter_by(list_id=list_id).first()
     if the_list is not None:
         the_item = \
-            models.Item.query.filter_by(list_id=list_id, item_id=item_id).first()
+            models.Item.query.filter_by(
+                list_id=list_id, item_id=item_id
+            ).first()
         shoplist_api.logger.debug(
             "/shoppinglists/<int:list_id>/items/<int:item_id>: "
             "incoming request data %s " % data
@@ -629,7 +655,9 @@ def delete_item_from_list(version, list_id, item_id):
     the_list = models.List.query.filter_by(list_id=list_id).first()
     if the_list is not None:
         the_item = \
-            models.Item.query.filter_by(list_id=list_id, item_id=item_id).first()
+            models.Item.query.filter_by(
+                list_id=list_id, item_id=item_id
+            ).first()
         if the_item is not None:
             item_name = the_item.item_name
             the_item.delete()

@@ -28,11 +28,13 @@ def select_func_to_return(f, *args, **kwargs):
             return f(*args, **kwargs)
     except Exception as ex:
         shoplist_api.logger.error(ex.message)
-        return make_response(
-            jsonify(
-                {'status': 'fail',
-                 'message': ex.message
-                })), 500
+        return \
+            make_response(
+                jsonify(
+                    {
+                        'status': 'fail',
+                        'message': ex.message
+                    })), 500
 
 
 def validate_content_type(f):
@@ -46,7 +48,8 @@ def validate_content_type(f):
                 jsonify(
                     {
                         'status': 'fail',
-                        'message': 'content-type not specified as application/json'
+                        'message':
+                            'content-type not specified as application/json'
                     })), 400
         return select_func_to_return(f, *args, **kwargs)
     return decorated_function
@@ -58,9 +61,16 @@ def validate_token(f):
     def decorated_function(*args, **kwargs):
         token = get_token()
 
-        # This condition is true when no Authorization header is present in the request
+        # This condition is true when no Authorization
+        # header is present in the request
         if token is None:
-            return make_response(jsonify({'status': 'fail', 'message': 'no access token'})), 401
+            return \
+                make_response(
+                    jsonify(
+                        {
+                            'status': 'fail',
+                            'message': 'no access token'
+                        })), 401
         #
         try:
             # decode the user id from the token to make sure it's a genuine
