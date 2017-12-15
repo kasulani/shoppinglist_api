@@ -120,7 +120,7 @@ def reset_password():
 
 
 @shoplist_api.route('/users', methods=['GET'])
-@utility.validate_content_type
+#@utility.validate_content_type
 @utility.validate_token
 def get_user_details():
     """
@@ -143,7 +143,7 @@ def get_user_details():
                                      num_of_lists=num_of_lists,
                                      num_of_items=num_of_items),
                         'status': 'pass',
-                        'message': 'user found'}), 201
+                        'message': 'user found'}), 200
     shoplist_api.logger.error("user does't exist")
     return jsonify({'status': 'fail', 'message': 'user not found'}), 404
 
@@ -246,27 +246,40 @@ def view_all_lists():
     results = []
     # query parameters
     q = request.args.get('q', None)  # this parameter contains the name of the list
-    limit = request.args.get('limit', 50)  # limits the number of records to 50 per page (optional)
-    page = request.args.get('page', 1)  # page one is default, but page can be passed as an argument (optional)
+    limit = int(request.args.get('limit', 50))  # limits the number of records to 50 per page (optional)
+    page = int(request.args.get('page', 1))  # page one is default, but page can be passed as an argument (optional)
     if q is not None:
         lists = models.List.query.filter(
             models.List.list_name.like("%" + q.strip() + "%")).\
-            filter_by(user_id=user_id).paginate(page, limit, False).items
+            filter_by(user_id=user_id).paginate(page, limit, False)
     else:
-        lists = models.List.query.filter_by(user_id=user_id).paginate(page, limit, False).items
-    for a_list in lists:
+        lists = models.List.query.filter_by(user_id=user_id).paginate(page, limit, False)
+    for a_list in lists.items:
         result = {
             'id': a_list.list_id,
             'title': a_list.list_name,
             'description': a_list.description
         }
         results.append(result)
+    previous_page = 'none'
+    next_page = 'none'
+    if lists.has_next:
+        next_page = '/shoppinglists?page=' + str(page+1) + '&limit=' + str(limit)
+    if lists.has_prev:
+        previous_page = '/shoppinglists?page=' + str(page - 1) + '&limit=' + str(limit)
     if len(results) > 0:
         return jsonify({'lists': results,
+                        'next_page': next_page,
+                        'previous_page': previous_page,
                         'count': str(len(results)),
                         'status': 'pass',
                         'message': 'lists found'}), 200
-    return jsonify({'count': '0', 'status': 'fail', 'message': 'no lists found'}), 404
+    return jsonify({'count': '0',
+                    'lists': [],
+                    'next_page': 'none',
+                    'previous_page': 'none',
+                    'status': 'fail',
+                    'message': 'no lists found'}), 200
 
 
 @shoplist_api.route('/shoppinglists/<int:list_id>', methods=['GET'])
@@ -482,7 +495,7 @@ def update_list_item(list_id, item_id):
 
 
 @shoplist_api.route('/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['DELETE'])
-@utility.validate_content_type
+#@utility.validate_content_type
 @utility.validate_token
 def delete_item_from_list(list_id, item_id):
     """
