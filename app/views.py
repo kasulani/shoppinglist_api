@@ -486,7 +486,7 @@ def update_list_item(list_id, item_id):
                                          title=the_item.item_name,
                                          description=the_item.description),
                             'status': 'pass',
-                            'message': 'item updated'}), 201
+                            'message': 'item updated'}), 200
         shoplist_api.logger.error(
             "item with id: <{0}> on list with id:<{1}> has not been updated ".format(item_id, list_id))
         return jsonify({'status': 'fail', 'message': 'item not updated'}), 400
