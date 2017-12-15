@@ -53,7 +53,7 @@ class TestShoppingListAPI(TestCase):
     # --------------------------- /auth/register endpoint tests --------------------------------------------------------
     def test_01_register_account(self):
         with self.client:
-            response = self.client.post('/auth/register',
+            response = self.client.post('/v1/auth/register',
                                         content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
@@ -64,7 +64,7 @@ class TestShoppingListAPI(TestCase):
     def test_02_register_an_existing_account(self):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
-            response = self.client.post('/auth/register',
+            response = self.client.post('/v1/auth/register',
                                         content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
@@ -76,7 +76,7 @@ class TestShoppingListAPI(TestCase):
     def test_03_login_with_wrong_credentials(self):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
-            response = self.client.post('/auth/login',
+            response = self.client.post('/v1/auth/login',
                                         content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser007")))
             reply = json.loads(response.data.decode())
@@ -87,7 +87,7 @@ class TestShoppingListAPI(TestCase):
     def test_04_login_with_correct_credentials(self):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
-            response = self.client.post('/auth/login',
+            response = self.client.post('/v1/auth/login',
                                         content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com",
                                                              password="testuser123")))
@@ -102,14 +102,14 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to log out
-            response = self.client.post('/auth/login',
-                             content_type='application/json',
-                             data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
+            response = self.client.post('/v1/auth/login',
+                                        content_type='application/json',
+                                        data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.get('/auth/logout', content_type='application/json', headers=headers)
+            response = self.client.get('/v1/auth/logout', content_type='application/json', headers=headers)
             reply = json.loads(response.data.decode())
             self.assertEqual(reply['status'], "pass", msg="status key fail")
             self.assertEqual(reply['message'], "logout was successful", msg="message key fail")
@@ -120,12 +120,12 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to reset password
-            self.client.post('/auth/login',
+            self.client.post('/v1/auth/login',
                              content_type='application/json',
                              data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
 
             # test the reset password endpoint
-            response = self.client.post('/auth/reset-password',
+            response = self.client.post('/v1/auth/reset-password',
                                         content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com",
                                                              old_password="testuser12300",
@@ -139,12 +139,12 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to reset password
-            self.client.post('/auth/login',
+            self.client.post('/v1/auth/login',
                              content_type='application/json',
                              data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
 
             # test the reset password endpoint
-            response = self.client.post('/auth/reset-password',
+            response = self.client.post('/v1/auth/reset-password',
                                         content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com",
                                                              old_password="testuser123",
@@ -159,14 +159,14 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to create a list
-            response = self.client.post('/auth/login',
+            response = self.client.post('/v1/auth/login',
                                         content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.post('/shoppinglists',
+            response = self.client.post('/v1/shoppinglists',
                                         content_type='application/json',
                                         headers=headers,
                                         data=json.dumps(dict(title="house party",
@@ -183,13 +183,13 @@ class TestShoppingListAPI(TestCase):
         self.add_list()
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.get('/shoppinglists', content_type='application/json', headers=headers)
+            response = self.client.get('/v1/shoppinglists', content_type='application/json', headers=headers)
             reply = json.loads(response.data.decode())
             self.assertTrue(reply['lists'], msg="lists key fail")
             self.assertEqual(reply['count'], "1", msg="count key fail")
@@ -201,13 +201,13 @@ class TestShoppingListAPI(TestCase):
         self.add_list()
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.get('/shoppinglists/1', content_type='application/json', headers=headers)
+            response = self.client.get('/v1/shoppinglists/1', content_type='application/json', headers=headers)
             reply = json.loads(response.data.decode())
             self.assertTrue(reply['list'], msg="lists key fail")
             self.assertEqual(reply['count'], "1", msg="count key fail")
@@ -218,13 +218,13 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.get('/shoppinglists/100', content_type='application/json', headers=headers)
+            response = self.client.get('/v1/shoppinglists/100', content_type='application/json', headers=headers)
             reply = json.loads(response.data.decode())
             self.assertEqual(reply['count'], "0", msg="count key fail")
             self.assertEqual(reply['status'], "pass", msg="status key fail")
@@ -235,13 +235,13 @@ class TestShoppingListAPI(TestCase):
         self.add_list()
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.put('/shoppinglists/1', content_type='application/json',
+            response = self.client.put('/v1/shoppinglists/1', content_type='application/json',
                                        headers=headers,
                                        data=json.dumps(dict(title="camping list", description="my camping list")))
             reply = json.loads(response.data.decode())
@@ -253,13 +253,13 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.put('/shoppinglists/100', content_type='application/json',
+            response = self.client.put('/v1/shoppinglists/100', content_type='application/json',
                                        headers=headers,
                                        data=json.dumps(dict(title="camping list", description="my camping list")))
             reply = json.loads(response.data.decode())
@@ -272,14 +272,14 @@ class TestShoppingListAPI(TestCase):
         self.add_list()
         with self.client:
             # you have to be logged in to create a list
-            response = self.client.post('/auth/login',
+            response = self.client.post('/v1/auth/login',
                                         content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.post('/shoppinglists/1/items',
+            response = self.client.post('/v1/shoppinglists/1/items',
                                         content_type='application/json',
                                         headers=headers,
                                         data=json.dumps(dict(name="soda",
@@ -293,14 +293,14 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to create a list
-            response = self.client.post('/auth/login',
+            response = self.client.post('/v1/auth/login',
                                         content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.post('/shoppinglists/100/items',
+            response = self.client.post('/v1/shoppinglists/100/items',
                                         content_type='application/json',
                                         headers=headers,
                                         data=json.dumps(dict(name="soda",
@@ -315,13 +315,13 @@ class TestShoppingListAPI(TestCase):
         self.add_item()
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.get('/shoppinglists/1/items', content_type='application/json', headers=headers)
+            response = self.client.get('/v1/shoppinglists/1/items', content_type='application/json', headers=headers)
             reply = json.loads(response.data.decode())
             self.assertTrue(reply['items'], msg="lists key fail")
             self.assertEqual(reply['count'], "1", msg="count key fail")
@@ -332,13 +332,13 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.get('/shoppinglists/100/items', content_type='application/json', headers=headers)
+            response = self.client.get('/v1/shoppinglists/100/items', content_type='application/json', headers=headers)
             reply = json.loads(response.data.decode())
             self.assertEqual(reply['status'], "fail", msg="status key fail")
             self.assertEqual(reply['message'], "list not found", msg="message key fail")
@@ -349,13 +349,13 @@ class TestShoppingListAPI(TestCase):
         self.add_item()
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.get('/shoppinglists/1/items/1', content_type='application/json', headers=headers)
+            response = self.client.get('/v1/shoppinglists/1/items/1', content_type='application/json', headers=headers)
             reply = json.loads(response.data.decode())
             self.assertTrue(reply['item'], msg="lists key fail")
             self.assertEqual(reply['count'], "1", msg="count key fail")
@@ -368,13 +368,13 @@ class TestShoppingListAPI(TestCase):
         self.add_item()
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.get('/shoppinglists/1/items/100', content_type='application/json', headers=headers)
+            response = self.client.get('/v1/shoppinglists/1/items/100', content_type='application/json', headers=headers)
             reply = json.loads(response.data.decode())
             self.assertEqual(reply['count'], "0", msg="count key fail")
             self.assertEqual(reply['status'], "fail", msg="status key fail")
@@ -386,13 +386,13 @@ class TestShoppingListAPI(TestCase):
         self.add_item()
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.put('/shoppinglists/1/items/1', content_type='application/json',
+            response = self.client.put('/v1/shoppinglists/1/items/1', content_type='application/json',
                                        headers=headers,
                                        data=json.dumps(dict(name="rock boom", description="the energy drink")))
             reply = json.loads(response.data.decode())
@@ -406,13 +406,13 @@ class TestShoppingListAPI(TestCase):
         self.add_item()
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.put('/shoppinglists/1/items/100', content_type='application/json',
+            response = self.client.put('/v1/shoppinglists/1/items/100', content_type='application/json',
                                        headers=headers,
                                        data=json.dumps(dict(name="rock boom", description="the energy drink")))
             reply = json.loads(response.data.decode())
@@ -423,13 +423,13 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.put('/shoppinglists/100/items/1', content_type='application/json',
+            response = self.client.put('/v1/shoppinglists/100/items/1', content_type='application/json',
                                        headers=headers,
                                        data=json.dumps(dict(name="rock boom", description="the energy drink")))
             reply = json.loads(response.data.decode())
@@ -441,13 +441,13 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.delete('/shoppinglists/100/items/1', content_type='application/json',
+            response = self.client.delete('/v1/shoppinglists/100/items/1', content_type='application/json',
                                           headers=headers)
             reply = json.loads(response.data.decode())
             self.assertEqual(reply['status'], "fail", msg="status key fail")
@@ -459,13 +459,13 @@ class TestShoppingListAPI(TestCase):
         self.add_item()
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.delete('/shoppinglists/1/items/1', content_type='application/json',
+            response = self.client.delete('/v1/shoppinglists/1/items/1', content_type='application/json',
                                           headers=headers)
             reply = json.loads(response.data.decode())
             self.assertEqual(reply['status'], "pass", msg="status key fail")
@@ -477,13 +477,13 @@ class TestShoppingListAPI(TestCase):
         self.add_item()
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.delete('/shoppinglists/1/items/100', content_type='application/json',
+            response = self.client.delete('/v1/shoppinglists/1/items/100', content_type='application/json',
                                           headers=headers)
             reply = json.loads(response.data.decode())
             self.assertEqual(reply['status'], "fail", msg="status key fail")
@@ -494,13 +494,13 @@ class TestShoppingListAPI(TestCase):
         self.add_list()
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.delete('/shoppinglists/1', content_type='application/json',
+            response = self.client.delete('/v1/shoppinglists/1', content_type='application/json',
                                           headers=headers)
             reply = json.loads(response.data.decode())
             self.assertEqual(reply['status'], "pass", msg="status key fail")
@@ -510,13 +510,13 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a list
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.delete('/shoppinglists/200', content_type='application/json',
+            response = self.client.delete('/v1/shoppinglists/200', content_type='application/json',
                                           headers=headers)
             reply = json.loads(response.data.decode())
             self.assertEqual(reply['status'], "fail", msg="status key fail")
@@ -526,13 +526,13 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a user details
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.get('/users',
+            response = self.client.get('/v1/users',
                                        content_type='application/json', headers=headers)
 
             reply = json.loads(response.data.decode())
@@ -544,13 +544,13 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a user details
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.put('/users',
+            response = self.client.put('/v1/users',
                                        content_type='application/json', headers=headers,
                                        data=json.dumps(dict(firstname="Test",
                                                             lastname="User",
@@ -564,13 +564,13 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a user details
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.put('/users',
+            response = self.client.put('/v1/users',
                                        content_type='application/json', headers=headers,
                                        data=json.dumps(dict(firstname="Test1")))
 
@@ -582,13 +582,13 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a user details
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.put('/users',
+            response = self.client.put('/v1/users',
                                        content_type='application/json', headers=headers,
                                        data=json.dumps(dict(lastname="User1")))
 
@@ -600,13 +600,13 @@ class TestShoppingListAPI(TestCase):
         self.add_user()  # add this test user because tearDown drops all table data
         with self.client:
             # you have to be logged in to view a user details
-            response = self.client.post('/auth/login', content_type='application/json',
+            response = self.client.post('/v1/auth/login', content_type='application/json',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
             bearer = "Bearer {}".format(reply['token'])
             headers = {'Authorization': bearer}
 
-            response = self.client.put('/users',
+            response = self.client.put('/v1/users',
                                        content_type='application/json', headers=headers,
                                        data=json.dumps(dict(description="About user")))
 
@@ -616,7 +616,7 @@ class TestShoppingListAPI(TestCase):
 
     def test_33_calling_any_endpoint_with_wrong_content_type(self):
         with self.client:
-            response = self.client.post('/auth/register',
+            response = self.client.post('/v1/auth/register',
                                         content_type='application/text',
                                         data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
             reply = json.loads(response.data.decode())
@@ -625,7 +625,7 @@ class TestShoppingListAPI(TestCase):
 
     def test_34_calling_any_endpoint_with_no_token(self):
         with self.client:
-            response = self.client.get('/users',
+            response = self.client.get('/v1/users',
                                        content_type='application/json')
 
             reply = json.loads(response.data.decode())
@@ -639,7 +639,7 @@ class TestShoppingListAPI(TestCase):
             bearer = "Bearer {}".format(token)
             headers = {'Authorization': bearer}
 
-            response = self.client.get('/users',
+            response = self.client.get('/v1/users',
                                        content_type='application/json', headers=headers)
 
             reply = json.loads(response.data.decode())
@@ -648,9 +648,10 @@ class TestShoppingListAPI(TestCase):
 
     def test_36_index(self):
         with self.client:
-            response = self.client.get('/')
+            response = self.client.get('/v1/')
             self.assert_template_used('index.html')
             self.assert200(response, message="failed to display index")
+
 
 if __name__ == "__main__":
     unittest.main()
