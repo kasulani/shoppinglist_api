@@ -12,8 +12,8 @@ from flask import request, jsonify, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-@shoplist_api.route('/', methods=['GET'])
-def index():
+@shoplist_api.route('/<version>/', methods=['GET'])
+def index(version):
     """
     This endpoint will return the API documentation
     :return:
@@ -21,9 +21,9 @@ def index():
     return render_template('index.html')
 
 
-@shoplist_api.route('/auth/register', methods=['POST'])
+@shoplist_api.route('/<version>/auth/register', methods=['POST'])
 @utility.validate_content_type
-def register():
+def register(version):
     """
     This endpoint will create a user account
     :return: json response
@@ -48,9 +48,9 @@ def register():
     return jsonify({'status': 'fail', 'message': 'bad or missing parameters in request'}), 400
 
 
-@shoplist_api.route('/auth/login', methods=['POST'])
+@shoplist_api.route('/<version>/auth/login', methods=['POST'])
 @utility.validate_content_type
-def login():
+def login(version):
     """
     This endpoint will login a user with an account
     :return: json response
@@ -78,9 +78,9 @@ def login():
     return jsonify({'status': 'fail', 'message': 'bad or missing parameters in request'}), 400
 
 
-@shoplist_api.route('/auth/logout', methods=['GET'])
+@shoplist_api.route('/<version>/auth/logout', methods=['GET'])
 @utility.validate_token
-def logout():
+def logout(version):
     """
     This endpoint will logout a user
     :return:
@@ -92,9 +92,9 @@ def logout():
     return jsonify({'status': 'pass', 'message': 'logout was successful'}), 200
 
 
-@shoplist_api.route('/auth/reset-password', methods=['POST'])
+@shoplist_api.route('/<version>/auth/reset-password', methods=['POST'])
 @utility.validate_content_type
-def reset_password():
+def reset_password(version):
     """
     This endpoint will reset a password for a given user logged in at the front end
     :return: json response
@@ -119,10 +119,10 @@ def reset_password():
 # -------------------------------------------------------------------------------------------------
 
 
-@shoplist_api.route('/users', methods=['GET'])
+@shoplist_api.route('/<version>/users', methods=['GET'])
 #@utility.validate_content_type
 @utility.validate_token
-def get_user_details():
+def get_user_details(version):
     """
     This endpoint will return details on a single user
     :return: json response
@@ -148,10 +148,10 @@ def get_user_details():
     return jsonify({'status': 'fail', 'message': 'user not found'}), 404
 
 
-@shoplist_api.route('/users', methods=['PUT'])
+@shoplist_api.route('/<version>/users', methods=['PUT'])
 @utility.validate_content_type
 @utility.validate_token
-def update_user():
+def update_user(version):
     """
     This endpoint will update user details such as firstname, lastname, description
     :return: json response
@@ -202,10 +202,10 @@ def update_user():
 # -------------------------------------------------------------------------------------------------
 
 
-@shoplist_api.route('/shoppinglists', methods=['POST'])
+@shoplist_api.route('/<version>/shoppinglists', methods=['POST'])
 @utility.validate_content_type
 @utility.validate_token
-def add_a_list():
+def add_a_list(version):
     """
     This endpoint will create a shopping list for a logged in user
     :return: json response
@@ -233,9 +233,9 @@ def add_a_list():
     return jsonify({'status': 'fail', 'message': 'title is missing in the data'}), 400
 
 
-@shoplist_api.route('/shoppinglists', methods=['GET'])
+@shoplist_api.route('/<version>/shoppinglists', methods=['GET'])
 @utility.validate_token
-def view_all_lists():
+def view_all_lists(version):
     """
     This endpoint will return all the lists for a logged in user and if the q parameter is provided, it will implement
     a search query based on the list name. Other parameters search as limit and page refine the results for the user of
@@ -282,11 +282,12 @@ def view_all_lists():
                     'message': 'no lists found'}), 200
 
 
-@shoplist_api.route('/shoppinglists/<int:list_id>', methods=['GET'])
+@shoplist_api.route('/<version>/shoppinglists/<int:list_id>', methods=['GET'])
 @utility.validate_token
-def get_a_list(list_id):
+def get_a_list(version, list_id):
     """
     This endpoint will return a list of a given id
+    :param version:
     :param list_id:
     :return: json response
     """
@@ -305,12 +306,13 @@ def get_a_list(list_id):
     return jsonify({'count': '0', 'status': 'pass', 'message': 'list not found'}), 404
 
 
-@shoplist_api.route('/shoppinglists/<int:list_id>', methods=['PUT'])
+@shoplist_api.route('/<version>/shoppinglists/<int:list_id>', methods=['PUT'])
 @utility.validate_content_type
 @utility.validate_token
-def update_a_list(list_id):
+def update_a_list(version, list_id):
     """
     This endpoint will update a list of with a given id
+    :param version:
     :param list_id:
     :return: json response
     """
@@ -338,11 +340,12 @@ def update_a_list(list_id):
     return jsonify({'status': 'fail', 'message': 'list not updated'}), 400
 
 
-@shoplist_api.route('/shoppinglists/<int:list_id>', methods=['DELETE'])
+@shoplist_api.route('/<version>/shoppinglists/<int:list_id>', methods=['DELETE'])
 @utility.validate_token
-def delete_a_list(list_id):
+def delete_a_list(version, list_id):
     """
     This endpoint will delete a list with a given id
+    :param version:
     :param list_id:
     :return: json response
     """
@@ -357,12 +360,13 @@ def delete_a_list(list_id):
 
 # -------------------------------------------------------------------------------------------------
 
-@shoplist_api.route('/shoppinglists/<int:list_id>/items', methods=['GET'])
+@shoplist_api.route('/<version>/shoppinglists/<int:list_id>/items', methods=['GET'])
 @utility.validate_token
-def get_list_items(list_id):
+def get_list_items(version, list_id):
     """
     This endpoint will return items on a given list. The results are paginated and a default limit is set in case one is
     not provided in the request.
+    :param version:
     :param list_id:
     :return: json response
     """
@@ -392,12 +396,13 @@ def get_list_items(list_id):
     return jsonify({'status': 'fail', 'message': 'list not found'}), 404
 
 
-@shoplist_api.route('/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['GET'])
+@shoplist_api.route('/<version>/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['GET'])
 @utility.validate_token
-def get_list_item(list_id, item_id):
+def get_list_item(version, list_id, item_id):
     """
     This endpoint will return details of a particular item on a given list. It returns details on a single
     item on a shopping list
+    :param version:
     :param list_id:
     :param item_id:
     :return: json response
@@ -420,12 +425,13 @@ def get_list_item(list_id, item_id):
     return jsonify({'status': 'fail', 'message': 'list not found'}), 404
 
 
-@shoplist_api.route('/shoppinglists/<int:list_id>/items', methods=['POST'])
+@shoplist_api.route('/<version>/shoppinglists/<int:list_id>/items', methods=['POST'])
 @utility.validate_content_type
 @utility.validate_token
-def add_items_list(list_id):
+def add_items_list(version, list_id):
     """
     This endpoint will add items to a given list
+    :param version:
     :param list_id:
     :return: json response
     """
@@ -454,12 +460,13 @@ def add_items_list(list_id):
     return jsonify({'status': 'fail', 'message': 'list does not exist'}), 404
 
 
-@shoplist_api.route('/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['PUT'])
+@shoplist_api.route('/<version>/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['PUT'])
 @utility.validate_content_type
 @utility.validate_token
-def update_list_item(list_id, item_id):
+def update_list_item(version, list_id, item_id):
     """
     This endpoint will update a given item on a given list
+    :param version:
     :param list_id:
     :param item_id:
     :return: json response
@@ -494,12 +501,13 @@ def update_list_item(list_id, item_id):
     return jsonify({'status': 'fail', 'message': 'list does not exist'}), 404
 
 
-@shoplist_api.route('/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['DELETE'])
+@shoplist_api.route('/<version>/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['DELETE'])
 #@utility.validate_content_type
 @utility.validate_token
-def delete_item_from_list(list_id, item_id):
+def delete_item_from_list(version, list_id, item_id):
     """
     This endpoint will delete an item on given list
+    :param version:
     :param list_id:
     :param item_id:
     :return: json response
