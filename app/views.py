@@ -29,23 +29,40 @@ def register(version):
     :return: json response
     """
     data = request.json
-    shoplist_api.logger.debug("/auth/register: incoming request data %s " % data)
+    shoplist_api.\
+        logger.debug(
+        "/auth/register: incoming request data %s " % data)
     if 'username' in data and 'password' in data:
         # check if the user exists in the db
         user = models.User.query.filter_by(email=data['username']).first()
         if user is None:
             # create user in the database
-            user = models.User(email=data['username'],
-                               password=generate_password_hash(data['password']))
+            user = models.\
+                User(email=data['username'],
+                     password=generate_password_hash(data['password']))
             user.add()
             shoplist_api.logger.debug("created user %s " % user)
-            return jsonify({'username': user.email,
-                            'status': 'pass',
-                            'message': 'user account created successfully'}), 201
+            return \
+                jsonify(
+                    {
+                        'username': user.email,
+                        'status': 'pass',
+                        'message': 'user account created successfully'
+                    }), 201
         shoplist_api.logger.error("user already exists")
-        return jsonify({'status': 'fail', 'message': 'user already exists'}), 200
+        return \
+            jsonify(
+                {
+                    'status': 'fail',
+                    'message': 'user already exists'
+                }), 200
     shoplist_api.logger.error("bad or missing parameters in json body")
-    return jsonify({'status': 'fail', 'message': 'bad or missing parameters in request'}), 400
+    return \
+        jsonify(
+            {
+                'status': 'fail',
+                'message': 'bad or missing parameters in request'
+            }), 400
 
 
 @shoplist_api.route('/<version>/auth/login', methods=['POST'])
@@ -56,26 +73,35 @@ def login(version):
     :return: json response
     """
     data = request.json
-    shoplist_api.logger.debug("/auth/login endpoint: incoming request data %s " % data)
+    shoplist_api.logger.debug(
+        "/auth/login endpoint: incoming request data %s " % data)
     if 'username' in data and 'password' in data:
         # locate the user and create a user object
         user = models.User.query.filter_by(email=data['username']).first()
         # log message and authenticate user
-        shoplist_api.logger.debug("/auth/login endpoint: authenticating user<%s>" % data['username'])
+        shoplist_api.logger.debug(
+            "/auth/login endpoint: authenticating user<%s>" % data['username'])
         if user and check_password_hash(user.password, data['password']):
             # generate token here
             token = user.generate_auth_token()
             if token:
                 # log message and return response to client
-                shoplist_api.logger.debug("user %s has logged in successfully" % data['username'])
+                shoplist_api.logger.debug(
+                    "user %s has logged in successfully" % data['username'])
                 return jsonify({'token': token.decode('ascii'),
                                 'status': 'pass',
                                 'message': 'login was successful'}), 201
-        shoplist_api.logger.error("wrong password or username or may be user does't exist")
+        shoplist_api.logger.error(
+            "wrong password or username or may be user does't exist")
         return jsonify({'status': 'fail',
                         'message': 'wrong password or username or may be user does\'t exist'}), 200
     shoplist_api.logger.error("bad or missing parameters in json body")
-    return jsonify({'status': 'fail', 'message': 'bad or missing parameters in request'}), 400
+    return \
+        jsonify(
+            {
+                'status': 'fail',
+                'message': 'bad or missing parameters in request'
+            }), 400
 
 
 @shoplist_api.route('/<version>/auth/logout', methods=['GET'])
@@ -96,31 +122,43 @@ def logout(version):
 @utility.validate_content_type
 def reset_password(version):
     """
-    This endpoint will reset a password for a given user logged in at the front end
+    This endpoint will reset a password for a given
+    user logged in at the front end
     :return: json response
     """
     data = request.json
     shoplist_api.logger.debug("/auth/reset: incoming request data %s " % data)
-    if 'username' in data and 'new_password' in data and 'old_password' in data:
+    if 'username' in data and 'new_password' \
+            in data and 'old_password' in data:
         # locate user and check the old password
         user = models.User.query.filter_by(email=data['username']).first()
         if user and check_password_hash(user.password, data['old_password']):
             user.password = generate_password_hash(data['new_password'])
             user.update()
-            return jsonify({'username': user.email,
-                            'status': 'pass',
-                            'message': 'password was changed successfully'}), 200
-        shoplist_api.logger.error("wrong username or password or may be user does't exist")
+            return \
+                jsonify(
+                    {
+                        'username': user.email,
+                        'status': 'pass',
+                        'message': 'password was changed successfully'
+                    }), 200
+        shoplist_api.logger.error(
+            "wrong username or password or may be user does't exist")
         return jsonify({'status': 'fail',
                         'message': 'wrong username or password or may be user does\'t exist'}), 200
     shoplist_api.logger.error("bad or missing parameters in json body")
-    return jsonify({'status': 'fail', 'message': 'bad or missing parameters in request'}), 400
+    return \
+        jsonify(
+            {
+                'status': 'fail',
+                'message': 'bad or missing parameters in request'
+            }), 400
 
 # -------------------------------------------------------------------------------------------------
 
 
 @shoplist_api.route('/<version>/users', methods=['GET'])
-#@utility.validate_content_type
+# @utility.validate_content_type
 @utility.validate_token
 def get_user_details(version):
     """
@@ -133,7 +171,8 @@ def get_user_details(version):
     num_of_items, num_of_lists = 0, 0
     for a_list in lists:  # count items on each list and total them up
         num_of_lists += 1  # increment number of lists by 1 on each iteration
-        num_of_items += models.Item.query.filter_by(list_id=a_list.list_id).count()
+        num_of_items += \
+            models.Item.query.filter_by(list_id=a_list.list_id).count()
     if user:
         return jsonify({'user': dict(id=user.user_id,
                                      username=user.email,
@@ -153,7 +192,8 @@ def get_user_details(version):
 @utility.validate_token
 def update_user(version):
     """
-    This endpoint will update user details such as firstname, lastname, description
+    This endpoint will update user details
+    such as firstname, lastname, description
     :return: json response
     """
     data = request.json
@@ -164,8 +204,9 @@ def update_user(version):
     user = models.User.query.filter_by(user_id=user_id).first()
     if user and isinstance(int(user_id), int):
         '''
-        Each field is in a try block of it's own to give the api user the ability to update a single field
-        independent of the other fields in the User model/table
+        Each field is in a try block of it's own to give the api 
+        user the ability to update a single field independent of 
+        the other fields in the User model/table
         '''
         err_count = 0
         # first name
@@ -219,9 +260,13 @@ def add_a_list(version):
             shoplist_api.logger.warning(ex.message)
             description = ""
         # create a list
-        the_list = models.List(user_id=int(user_id), list_name=data['title'], description=description)
+        the_list = \
+            models.List(
+                user_id=int(user_id),
+                list_name=data['title'], description=description)
         the_list.add()
-        shoplist_api.logger.debug("created {0} for user:<{1}>".format(the_list, the_list.user_id))
+        shoplist_api.logger.debug(
+            "created {0} for user:<{1}>".format(the_list, the_list.user_id))
         response = jsonify({'id': the_list.list_id,
                             'title': the_list.list_name,
                             'description': the_list.description,
@@ -230,30 +275,42 @@ def add_a_list(version):
                             })
         return response, 201
     shoplist_api.logger.error("title is missing in the data")
-    return jsonify({'status': 'fail', 'message': 'title is missing in the data'}), 400
+    return \
+        jsonify(
+            {
+                'status': 'fail',
+                'message': 'title is missing in the data'
+            }), 400
 
 
 @shoplist_api.route('/<version>/shoppinglists', methods=['GET'])
 @utility.validate_token
 def view_all_lists(version):
     """
-    This endpoint will return all the lists for a logged in user and if the q parameter is provided, it will implement
-    a search query based on the list name. Other parameters search as limit and page refine the results for the user of
+    This endpoint will return all the lists for a logged in user
+    and if the q parameter is provided, it will implement
+    a search query based on the list name. Other parameters
+    search as limit and page refine the results for the user of
     the API
     :return:
     """
     user_id = models.User.decode_token(utility.get_token())
     results = []
     # query parameters
-    q = request.args.get('q', None)  # this parameter contains the name of the list
-    limit = int(request.args.get('limit', 50))  # limits the number of records to 50 per page (optional)
-    page = int(request.args.get('page', 1))  # page one is default, but page can be passed as an argument (optional)
+    # this parameter contains the name of the list
+    q = request.args.get('q', None)
+    # limits the number of records to 50 per page (optional)
+    limit = int(request.args.get('limit', 50))
+    # page one is default, but page can be passed as
+    # an argument (optional)
+    page = int(request.args.get('page', 1))
     if q is not None:
         lists = models.List.query.filter(
             models.List.list_name.like("%" + q.strip() + "%")).\
             filter_by(user_id=user_id).paginate(page, limit, False)
     else:
-        lists = models.List.query.filter_by(user_id=user_id).paginate(page, limit, False)
+        lists = \
+            models.List.query.filter_by(user_id=user_id).paginate(page, limit, False)
     for a_list in lists.items:
         result = {
             'id': a_list.list_id,
@@ -264,9 +321,13 @@ def view_all_lists(version):
     previous_page = 'none'
     next_page = 'none'
     if lists.has_next:
-        next_page = '/shoppinglists?page=' + str(page+1) + '&limit=' + str(limit)
+        next_page = '/shoppinglists?page=' + \
+                    str(page+1) + '&limit=' + \
+                    str(limit)
     if lists.has_prev:
-        previous_page = '/shoppinglists?page=' + str(page - 1) + '&limit=' + str(limit)
+        previous_page = '/shoppinglists?page=' + \
+                        str(page - 1) + \
+                        '&limit=' + str(limit)
     if len(results) > 0:
         return jsonify({'lists': results,
                         'next_page': next_page,
@@ -292,7 +353,8 @@ def get_a_list(version, list_id):
     :return: json response
     """
     user_id = models.User.decode_token(utility.get_token())
-    a_list = models.List.query.filter_by(list_id=list_id, user_id=user_id).first()
+    a_list = \
+        models.List.query.filter_by(list_id=list_id, user_id=user_id).first()
     if a_list is not None:
         shoplist_api.logger.debug("list %s found" % a_list)
         response = jsonify({'list': dict(id=a_list.list_id,
@@ -329,18 +391,21 @@ def update_a_list(version, list_id):
         the_list.list_name = data['title']
         the_list.description = description
         the_list.update()
-        shoplist_api.logger.debug("list with id: <%s> has been updated " % the_list.list_id)
+        shoplist_api.logger.debug(
+            "list with id: <%s> has been updated " % the_list.list_id)
         response = jsonify({'list': dict(id=the_list.list_id,
                                          title=the_list.list_name,
                                          description=the_list.description),
                             'status': 'pass',
                             'message': 'list updated'})
         return response, 200
-    shoplist_api.logger.error("list with id: <%s> has not been updated " % list_id)
+    shoplist_api.logger.error(
+        "list with id: <%s> has not been updated " % list_id)
     return jsonify({'status': 'fail', 'message': 'list not updated'}), 400
 
 
-@shoplist_api.route('/<version>/shoppinglists/<int:list_id>', methods=['DELETE'])
+@shoplist_api.route('/<version>/shoppinglists/<int:list_id>',
+                    methods=['DELETE'])
 @utility.validate_token
 def delete_a_list(version, list_id):
     """
@@ -350,22 +415,28 @@ def delete_a_list(version, list_id):
     :return: json response
     """
     user_id = models.User.decode_token(utility.get_token())
-    the_list = models.List.query.filter_by(list_id=list_id, user_id=user_id).first()
+    the_list = \
+        models.List.query.filter_by(list_id=list_id, user_id=user_id).first()
     if the_list is not None:
         the_list.delete()
-        shoplist_api.logger.debug("list with id<%s> has been deleted " % list_id)
+        shoplist_api.logger.debug(
+            "list with id<%s> has been deleted " % list_id)
         return jsonify({'status': 'pass', 'message': 'list deleted'}), 200
     return jsonify({'status': 'fail', 'message': 'list not deleted'}), 404
 
 
 # -------------------------------------------------------------------------------------------------
 
-@shoplist_api.route('/<version>/shoppinglists/<int:list_id>/items', methods=['GET'])
+@shoplist_api.route(
+    '/<version>/shoppinglists/<int:list_id>/items',
+    methods=['GET']
+)
 @utility.validate_token
 def get_list_items(version, list_id):
     """
-    This endpoint will return items on a given list. The results are paginated and a default limit is set in case one is
-    not provided in the request.
+    This endpoint will return items on a given list.
+    The results are paginated and a default limit is
+    set in case one is not provided in the request.
     :param version:
     :param list_id:
     :return: json response
@@ -375,9 +446,12 @@ def get_list_items(version, list_id):
         shoplist_api.logger.debug("getting items on list: %s " % the_list)
         results = []
         # get parameters
-        limit = request.args.get('limit', 50)  # limits the number of records to 50 per page (optional)
-        page = request.args.get('page', 1)  # page one is default, but page can be passed as an argument (optional)
-        items = models.Item.query.filter_by(list_id=list_id).paginate(page, limit, False).items
+        # limits the number of records to 50 per page (optional)
+        limit = request.args.get('limit', 50)
+        # page one is default, but page can be passed as an argument (optional)
+        page = request.args.get('page', 1)
+        items = \
+            models.Item.query.filter_by(list_id=list_id).paginate(page, limit, False).items
         for item in items:
             result = {
                 'id': item.item_id,
@@ -391,17 +465,27 @@ def get_list_items(version, list_id):
                             'count': str(len(results)),
                             'status': 'pass',
                             'message': 'items found'}), 200
-        return jsonify({'count': '0', 'status': 'fail', 'message': 'items not found'}), 404
+        return \
+            jsonify(
+                {
+                    'count': '0',
+                    'status': 'fail',
+                    'message': 'items not found'
+                }), 404
     shoplist_api.logger.error("list not found")
     return jsonify({'status': 'fail', 'message': 'list not found'}), 404
 
 
-@shoplist_api.route('/<version>/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['GET'])
+@shoplist_api.route(
+    '/<version>/shoppinglists/<int:list_id>/items/<int:item_id>',
+    methods=['GET']
+)
 @utility.validate_token
 def get_list_item(version, list_id, item_id):
     """
-    This endpoint will return details of a particular item on a given list. It returns details on a single
-    item on a shopping list
+    This endpoint will return details of a particular item
+    on a given list. It returns details on a single item on
+    a shopping list
     :param version:
     :param list_id:
     :param item_id:
@@ -409,7 +493,9 @@ def get_list_item(version, list_id, item_id):
     """
     the_list = models.List.query.filter_by(list_id=list_id).first()
     if the_list is not None:  # check if list exists
-        the_item = models.Item.query.filter_by(item_id=item_id).first()  # locate the item
+        # locate the item
+        the_item = \
+            models.Item.query.filter_by(item_id=item_id).first()
         if the_item is not None:
             result = {
                 'id': the_item.item_id,
@@ -421,11 +507,20 @@ def get_list_item(version, list_id, item_id):
                             'count': "1",
                             'status': 'pass',
                             'message': 'item found'}), 200
-        return jsonify({'count': '0', 'status': 'fail', 'message': 'item not found'}), 404
+        return \
+            jsonify(
+                {
+                    'count': '0',
+                    'status': 'fail',
+                    'message': 'item not found'
+                }), 404
     return jsonify({'status': 'fail', 'message': 'list not found'}), 404
 
 
-@shoplist_api.route('/<version>/shoppinglists/<int:list_id>/items', methods=['POST'])
+@shoplist_api.route(
+    '/<version>/shoppinglists/<int:list_id>/items',
+    methods=['POST']
+)
 @utility.validate_content_type
 @utility.validate_token
 def add_items_list(version, list_id):
@@ -450,17 +545,26 @@ def add_items_list(version, list_id):
                                list_id=list_id,
                                description=description)
             item.add()
-            shoplist_api.logger.debug("added {0} to list <{1}>".format(item, list_id))
+            shoplist_api.logger.debug(
+                "added {0} to list <{1}>".format(item, list_id))
             return jsonify({'item_id': item.item_id, 'name': item.item_name,
                             'description': item.description,
-                            'status': 'pass', 'message': 'item added to list'}), 201
+                            'status': 'pass',
+                            'message': 'item added to list'}), 201
         shoplist_api.logger.error("bad or missing parameters in json body")
-        return jsonify({'status': 'fail', 'message': 'bad or missing parameters in request'}), 400
+        return jsonify(
+            {
+                'status': 'fail',
+                'message': 'bad or missing parameters in request'
+            }), 400
     shoplist_api.logger.error("list <%s> does not exist" % list_id)
     return jsonify({'status': 'fail', 'message': 'list does not exist'}), 404
 
 
-@shoplist_api.route('/<version>/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['PUT'])
+@shoplist_api.route(
+    '/<version>/shoppinglists/<int:list_id>/items/<int:item_id>',
+    methods=['PUT']
+)
 @utility.validate_content_type
 @utility.validate_token
 def update_list_item(version, list_id, item_id):
@@ -474,9 +578,12 @@ def update_list_item(version, list_id, item_id):
     data = request.json
     the_list = models.List.query.filter_by(list_id=list_id).first()
     if the_list is not None:
-        the_item = models.Item.query.filter_by(list_id=list_id, item_id=item_id).first()
+        the_item = \
+            models.Item.query.filter_by(list_id=list_id, item_id=item_id).first()
         shoplist_api.logger.debug(
-            "/shoppinglists/<int:list_id>/items/<int:item_id>: incoming request data %s " % data)
+            "/shoppinglists/<int:list_id>/items/<int:item_id>: "
+            "incoming request data %s " % data
+        )
         if the_item is not None and 'name' in data:
             try:
                 description = data['description']
@@ -488,21 +595,28 @@ def update_list_item(version, list_id, item_id):
             the_item.description = description
             the_item.update()
             shoplist_api.logger.debug(
-                "item with id:<{0}> on list with id:<{1}> has been updated ".format(item_id, list_id))
+                "item with id:<{0}> on list with id:<{1}> has "
+                "been updated ".format(item_id, list_id)
+            )
             return jsonify({'item': dict(id=the_item.item_id,
                                          title=the_item.item_name,
                                          description=the_item.description),
                             'status': 'pass',
                             'message': 'item updated'}), 200
         shoplist_api.logger.error(
-            "item with id: <{0}> on list with id:<{1}> has not been updated ".format(item_id, list_id))
+            "item with id: <{0}> on list with id:<{1}> has "
+            "not been updated ".format(item_id, list_id)
+        )
         return jsonify({'status': 'fail', 'message': 'item not updated'}), 400
     shoplist_api.logger.error("list with id:<%s> does not exist" % list_id)
     return jsonify({'status': 'fail', 'message': 'list does not exist'}), 404
 
 
-@shoplist_api.route('/<version>/shoppinglists/<int:list_id>/items/<int:item_id>', methods=['DELETE'])
-#@utility.validate_content_type
+@shoplist_api.route(
+    '/<version>/shoppinglists/<int:list_id>/items/<int:item_id>',
+    methods=['DELETE']
+)
+# @utility.validate_content_type
 @utility.validate_token
 def delete_item_from_list(version, list_id, item_id):
     """
@@ -514,18 +628,27 @@ def delete_item_from_list(version, list_id, item_id):
     """
     the_list = models.List.query.filter_by(list_id=list_id).first()
     if the_list is not None:
-        the_item = models.Item.query.filter_by(list_id=list_id, item_id=item_id).first()
+        the_item = \
+            models.Item.query.filter_by(list_id=list_id, item_id=item_id).first()
         if the_item is not None:
             item_name = the_item.item_name
             the_item.delete()
-            shoplist_api.logger.debug("item %s has been deleted successfully" % item_name)
+            shoplist_api.logger.debug(
+                "item %s has been deleted successfully" % item_name
+            )
             return jsonify({'status': 'pass', 'message': 'item deleted'}), 200
         shoplist_api.logger.error(
-            "item with id: <{0}> on list with id:<{1}> has not been deleted ".format(item_id, list_id))
-        return jsonify({'status': 'fail', 'message': 'item not not found'}), 404
+            "item with id: <{0}> on list with id:<{1}> has "
+            "not been deleted ".format(item_id, list_id)
+        )
+        return \
+            jsonify(
+                {
+                    'status': 'fail',
+                    'message': 'item not not found'}), 404
     shoplist_api.logger.error("list with id:<%s> does not exist" % list_id)
-    return jsonify({'status': 'fail', 'message': 'list does not exist'}), 404
+    return jsonify(
+        {
+            'status': 'fail',
+            'message': 'list does not exist'}), 404
 # -------------------------------------------------------------------------------------------------
-
-
-
