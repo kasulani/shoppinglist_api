@@ -109,7 +109,7 @@ def reset_password():
             user.update()
             return jsonify({'username': user.email,
                             'status': 'pass',
-                            'message': 'password was changed successfully'}), 201
+                            'message': 'password was changed successfully'}), 200
         shoplist_api.logger.error("wrong username or password or may be user does't exist")
         return jsonify({'status': 'fail',
                         'message': 'wrong username or password or may be user does\'t exist'}), 200
