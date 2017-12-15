@@ -21,9 +21,16 @@ class User(db.Model):
     lastname = db.Column(db.String(100))
     description = db.Column(db.Text())
     token = db.Column(db.String(250))
-    user_lists = db.relationship('List', order_by='List.list_id', cascade='delete,all')
+    user_lists = \
+        db.relationship(
+            'List',
+            order_by='List.list_id',
+            cascade='delete,all'
+        )
 
-    def __init__(self, email, password, firstname="", lastname="", description=""):
+    def __init__(self, email,
+                 password, firstname="",
+                 lastname="", description=""):
         # self.username = username
         self.email = email
         self.password = password
@@ -101,7 +108,11 @@ class List(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(User.user_id))
     list_name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text())
-    list_items = db.relationship('Item', order_by='Item.item_id', cascade='delete, all')
+    list_items = \
+        db.relationship(
+            'Item',
+            order_by='Item.item_id',
+            cascade='delete, all')
 
     def __init__(self, list_name, user_id, description=""):
         # self.list_id = list_id
@@ -178,4 +189,3 @@ class Item(db.Model):
 
     def __repr__(self):
         return '<List %s>' % self.item_name
-
