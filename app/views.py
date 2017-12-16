@@ -79,7 +79,8 @@ def login(version):
         user = models.User.query.filter_by(email=data['username']).first()
         # log message and authenticate user
         # shoplist_api.logger.debug(
-        #     "/auth/login endpoint: authenticating user<%s>" % data['username'])
+        #    "/auth/login endpoint:
+        # authenticating user<%s>" % data['username'])
         if user and check_password_hash(user.password, data['password']):
             # generate token here
             token = user.generate_auth_token()
