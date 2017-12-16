@@ -323,9 +323,9 @@ def view_all_lists(version):
             filter_by(user_id=user_id).paginate(page, limit, False)
     else:
         lists = \
-            models.List.query.\
-                filter_by(user_id=user_id). \
-                paginate(page, limit, False)
+            models.List.query.filter_by(user_id=user_id).paginate(
+                page, limit, False
+            )
     for a_list in lists.items:
         result = {
             'id': a_list.list_id,
@@ -475,9 +475,9 @@ def get_list_items(version, list_id):
         # page one is default, but page can be passed as an argument (optional)
         page = request.args.get('page', 1)
         items = \
-            models.Item.query. \
-                filter_by(list_id=list_id). \
-                paginate(page, limit, False).items
+            models.Item.query.filter_by(list_id=list_id).paginate(
+                page, limit, False
+            ).items
         for item in items:
             result = {
                 'id': item.item_id,
