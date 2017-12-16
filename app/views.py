@@ -29,17 +29,14 @@ def register(version):
     :return: json response
     """
     data = request.json
-    shoplist_api.\
-        logger.\
-            debug(
-                "/auth/register: incoming request data %s " % data
-            )
+    shoplist_api. \
+        logger.debug("/auth/register: incoming request data %s " % data)
     if 'username' in data and 'password' in data:
         # check if the user exists in the db
         user = models.User.query.filter_by(email=data['username']).first()
         if user is None:
             # create user in the database
-            user = models.\
+            user = models. \
                 User(email=data['username'],
                      password=generate_password_hash(data['password']))
             user.add()
@@ -100,7 +97,8 @@ def login(version):
                 {
                     'status': 'fail',
                     'message':
-                        'wrong password or username or may be user does\'t exist'
+                        'wrong password or username or '
+                        'may be user does\'t exist'
                 }), 200
     shoplist_api.logger.error("bad or missing parameters in json body")
     return \
@@ -156,7 +154,8 @@ def reset_password(version):
                 {
                     'status': 'fail',
                     'message':
-                        'wrong username or password or may be user does\'t exist'
+                        'wrong username or password '
+                        'or may be user does\'t exist'
                 }), 200
     shoplist_api.logger.error("bad or missing parameters in json body")
     return \
@@ -165,6 +164,7 @@ def reset_password(version):
                 'status': 'fail',
                 'message': 'bad or missing parameters in request'
             }), 400
+
 
 # -------------------------------------------------------------------------------------------------
 
@@ -252,6 +252,7 @@ def update_user(version):
     shoplist_api.logger.error("user does't exist")
     return jsonify({'status': 'fail', 'message': 'user not found'}), 404
 
+
 # -------------------------------------------------------------------------------------------------
 
 
@@ -318,11 +319,12 @@ def view_all_lists(version):
     page = int(request.args.get('page', 1))
     if q is not None:
         lists = models.List.query.filter(
-            models.List.list_name.like("%" + q.strip() + "%")).\
+            models.List.list_name.like("%" + q.strip() + "%")). \
             filter_by(user_id=user_id).paginate(page, limit, False)
     else:
         lists = \
-            models.List.query.filter_by(user_id=user_id).\
+            models.List.query.\
+                filter_by(user_id=user_id). \
                 paginate(page, limit, False)
     for a_list in lists.items:
         result = {
@@ -335,7 +337,7 @@ def view_all_lists(version):
     next_page = 'none'
     if lists.has_next:
         next_page = '/shoppinglists?page=' + \
-                    str(page+1) + '&limit=' + \
+                    str(page + 1) + '&limit=' + \
                     str(limit)
     if lists.has_prev:
         previous_page = '/shoppinglists?page=' + \
@@ -473,8 +475,8 @@ def get_list_items(version, list_id):
         # page one is default, but page can be passed as an argument (optional)
         page = request.args.get('page', 1)
         items = \
-            models.Item.query.filter_by(
-                list_id=list_id).\
+            models.Item.query. \
+                filter_by(list_id=list_id). \
                 paginate(page, limit, False).items
         for item in items:
             result = {
@@ -679,4 +681,5 @@ def delete_item_from_list(version, list_id, item_id):
         {
             'status': 'fail',
             'message': 'list does not exist'}), 404
+
 # -------------------------------------------------------------------------------------------------
