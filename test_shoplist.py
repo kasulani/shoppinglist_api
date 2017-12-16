@@ -487,7 +487,7 @@ class TestShoppingListAPI(TestCase):
                                           headers=headers)
             reply = json.loads(response.data.decode())
             self.assertEqual(reply['status'], "fail", msg="status key fail")
-            self.assertEqual(reply['message'], "item not not found", msg="message key fail")
+            self.assertEqual(reply['message'], "item not found", msg="message key fail")
 
     def test_26_delete_an_existing_list(self):
         self.add_user()  # add this test user because tearDown drops all table data
