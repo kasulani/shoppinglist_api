@@ -29,7 +29,7 @@ Even God commands us to run tests: 1 Thessalonians 5:21; "Test all things."
 So to run tests, go to your command line prompt and execute the following command
 ```sh
    $ cd shopping_list_app/
-   $ nosetest --with-coverage test_shoplist.py
+   $ nosetests --with-coverage test_shoplist.py
 ```
 ## Running the application
 To run this application on a linux box, execute the following command.
