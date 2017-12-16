@@ -29,8 +29,8 @@ def register(version):
     :return: json response
     """
     data = request.json
-    shoplist_api. \
-        logger.debug("/auth/register: incoming request data %s " % data)
+    # shoplist_api. \
+    #     logger.debug("/auth/register: incoming request data %s " % data)
     if 'username' in data and 'password' in data:
         # check if the user exists in the db
         user = models.User.query.filter_by(email=data['username']).first()
@@ -40,7 +40,7 @@ def register(version):
                 User(email=data['username'],
                      password=generate_password_hash(data['password']))
             user.add()
-            shoplist_api.logger.debug("created user %s " % user)
+            # shoplist_api.logger.debug("created user %s " % user)
             return \
                 jsonify(
                     {
@@ -48,14 +48,14 @@ def register(version):
                         'status': 'pass',
                         'message': 'user account created successfully'
                     }), 201
-        shoplist_api.logger.error("user already exists")
+        # shoplist_api.logger.error("user already exists")
         return \
             jsonify(
                 {
                     'status': 'fail',
                     'message': 'user already exists'
                 }), 200
-    shoplist_api.logger.error("bad or missing parameters in json body")
+    # shoplist_api.logger.error("bad or missing parameters in json body")
     return \
         jsonify(
             {
@@ -72,26 +72,26 @@ def login(version):
     :return: json response
     """
     data = request.json
-    shoplist_api.logger.debug(
-        "/auth/login endpoint: incoming request data %s " % data)
+    # shoplist_api.logger.debug(
+    #     "/auth/login endpoint: incoming request data %s " % data)
     if 'username' in data and 'password' in data:
         # locate the user and create a user object
         user = models.User.query.filter_by(email=data['username']).first()
         # log message and authenticate user
-        shoplist_api.logger.debug(
-            "/auth/login endpoint: authenticating user<%s>" % data['username'])
+        # shoplist_api.logger.debug(
+        #     "/auth/login endpoint: authenticating user<%s>" % data['username'])
         if user and check_password_hash(user.password, data['password']):
             # generate token here
             token = user.generate_auth_token()
             if token:
                 # log message and return response to client
-                shoplist_api.logger.debug(
-                    "user %s has logged in successfully" % data['username'])
+                # shoplist_api.logger.debug(
+                #     "user %s has logged in successfully" % data['username'])
                 return jsonify({'token': token.decode('ascii'),
                                 'status': 'pass',
                                 'message': 'login was successful'}), 201
-        shoplist_api.logger.error(
-            "wrong password or username or may be user does't exist")
+        # shoplist_api.logger.error(
+        #     "wrong password or username or may be user does't exist")
         return \
             jsonify(
                 {
@@ -100,7 +100,7 @@ def login(version):
                         'wrong password or username or '
                         'may be user does\'t exist'
                 }), 200
-    shoplist_api.logger.error("bad or missing parameters in json body")
+    # shoplist_api.logger.error("bad or missing parameters in json body")
     return \
         jsonify(
             {
@@ -147,8 +147,8 @@ def reset_password(version):
                         'status': 'pass',
                         'message': 'password was changed successfully'
                     }), 200
-        shoplist_api.logger.error(
-            "wrong username or password or may be user does't exist")
+        # shoplist_api.logger.error(
+        #     "wrong username or password or may be user does't exist")
         return \
             jsonify(
                 {
@@ -157,7 +157,7 @@ def reset_password(version):
                         'wrong username or password '
                         'or may be user does\'t exist'
                 }), 200
-    shoplist_api.logger.error("bad or missing parameters in json body")
+    # shoplist_api.logger.error("bad or missing parameters in json body")
     return \
         jsonify(
             {
@@ -278,8 +278,8 @@ def add_a_list(version):
                 user_id=int(user_id),
                 list_name=data['title'], description=description)
         the_list.add()
-        shoplist_api.logger.debug(
-            "created {0} for user:<{1}>".format(the_list, the_list.user_id))
+        # shoplist_api.logger.debug(
+        #     "created {0} for user:<{1}>".format(the_list, the_list.user_id))
         response = jsonify({'id': the_list.list_id,
                             'title': the_list.list_name,
                             'description': the_list.description,
@@ -287,7 +287,7 @@ def add_a_list(version):
                             'message': 'list created successfully'
                             })
         return response, 201
-    shoplist_api.logger.error("title is missing in the data")
+    # shoplist_api.logger.error("title is missing in the data")
     return \
         jsonify(
             {
@@ -415,16 +415,16 @@ def update_a_list(version, list_id):
         the_list.list_name = data['title']
         the_list.description = description
         the_list.update()
-        shoplist_api.logger.debug(
-            "list with id: <%s> has been updated " % the_list.list_id)
+        # shoplist_api.logger.debug(
+        #     "list with id: <%s> has been updated " % the_list.list_id)
         response = jsonify({'list': dict(id=the_list.list_id,
                                          title=the_list.list_name,
                                          description=the_list.description),
                             'status': 'pass',
                             'message': 'list updated'})
         return response, 200
-    shoplist_api.logger.error(
-        "list with id: <%s> has not been updated " % list_id)
+    # shoplist_api.logger.error(
+    #     "list with id: <%s> has not been updated " % list_id)
     return jsonify({'status': 'fail', 'message': 'list not updated'}), 400
 
 
@@ -571,19 +571,19 @@ def add_items_list(version, list_id):
                                list_id=list_id,
                                description=description)
             item.add()
-            shoplist_api.logger.debug(
-                "added {0} to list <{1}>".format(item, list_id))
+            # shoplist_api.logger.debug(
+            #     "added {0} to list <{1}>".format(item, list_id))
             return jsonify({'item_id': item.item_id, 'name': item.item_name,
                             'description': item.description,
                             'status': 'pass',
                             'message': 'item added to list'}), 201
-        shoplist_api.logger.error("bad or missing parameters in json body")
+        # shoplist_api.logger.error("bad or missing parameters in json body")
         return jsonify(
             {
                 'status': 'fail',
                 'message': 'bad or missing parameters in request'
             }), 400
-    shoplist_api.logger.error("list <%s> does not exist" % list_id)
+    # shoplist_api.logger.error("list <%s> does not exist" % list_id)
     return jsonify({'status': 'fail', 'message': 'list does not exist'}), 404
 
 
@@ -661,22 +661,22 @@ def delete_item_from_list(version, list_id, item_id):
                 list_id=list_id, item_id=item_id
             ).first()
         if the_item is not None:
-            item_name = the_item.item_name
+            # item_name = the_item.item_name
             the_item.delete()
-            shoplist_api.logger.debug(
-                "item %s has been deleted successfully" % item_name
-            )
+            # shoplist_api.logger.debug(
+            #     "item %s has been deleted successfully" % item_name
+            # )
             return jsonify({'status': 'pass', 'message': 'item deleted'}), 200
-        shoplist_api.logger.error(
-            "item with id: <{0}> on list with id:<{1}> has "
-            "not been deleted ".format(item_id, list_id)
-        )
+        # shoplist_api.logger.error(
+        #     "item with id: <{0}> on list with id:<{1}> has "
+        #     "not been deleted ".format(item_id, list_id)
+        # )
         return \
             jsonify(
                 {
                     'status': 'fail',
-                    'message': 'item not not found'}), 404
-    shoplist_api.logger.error("list with id:<%s> does not exist" % list_id)
+                    'message': 'item not found'}), 404
+    # shoplist_api.logger.error("list with id:<%s> does not exist" % list_id)
     return jsonify(
         {
             'status': 'fail',
