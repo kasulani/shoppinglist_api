@@ -83,12 +83,13 @@ def login(version):
         # authenticating user<%s>" % data['username'])
         if user and check_password_hash(user.password, data['password']):
             # generate token here
-            token = user.generate_auth_token()
-            if token:
+            # token = user.generate_auth_token()
+            user.generate_auth_token()
+            if user.token:
                 # log message and return response to client
                 # shoplist_api.logger.debug(
                 #     "user %s has logged in successfully" % data['username'])
-                return jsonify({'token': token.decode('ascii'),
+                return jsonify({'token': user.token.decode('ascii'),
                                 'status': 'pass',
                                 'message': 'login was successful'}), 201
         # shoplist_api.logger.error(
