@@ -78,5 +78,6 @@ DELETE | /shoppinglists/id/items/<item_id> | False | Delete a shopping list item
 
 ## Demo Video
 You can watch a demonstration video of the api endpoints in action using postman here.
-[![Demo video](http://img.youtube.com/vi/5h4sI9ZdgK0&feature/0.jpg)](https://www.youtube.com/watch?v=5h4sI9ZdgK0&feature=youtu.be)
+
+[![Demo video](http://img.youtube.com/vi/5h4sI9ZdgK0/0.jpg)](https://www.youtube.com/watch?v=5h4sI9ZdgK0)
 
