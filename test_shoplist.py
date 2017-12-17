@@ -652,6 +652,44 @@ class TestShoppingListAPI(TestCase):
             self.assert_template_used('index.html')
             self.assert200(response, message="failed to display index")
 
+    def test_37_view_a_single_non_existing_item_on_a_non_existing_list(self):
+        self.add_user()  # add this test user because tearDown drops all table data
+        self.add_list()
+        self.add_item()
+        with self.client:
+            # you have to be logged in to view a list
+            response = self.client.post('/v1/auth/login', content_type='application/json',
+                                        data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
+            reply = json.loads(response.data.decode())
+            bearer = "Bearer {}".format(reply['token'])
+            headers = {'Authorization': bearer}
+
+            response = self.client.get('/v1/shoppinglists/100/items/100', content_type='application/json', headers=headers)
+            reply = json.loads(response.data.decode())
+            self.assertEqual(reply['status'], "fail", msg="status key fail")
+            self.assertEqual(reply['message'], "list not found", msg="message key fail")
+
+    def test_38_add_an_item_to_an_existing_list_with_wrong_param(self):
+        self.add_user()  # add this test user because tearDown drops all table data
+        self.add_list()
+        with self.client:
+            # you have to be logged in to create a list
+            response = self.client.post('/v1/auth/login',
+                                        content_type='application/json',
+                                        data=json.dumps(dict(username="testuser1@gmail.com", password="testuser123")))
+            reply = json.loads(response.data.decode())
+            bearer = "Bearer {}".format(reply['token'])
+            headers = {'Authorization': bearer}
+
+            response = self.client.post('/v1/shoppinglists/1/items',
+                                        content_type='application/json',
+                                        headers=headers,
+                                        data=json.dumps(dict(names="soda",
+                                                             description="create of soda")))
+            reply = json.loads(response.data.decode())
+            self.assertEqual(reply['status'], "fail", msg="status key fail")
+            self.assertEqual(reply['message'], "bad or missing parameters in request", msg="message key fail")
+
 
 if __name__ == "__main__":
     unittest.main()
