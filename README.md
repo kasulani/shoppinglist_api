@@ -76,4 +76,8 @@ POST | /shoppinglists/id/items | False | Add an Item to a shopping list
 PUT | /shoppinglists/id/items/<item_id> | False | Update a shopping list item on a given list
 DELETE | /shoppinglists/id/items/<item_id> | False | Delete a shopping list item from a given list
 
+## Demo Video
+You can watch a demonstration video of the api endpoints in action using postman here.
+
+[![Demo video](http://img.youtube.com/vi/5h4sI9ZdgK0/0.jpg)](https://www.youtube.com/watch?v=5h4sI9ZdgK0)
 
